@@ -113,7 +113,7 @@ export const EmployeeAcceptInvitationPage: React.FC<EmployeeAcceptInvitationPage
       <header className="border-b border-slate-200/80 bg-white/80 backdrop-blur-md py-4 px-6 sm:px-8">
         <div className="max-w-4xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-2.5">
-            <span className="font-serif text-xl font-bold tracking-tight text-teal-900">AURA</span>
+            <span className="font-serif text-xl font-bold tracking-tight text-teal-900">Aarogya</span>
             <span className="text-slate-300">|</span>
             <span className="text-xs font-mono uppercase tracking-wider text-slate-500 font-medium">
               Staff Appointment Acceptance
@@ -157,7 +157,7 @@ export const EmployeeAcceptInvitationPage: React.FC<EmployeeAcceptInvitationPage
                 onClick={() => onNavigate('/')}
                 className="px-6 py-2.5 rounded-full text-xs font-semibold text-white bg-teal-800 hover:bg-teal-900 transition-all cursor-pointer shadow-sm"
               >
-                Return to AURA Home
+                Return to Aarogya Home
               </button>
             </div>
           </div>
@@ -281,7 +281,7 @@ export const EmployeeAcceptInvitationPage: React.FC<EmployeeAcceptInvitationPage
               {!invitation.has_existing_account && (
                 <div>
                   <label className="block text-xs font-semibold text-slate-800 mb-1.5">
-                    HIMS Username <span className="text-rose-500">*</span>
+                    Aarogya Username <span className="text-rose-500">*</span>
                   </label>
                   <div className="relative">
                     <User className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
@@ -398,7 +398,7 @@ export const EmployeeAcceptInvitationPage: React.FC<EmployeeAcceptInvitationPage
                 onClick={() => onNavigate('/login')}
                 className="w-full sm:w-auto px-8 py-3 rounded-full text-xs sm:text-sm font-bold text-white bg-teal-800 hover:bg-teal-900 transition-all flex items-center justify-center gap-2 shadow-sm cursor-pointer mx-auto"
               >
-                <span>Proceed to HIMS Sign-In</span>
+                <span>Proceed to Aarogya Sign-In</span>
                 <ArrowRight className="w-4 h-4" />
               </button>
             </div>
@@ -408,7 +408,7 @@ export const EmployeeAcceptInvitationPage: React.FC<EmployeeAcceptInvitationPage
 
       {/* Editorial Footer */}
       <footer className="border-t border-slate-200/80 bg-white/60 py-4 px-6 text-center text-xs text-slate-400 font-mono">
-        AURA Healthcare Information Management System &bull; Enterprise RBAC Engine
+        Aarogya Healthcare Information Management System &bull; Enterprise RBAC Engine
       </footer>
     </div>
   );

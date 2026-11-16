@@ -9,7 +9,7 @@ export const CommunitySection: React.FC = () => {
       role: 'Chief Medical Officer',
       org: 'Pacific Metro Health System',
       quote:
-        'AURA finally bridges the gap between high-acuity medical consultations and human-centric software. It saved our clinic over 40 hours of clerical burnout weekly.',
+        'Aarogya finally bridges the gap between high-acuity medical consultations and human-centric software. It saved our clinic over 40 hours of clerical burnout weekly.',
     },
     {
       name: 'Linda Lindqvist, RN',

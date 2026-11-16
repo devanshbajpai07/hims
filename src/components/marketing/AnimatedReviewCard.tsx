@@ -23,7 +23,7 @@ export const TESTIMONIALS: TestimonialItem[] = [
   },
   {
     id: 'marcus',
-    quote: 'AURA restored calm to our consulting rooms. Clinicians examine patients, not 40-step billing drop-downs.',
+    quote: 'Aarogya restored calm to our consulting rooms. Clinicians examine patients, not 40-step billing drop-downs.',
     authorName: 'Dr. Marcus Vance, MD',
     authorRole: 'Chief Medical Officer',
     authorOrg: 'Pacific Metro Health System',

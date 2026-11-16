@@ -161,16 +161,16 @@ class SMTPEmailService(EmailService):
     def send_password_reset_email(self, to_email: str, reset_link: str, expires_minutes: int) -> bool:
         try:
             msg = MIMEMultipart("alternative")
-            msg["Subject"] = "Password Reset Request — AURA HIMS Purchaser Portal"
+            msg["Subject"] = "Password Reset Request — Aarogya Purchaser Portal"
             msg["From"] = settings.SMTP_FROM_EMAIL
             msg["To"] = to_email
 
             text_content = (
                 f"Hello,\n\n"
-                f"We received a request to reset your AURA HIMS purchaser account password.\n\n"
+                f"We received a request to reset your Aarogya purchaser account password.\n\n"
                 f"Reset your password by following this link:\n{reset_link}\n\n"
                 f"This link will expire in {expires_minutes} minutes. If you did not make this request, you can safely ignore this email.\n\n"
-                f"— HIMS Security Team"
+                f"— Aarogya Security Team"
             )
             msg.attach(MIMEText(text_content, "plain"))
 
@@ -187,7 +187,7 @@ class SMTPEmailService(EmailService):
     def send_notification_email(self, to_email: str, subject: str, message: str) -> bool:
         try:
             msg = MIMEMultipart("alternative")
-            msg["Subject"] = f"{subject} — AURA HIMS"
+            msg["Subject"] = f"{subject} — Aarogya"
             msg["From"] = settings.SMTP_FROM_EMAIL
             msg["To"] = to_email
             msg.attach(MIMEText(message, "plain"))
@@ -213,17 +213,17 @@ class SMTPEmailService(EmailService):
     ) -> bool:
         try:
             msg = MIMEMultipart("alternative")
-            msg["Subject"] = f"Invitation to join {hospital_name} as {role_type} — AURA HIMS"
+            msg["Subject"] = f"Invitation to join {hospital_name} as {role_type} — Aarogya"
             msg["From"] = settings.SMTP_FROM_EMAIL
             msg["To"] = to_email
 
             text_content = (
                 f"Dear {recipient_name},\n\n"
-                f"You have been officially invited to join {hospital_name} as {role_type} on AURA HIMS.\n\n"
+                f"You have been officially invited to join {hospital_name} as {role_type} on Aarogya.\n\n"
                 f"To accept this invitation and configure your credentials, visit the following secure link:\n"
                 f"{invitation_url}\n\n"
                 f"This invitation link is valid for {expires_hours} hours. If you did not anticipate this invitation, please contact your institution's executive leadership.\n\n"
-                f"— AURA Healthcare Information Management System"
+                f"— Aarogya Healthcare Information Management System"
             )
             msg.attach(MIMEText(text_content, "plain"))
 
@@ -261,7 +261,7 @@ class AntideployEmailService(EmailService):
 
     def _send(self, to_email: str, subject: str, html_content: str, text_content: str) -> bool:
         self._configure_client()
-        sender = settings.EMAIL_FROM or "AURA HIMS <onboarding@mail.antideploy.app>"
+        sender = settings.EMAIL_FROM or "Aarogya <onboarding@mail.antideploy.app>"
         params = {
             "from": sender,
             "to": [to_email.strip()],
@@ -282,13 +282,13 @@ class AntideployEmailService(EmailService):
             return False
 
     def send_otp_email(self, to_email: str, hospital_name: str, otp: str, expires_minutes: int) -> bool:
-        subject = f"Your Verification Code for {hospital_name} — AURA HIMS"
+        subject = f"Your Verification Code for {hospital_name} — Aarogya"
         text_content = (
             f"Hello,\n\n"
             f"Your 6-digit verification code for {hospital_name} is:\n\n"
             f"  {otp}\n\n"
             f"This code will expire in {expires_minutes} minutes. If you did not request this code, please ignore this email.\n\n"
-            f"— AURA Healthcare Information Management System"
+            f"— Aarogya Healthcare Information Management System"
         )
         html_content = f"""<!DOCTYPE html>
 <html>
@@ -296,7 +296,7 @@ class AntideployEmailService(EmailService):
 <body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #FAF7F2; margin: 0; padding: 40px 20px;">
   <div style="max-width: 560px; margin: 0 auto; background: #ffffff; border: 1px solid #E2E8F0; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.03);">
     <div style="background: #064E3B; padding: 28px 32px; color: #ffffff;">
-      <h1 style="margin: 0; font-size: 20px; font-weight: 700; letter-spacing: -0.02em;">AURA</h1>
+      <h1 style="margin: 0; font-size: 20px; font-weight: 700; letter-spacing: -0.02em;">Aarogya</h1>
       <p style="margin: 4px 0 0; font-size: 13px; opacity: 0.85;">Hospital Information Management System</p>
     </div>
     <div style="padding: 36px 32px; color: #1E293B;">
@@ -321,13 +321,13 @@ class AntideployEmailService(EmailService):
 
     def send_password_reset_email(self, to_email: str, reset_link: str, expires_minutes: int) -> bool:
         logger.info("[TRANSACTIONAL EMAIL] Password reset dispatched for %s -> %s", to_email, reset_link)
-        subject = "Password Reset Request — AURA HIMS"
+        subject = "Password Reset Request — Aarogya"
         text_content = (
             f"Hello,\n\n"
-            f"We received a request to reset your password for AURA HIMS.\n\n"
+            f"We received a request to reset your password for Aarogya.\n\n"
             f"Reset your password by visiting this secure link:\n{reset_link}\n\n"
             f"This link will expire in {expires_minutes} minutes. If you did not request this, you can safely ignore this email.\n\n"
-            f"— AURA Healthcare Information Management System"
+            f"— Aarogya Healthcare Information Management System"
         )
         html_content = f"""<!DOCTYPE html>
 <html>
@@ -335,7 +335,7 @@ class AntideployEmailService(EmailService):
 <body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #FAF7F2; margin: 0; padding: 40px 20px;">
   <div style="max-width: 560px; margin: 0 auto; background: #ffffff; border: 1px solid #E2E8F0; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.03);">
     <div style="background: #064E3B; padding: 28px 32px; color: #ffffff;">
-      <h1 style="margin: 0; font-size: 20px; font-weight: 700; letter-spacing: -0.02em;">AURA</h1>
+      <h1 style="margin: 0; font-size: 20px; font-weight: 700; letter-spacing: -0.02em;">Aarogya</h1>
       <p style="margin: 4px 0 0; font-size: 13px; opacity: 0.85;">Hospital Information Management System</p>
     </div>
     <div style="padding: 36px 32px; color: #1E293B;">
@@ -362,15 +362,15 @@ class AntideployEmailService(EmailService):
         return self._send(to_email, subject, html_content, text_content)
 
     def send_notification_email(self, to_email: str, subject: str, message: str) -> bool:
-        full_subject = f"{subject} — AURA HIMS"
-        text_content = f"{message}\n\n— AURA Healthcare Information Management System"
+        full_subject = f"{subject} — Aarogya"
+        text_content = f"{message}\n\n— Aarogya Healthcare Information Management System"
         html_content = f"""<!DOCTYPE html>
 <html>
 <head><meta charset="utf-8"><title>{full_subject}</title></head>
 <body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #FAF7F2; margin: 0; padding: 40px 20px;">
   <div style="max-width: 560px; margin: 0 auto; background: #ffffff; border: 1px solid #E2E8F0; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.03);">
     <div style="background: #064E3B; padding: 28px 32px; color: #ffffff;">
-      <h1 style="margin: 0; font-size: 20px; font-weight: 700; letter-spacing: -0.02em;">AURA</h1>
+      <h1 style="margin: 0; font-size: 20px; font-weight: 700; letter-spacing: -0.02em;">Aarogya</h1>
       <p style="margin: 4px 0 0; font-size: 13px; opacity: 0.85;">Hospital Information Management System</p>
     </div>
     <div style="padding: 36px 32px; color: #1E293B;">
@@ -394,14 +394,14 @@ class AntideployEmailService(EmailService):
         invitation_url: str,
         expires_hours: int,
     ) -> bool:
-        subject = f"Invitation to join {hospital_name} as {role_type} — AURA HIMS"
+        subject = f"Invitation to join {hospital_name} as {role_type} — Aarogya"
         text_content = (
             f"Dear {recipient_name},\n\n"
-            f"You have been officially invited to join {hospital_name} as {role_type} on AURA HIMS.\n\n"
+            f"You have been officially invited to join {hospital_name} as {role_type} on Aarogya.\n\n"
             f"To accept this invitation and configure your credentials, visit the following secure link:\n"
             f"{invitation_url}\n\n"
             f"This invitation link is valid for {expires_hours} hours. If you did not anticipate this invitation, please contact your institution's executive leadership.\n\n"
-            f"— AURA Healthcare Information Management System"
+            f"— Aarogya Healthcare Information Management System"
         )
         html_content = f"""<!DOCTYPE html>
 <html>
@@ -409,7 +409,7 @@ class AntideployEmailService(EmailService):
 <body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #FAF7F2; margin: 0; padding: 40px 20px;">
   <div style="max-width: 560px; margin: 0 auto; background: #ffffff; border: 1px solid #E2E8F0; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.03);">
     <div style="background: #064E3B; padding: 28px 32px; color: #ffffff;">
-      <h1 style="margin: 0; font-size: 20px; font-weight: 700; letter-spacing: -0.02em;">AURA</h1>
+      <h1 style="margin: 0; font-size: 20px; font-weight: 700; letter-spacing: -0.02em;">Aarogya</h1>
       <p style="margin: 4px 0 0; font-size: 13px; opacity: 0.85;">Hospital Information Management System</p>
     </div>
     <div style="padding: 36px 32px; color: #1E293B;">
@@ -418,7 +418,7 @@ class AntideployEmailService(EmailService):
         Dear <strong>{recipient_name}</strong>,
       </p>
       <p style="margin: 0 0 24px; font-size: 15px; line-height: 1.5; color: #475569;">
-        You have been officially invited to join <strong>{hospital_name}</strong> in the executive capacity of <strong>{role_type}</strong> on AURA HIMS.
+        You have been officially invited to join <strong>{hospital_name}</strong> in the executive capacity of <strong>{role_type}</strong> on Aarogya.
       </p>
       <div style="text-align: center; margin: 32px 0;">
         <a href="{invitation_url}" style="display: inline-block; background: #0D5C4D; color: #ffffff; font-size: 15px; font-weight: 600; text-decoration: none; padding: 14px 32px; border-radius: 12px; box-shadow: 0 2px 4px rgba(13,92,77,0.2);">Accept Invitation &rarr;</a>

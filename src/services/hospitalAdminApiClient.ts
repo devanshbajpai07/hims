@@ -469,13 +469,59 @@ function getCsrfToken(): string | null {
   return match ? decodeURIComponent(match[2]) : null;
 }
 
+function getStoredToken(): string | null {
+  if (typeof window === 'undefined') return null;
+  try {
+    const adminToken = window.sessionStorage?.getItem('hims_admin_token') || window.localStorage?.getItem('hims_admin_token');
+    if (adminToken) return adminToken;
+
+    const empRaw = window.sessionStorage?.getItem('hims_employee_session') || window.localStorage?.getItem('hims_employee_session');
+    if (empRaw) {
+      const parsed = JSON.parse(empRaw);
+      if (parsed?.token) return parsed.token;
+    }
+
+    const purchToken = window.sessionStorage?.getItem('hims_purchaser_token') || window.localStorage?.getItem('hims_purchaser_token');
+    if (purchToken) return purchToken;
+  } catch {}
+  return null;
+}
+
 class HospitalAdminApiClient {
+  private adminToken: string | null = null;
+
+  getAdminToken(): string | null {
+    return this.adminToken || getStoredToken();
+  }
+
+  setAdminToken(token: string | null, remember: boolean = true) {
+    this.adminToken = token;
+    if (typeof window !== 'undefined') {
+      try {
+        if (token) {
+          window.sessionStorage?.setItem('hims_admin_token', token);
+          if (remember) {
+            window.localStorage?.setItem('hims_admin_token', token);
+          }
+        } else {
+          window.sessionStorage?.removeItem('hims_admin_token');
+          window.localStorage?.removeItem('hims_admin_token');
+        }
+      } catch {}
+    }
+  }
+
   private getHeaders(): HeadersInit {
     const headers: Record<string, string> = {
       'Content-Type': 'application/json',
     };
     const csrf = getCsrfToken();
     if (csrf) headers['X-CSRF-Token'] = csrf;
+
+    const token = this.getAdminToken();
+    if (token) {
+      headers['Authorization'] = `Bearer ${token}`;
+    }
     return headers;
   }
 
@@ -616,21 +662,28 @@ class HospitalAdminApiClient {
       const err = await res.json().catch(() => ({}));
       throw new Error(err.detail || 'Authentication failed. Please check your credentials.');
     }
-    return res.json();
+    const data: AdminLoginResponse = await res.json();
+    if (data.token) {
+      this.setAdminToken(data.token, payload.remember_me ?? true);
+    }
+    return data;
   }
 
   async logoutAdmin(): Promise<void> {
-    await fetch(`${API_BASE}/admin/auth/logout`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      credentials: 'include',
-    }).catch(() => {});
+    try {
+      await fetch(`${API_BASE}/admin/auth/logout`, {
+        method: 'POST',
+        headers: this.getHeaders(),
+        credentials: 'include',
+      });
+    } catch {}
+    this.setAdminToken(null);
   }
 
   async getAdminMe(): Promise<{ user: any; hospital: any }> {
     const res = await fetch(`${API_BASE}/admin/auth/me`, {
       method: 'GET',
-      headers: { 'Content-Type': 'application/json' },
+      headers: this.getHeaders(),
       credentials: 'include',
     });
     if (!res.ok) {

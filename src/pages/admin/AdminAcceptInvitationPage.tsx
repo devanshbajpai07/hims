@@ -98,7 +98,7 @@ export const AdminAcceptInvitationPage: React.FC<AdminAcceptInvitationPageProps>
       <header className="border-b border-slate-200/80 bg-white/80 backdrop-blur-md py-4 px-6 sm:px-8">
         <div className="max-w-4xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-2.5">
-            <span className="font-serif text-xl font-bold tracking-tight text-teal-900">AURA</span>
+            <span className="font-serif text-xl font-bold tracking-tight text-teal-900">Aarogya</span>
             <span className="text-slate-300">|</span>
             <span className="text-xs font-mono uppercase tracking-wider text-slate-500 font-medium">
               Administrator Acceptance
@@ -142,7 +142,7 @@ export const AdminAcceptInvitationPage: React.FC<AdminAcceptInvitationPageProps>
                 onClick={() => onNavigate('/')}
                 className="px-6 py-2.5 rounded-full text-xs font-semibold text-white bg-teal-800 hover:bg-teal-900 transition-all cursor-pointer shadow-sm"
               >
-                Return to AURA Home
+                Return to Aarogya Home
               </button>
             </div>
           </div>
@@ -324,7 +324,7 @@ export const AdminAcceptInvitationPage: React.FC<AdminAcceptInvitationPageProps>
       </main>
 
       <footer className="py-6 text-center text-xs text-slate-400 border-t border-slate-200/60">
-        &copy; {new Date().getFullYear()} AURA Healthcare Information Management System. All rights reserved.
+        &copy; {new Date().getFullYear()} Aarogya Healthcare Information Management System. All rights reserved.
       </footer>
     </div>
   );

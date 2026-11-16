@@ -69,11 +69,11 @@ export const PurchaseConfirmationPage: React.FC<PurchaseConfirmationPageProps> =
           </span>
 
           <h1 className="text-3xl sm:text-4xl font-bold font-sans text-slate-950">
-            Welcome to the HIMS Network
+            Welcome to the Aarogya Network
           </h1>
 
           <p className="text-sm text-slate-600 mt-3 font-normal max-w-lg mx-auto leading-relaxed">
-            Your <strong className="font-semibold text-slate-900">{subscription?.planName || 'HIMS'}</strong> subscription has been provisioned and linked to your purchaser account.
+            Your <strong className="font-semibold text-slate-900">{subscription?.planName || 'Aarogya'}</strong> subscription has been provisioned and linked to your purchaser account.
           </p>
 
           {/* Subscription Receipt Card */}

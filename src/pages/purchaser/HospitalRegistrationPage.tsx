@@ -303,7 +303,7 @@ export const HospitalRegistrationPage: React.FC<HospitalRegistrationPageProps> =
               {/* Connected Lower Dock: Footnote */}
               <div className="bg-slate-50/80 border-t border-slate-200/80 px-7 sm:px-12 py-7 sm:py-8 text-center">
                 <p className="italic text-xs sm:text-[13.5px] text-slate-600 leading-normal">
-                  &ldquo;Licensing and provisioning multi-facility hospital infrastructure used to take fiscal quarters. With AURA, our health network was fully operational in minutes.&rdquo;
+                  &ldquo;Licensing and provisioning multi-facility hospital infrastructure used to take fiscal quarters. With Aarogya, our health network was fully operational in minutes.&rdquo;
                   <strong className="text-slate-900 font-semibold not-italic ml-2">&mdash; Victoria Sterling, VP of Health Informatics &amp; Procurement</strong>
                 </p>
               </div>
@@ -568,7 +568,7 @@ export const HospitalRegistrationPage: React.FC<HospitalRegistrationPageProps> =
       {/* Subtle Bottom Footer Strip matching Login & Dashboard */}
       <footer className="relative z-10 w-full max-w-[1536px] mx-auto px-6 sm:px-10 lg:px-14 py-6 border-t border-slate-200/70 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500">
         <div className="flex items-center gap-2">
-          <span>© 2026 AURA Health Systems Inc.</span>
+          <span>© 2026 Aarogya Health Systems Inc.</span>
           <span>•</span>
           <span>Institutional Procurement</span>
         </div>

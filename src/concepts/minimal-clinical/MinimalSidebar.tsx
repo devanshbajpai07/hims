@@ -52,7 +52,7 @@ export const MinimalSidebar: React.FC<MinimalSidebarProps> = ({
           </div>
           <div>
             <div className="text-sm font-semibold tracking-tight text-slate-800 flex items-center gap-1.5">
-              <span>AURA Health</span>
+              <span>Aarogya Health</span>
               <span className="text-[10px] font-normal uppercase tracking-wider px-1.5 py-0.5 rounded bg-slate-100 text-slate-500">
                 Clinic
               </span>

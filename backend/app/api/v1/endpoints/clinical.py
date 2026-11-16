@@ -1419,7 +1419,7 @@ def save_consultation_report(
     now_str = now_utc.strftime("%Y-%m-%d %H:%M:%S UTC")
 
     report_text = f"""================================================================================
-                             AURA HEALTH SYSTEM
+                            AAROGYA HEALTH SYSTEM
                OFFICIAL MEDICAL CONSULTATION ENCOUNTER REPORT
 ================================================================================
 Facility:             {emp_ctx.hospital.name} ({emp_ctx.hospital.hospital_uid})

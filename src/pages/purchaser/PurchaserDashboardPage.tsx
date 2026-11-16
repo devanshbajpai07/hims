@@ -30,7 +30,6 @@ export const PurchaserDashboardPage: React.FC<PurchaserDashboardPageProps> = ({ 
   const activatedSubId = searchParams.get('activated');
 
   const currentPurchaser = useMemo(() => purchaserService.getCurrentPurchaser(), []);
-  const purchaserId = currentPurchaser?.id;
   const onNavigateRef = useRef(onNavigate);
   onNavigateRef.current = onNavigate;
 
@@ -39,44 +38,62 @@ export const PurchaserDashboardPage: React.FC<PurchaserDashboardPageProps> = ({ 
   const [cancelLoading, setCancelLoading] = useState(false);
 
   const [subscriptions, setSubscriptions] = useState<SubscriptionRecord[]>(() => {
-    return purchaserId ? purchaserService.getPurchaserSubscriptions(purchaserId) : [];
+    const pId = currentPurchaser?.id;
+    return pId ? purchaserService.getPurchaserSubscriptions(pId) : [];
   });
   const [loading, setLoading] = useState(true);
 
   // Sync fresh profile from backend
   useEffect(() => {
-    if (!purchaserId) return;
-    purchaserApiClient.getMe().then((profile) => {
-      setActivePurchaser({
-        id: profile.id,
-        fullName: profile.fullName,
-        email: profile.email,
-        isEmailVerified: profile.isEmailVerified,
-        accountStatus: profile.accountStatus,
-        createdAt: profile.createdAt,
-        lastLoginAt: profile.lastLoginAt,
-        deletionScheduledAt: profile.deletionScheduledAt,
-      });
-      purchaserService.setCurrentPurchaser({
-        id: profile.id,
-        fullName: profile.fullName,
-        email: profile.email,
-        isEmailVerified: profile.isEmailVerified,
-        accountStatus: profile.accountStatus,
-        createdAt: profile.createdAt,
-        lastLoginAt: profile.lastLoginAt,
-        deletionScheduledAt: profile.deletionScheduledAt,
-      });
-    }).catch(() => {});
-  }, [purchaserId]);
+    let isMounted = true;
+    const token = purchaserApiClient.getSessionToken();
+    const cached = purchaserService.getCurrentPurchaser();
 
-  useEffect(() => {
-    if (!purchaserId) {
+    if (!cached && !token) {
       onNavigateRef.current('/account/login');
       return;
     }
 
+    purchaserApiClient
+      .getMe()
+      .then((profile) => {
+        if (!isMounted) return;
+        const verified: PurchaserAccount = {
+          id: profile.id,
+          fullName: profile.fullName,
+          email: profile.email,
+          isEmailVerified: profile.isEmailVerified,
+          accountStatus: profile.accountStatus,
+          createdAt: profile.createdAt,
+          lastLoginAt: profile.lastLoginAt,
+          deletionScheduledAt: profile.deletionScheduledAt,
+        };
+        setActivePurchaser(verified);
+        purchaserService.setCurrentPurchaser(verified);
+      })
+      .catch((err) => {
+        if (!isMounted) return;
+        if (!cached) {
+          onNavigateRef.current('/account/login');
+        }
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
+  useEffect(() => {
+    const token = purchaserApiClient.getSessionToken();
+    const cached = purchaserService.getCurrentPurchaser();
+    const pId = activePurchaser?.id || cached?.id;
+
+    if (!pId && !token) {
+      return;
+    }
+
     let isMounted = true;
+    setLoading(true);
 
     // Fetch live backend subscriptions and hospitals from Neon PostgreSQL
     Promise.all([
@@ -110,7 +127,7 @@ export const PurchaserDashboardPage: React.FC<PurchaserDashboardPageProps> = ({ 
 
           return {
             id: sub.id,
-            purchaserId: sub.purchaser_id || purchaserId,
+            purchaserId: sub.purchaser_id || pId,
             planId: planId as any,
             planName: planName,
             status: sub.status as any,
@@ -162,7 +179,7 @@ export const PurchaserDashboardPage: React.FC<PurchaserDashboardPageProps> = ({ 
     return () => {
       isMounted = false;
     };
-  }, [purchaserId]);
+  }, [activePurchaser?.id]);
 
   const handleCancelDeletion = async () => {
     setCancelLoading(true);
@@ -183,7 +200,8 @@ export const PurchaserDashboardPage: React.FC<PurchaserDashboardPageProps> = ({ 
     }
   };
 
-  if (!currentPurchaser) return null;
+  const effectivePurchaser = activePurchaser || currentPurchaser;
+  if (!effectivePurchaser) return null;
 
   const totalSubs = subscriptions.length;
   const registeredCount = subscriptions.filter((s) => s.hospitalId).length;
@@ -496,7 +514,7 @@ export const PurchaserDashboardPage: React.FC<PurchaserDashboardPageProps> = ({ 
       {/* Subtle Bottom Footer Strip */}
       <footer className="relative z-10 w-full max-w-[1536px] mx-auto px-6 sm:px-10 lg:px-14 py-6 border-t border-slate-200/70 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500">
         <div className="flex items-center gap-2">
-          <span>© 2026 AURA Health Systems Inc.</span>
+          <span>© 2026 Aarogya Health Systems Inc.</span>
           <span>•</span>
           <span>Institutional Procurement</span>
         </div>

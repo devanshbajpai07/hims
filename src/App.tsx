@@ -50,6 +50,7 @@ import { GeneralStaffDashboard } from './roles/general_staff/GeneralStaffDashboa
 import { PharmacistFutureScopeView } from './roles/pharmacist/PharmacistFutureScopeView';
 import { ContactGeneralStaffModal } from './components/communication/ContactGeneralStaffModal';
 import { clinicalApiClient } from './services/clinicalApiClient';
+import { hospitalAdminApi } from './services/hospitalAdminApiClient';
 import { authService } from './services/authService';
 import { purchaserService } from './services/purchaserService';
 import { AssignmentSelectorModal } from './components/auth/AssignmentSelectorModal';
@@ -286,6 +287,27 @@ export function App() {
     let isMounted = true;
     const stored = authService.getStoredSession();
     if (stored?.token) {
+      if (stored.activeMembership?.role === 'admin' || window.location.pathname.startsWith('/admin')) {
+        hospitalAdminApi
+          .getAdminMe()
+          .then((me) => {
+            if (!isMounted) return;
+            if (me && me.user && me.hospital) {
+              setSession(stored);
+              setActiveRole('admin');
+            }
+          })
+          .catch(() => {
+            if (!isMounted) return;
+            setSession(null);
+            authService.setStoredSession(null);
+            if (window.location.pathname.startsWith('/admin/dashboard') || window.location.pathname.startsWith('/admin/platform')) {
+              navigateTo('/admin/login');
+            }
+          });
+        return;
+      }
+
       authService
         .restoreSession()
         .then((refreshed) => {
@@ -448,16 +470,59 @@ export function App() {
     navigateTo(targetPath);
   };
 
-  // Cross-account synchronization guard: Purge conflicting purchaser cache if employee email differs
-  useEffect(() => {
-    const storedEmp = authService.getStoredSession();
-    const storedPurchaser = purchaserService.getCurrentPurchaser();
-    if (storedEmp?.user?.email && storedPurchaser?.email) {
-      if (storedEmp.user.email.toLowerCase() !== storedPurchaser.email.toLowerCase()) {
-        purchaserService.setCurrentPurchaser(null);
-      }
-    }
-  }, [session]);
+  // Dedicated Admin Login success handler
+  const handleAdminLoginSuccess = useCallback((res: any) => {
+    if (!res.user || !res.hospital || !res.token) return;
+    const adminAssign = {
+      id: 'admin-slot',
+      roleId: 'admin-role',
+      roleCode: 'admin' as UserRole,
+      roleName: 'Hospital Administrator',
+      departmentName: 'Administration',
+      scopeType: 'FACILITY' as const,
+      permissions: ['*'],
+      isActive: true,
+    };
+    const adminSession: AuthSession = {
+      user: {
+        id: res.user.id,
+        username: res.user.username,
+        email: res.user.email,
+        legalName: res.user.full_name,
+        createdAt: new Date().toISOString(),
+      },
+      activeMembership: {
+        id: res.user.id,
+        userId: res.user.id,
+        hospitalId: res.hospital.id,
+        hospitalUid: res.hospital.hospital_uid,
+        hospitalName: res.hospital.name,
+        employeeUid: 'ADMIN',
+        role: 'admin',
+        department: 'Administration',
+        departmentName: 'Administration',
+        scopeType: 'FACILITY',
+        status: 'active',
+        departmentHeadApproved: true,
+        adminApproved: true,
+        joinedAt: new Date().toISOString(),
+        assignments: [adminAssign],
+        activeAssignmentId: 'admin-slot',
+        effectivePermissions: ['*'],
+      },
+      assignments: [adminAssign],
+      activeAssignment: adminAssign,
+      effectivePermissions: ['*'],
+      availableMemberships: [],
+      rememberMe: true,
+      token: res.token,
+      expiresAt: new Date(Date.now() + 30 * 86400000).toISOString(),
+    };
+    setSession(adminSession);
+    authService.setStoredSession(adminSession);
+    setActiveRole('admin');
+    addToast('Admin Authenticated', `Welcome to ${res.hospital.name} Administration Platform.`);
+  }, [addToast]);
 
   // Logout handler
   const handleLogout = () => {
@@ -851,7 +916,9 @@ export function App() {
       {currentPath === '/account/hospital-setup' && <HospitalSetupPage onNavigate={navigateTo} />}
 
       {/* HOSPITAL ADMINISTRATOR PLATFORM ROUTES */}
-      {currentPath === '/admin/login' && <AdminLoginPage onNavigate={navigateTo} />}
+      {currentPath === '/admin/login' && (
+        <AdminLoginPage onNavigate={navigateTo} onLoginSuccess={handleAdminLoginSuccess} />
+      )}
       {currentPath === '/admin/forgot-password' && <ForgotPasswordPage onNavigate={navigateTo} role="admin" />}
       {currentPath === '/admin/reset-password' && <ResetPasswordPage onNavigate={navigateTo} context="admin" />}
       {currentPath.startsWith('/admin/accept-invitation') && (
@@ -859,18 +926,19 @@ export function App() {
       )}
       {currentPath === '/admin/dashboard' && (
         (() => {
-          if (!session) {
+          const effectiveSession = session || authService.getStoredSession();
+          if (!effectiveSession) {
             setTimeout(() => navigateTo('/admin/login'), 0);
             return null;
           }
-          const authorizedRoles = getAuthorizedRoles(session);
+          const authorizedRoles = getAuthorizedRoles(effectiveSession);
           if (!authorizedRoles.includes('admin')) {
             return (
               <div className="min-h-screen bg-[#FAF7F2] flex items-center justify-center p-4">
                 <UnauthorizedWorkspaceView
                   requestedRole="admin"
                   requestedPath={currentPath}
-                  session={session}
+                  session={effectiveSession}
                   authorizedRoles={authorizedRoles}
                   onNavigateToRole={(role) => {
                     setActiveRole(role);

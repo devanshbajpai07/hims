@@ -111,7 +111,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           </div>
           <div className="flex items-baseline gap-2">
             <span className="text-3xl font-extrabold tracking-tight text-slate-950 dark:text-white font-sans">
-              aura
+              Aarogya
             </span>
           </div>
         </button>

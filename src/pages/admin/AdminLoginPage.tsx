@@ -17,6 +17,7 @@ import {
   hospitalAdminApi,
   AdminLoginResponse,
 } from '../../services/hospitalAdminApiClient';
+import { authService } from '../../services/authService';
 
 interface AdminLoginPageProps {
   onNavigate: (path: string) => void;
@@ -69,6 +70,55 @@ export const AdminLoginPage: React.FC<AdminLoginPageProps> = ({
         return;
       }
 
+      if (res.user && res.hospital && res.token) {
+        const adminAssign = {
+          id: 'admin-slot',
+          roleId: 'admin-role',
+          roleCode: 'admin' as const,
+          roleName: 'Hospital Administrator',
+          departmentName: 'Administration',
+          scopeType: 'FACILITY' as const,
+          permissions: ['*'],
+          isActive: true,
+        };
+        const adminSession = {
+          user: {
+            id: res.user.id,
+            username: res.user.username,
+            email: res.user.email,
+            legalName: res.user.full_name,
+            createdAt: new Date().toISOString(),
+          },
+          activeMembership: {
+            id: res.user.id,
+            userId: res.user.id,
+            hospitalId: res.hospital.id,
+            hospitalUid: res.hospital.hospital_uid,
+            hospitalName: res.hospital.name,
+            employeeUid: 'ADMIN',
+            role: 'admin' as const,
+            department: 'Administration',
+            departmentName: 'Administration',
+            scopeType: 'FACILITY' as const,
+            status: 'active' as const,
+            departmentHeadApproved: true,
+            adminApproved: true,
+            joinedAt: new Date().toISOString(),
+            assignments: [adminAssign],
+            activeAssignmentId: 'admin-slot',
+            effectivePermissions: ['*'],
+          },
+          assignments: [adminAssign],
+          activeAssignment: adminAssign,
+          effectivePermissions: ['*'],
+          availableMemberships: [],
+          rememberMe,
+          token: res.token,
+          expiresAt: new Date(Date.now() + 30 * 86400000).toISOString(),
+        };
+        authService.setStoredSession(adminSession);
+      }
+
       if (onLoginSuccess) {
         onLoginSuccess(res);
       }
@@ -106,7 +156,7 @@ export const AdminLoginPage: React.FC<AdminLoginPageProps> = ({
             </div>
             <div className="flex items-baseline gap-2">
               <span className="text-3xl font-extrabold tracking-tight text-slate-950 font-sans">
-                aura
+                Aarogya
               </span>
             </div>
           </button>
@@ -389,7 +439,7 @@ export const AdminLoginPage: React.FC<AdminLoginPageProps> = ({
   {/* Subtle Bottom Footer Strip (Exact Match to Enterprise Sign-In) */ }
 <footer className="relative z-10 w-full max-w-[1536px] mx-auto px-6 sm:px-10 lg:px-14 py-6 border-t border-slate-200/70 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500">
   <div className="flex items-center gap-2">
-    <span>© 2026 AURA Health Systems Inc.</span>
+    <span>© 2026 Aarogya Health Systems Inc.</span>
     <span>•</span>
     <span>Hospital Administrator Portal</span>
   </div>

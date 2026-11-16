@@ -35,7 +35,7 @@ export const PurchaserNavbar: React.FC<PurchaserNavbarProps> = ({
           </div>
           <div className="flex flex-col text-left">
             <span className="font-sans text-3xl font-extrabold tracking-tight text-slate-950 leading-none">
-              aura
+              Aarogya
             </span>
             <span className="text-[10px] font-mono uppercase tracking-wider text-teal-800 font-semibold mt-1">
               Enterprise Portal
@@ -68,7 +68,7 @@ export const PurchaserNavbar: React.FC<PurchaserNavbarProps> = ({
           <button
             onClick={() => onNavigate(targetHome)}
             className="px-7 py-3 sm:px-8 sm:py-3.5 rounded-full text-base sm:text-[17px] font-semibold text-white bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-700 hover:from-emerald-500 hover:to-teal-500 shadow-md hover:shadow-native-glow transition-all duration-200 flex items-center gap-2.5 group cursor-pointer border border-emerald-400/30 font-sans shrink-0"
-            title={isEnterpriseHome ? 'Return to Aura Website' : 'Return to Enterprise Portal Home'}
+            title={isEnterpriseHome ? 'Return to Aarogya Website' : 'Return to Enterprise Portal Home'}
           >
             <ArrowLeft className="w-5 h-5 transition-transform group-hover:-translate-x-1" />
             <span>Back to Home</span>

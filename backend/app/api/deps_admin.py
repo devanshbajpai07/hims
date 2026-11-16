@@ -43,15 +43,13 @@ def get_current_admin(
     """
     token: Optional[str] = None
 
-    # 1. Check HttpOnly session cookie
-    cookie_token = request.cookies.get(settings.SESSION_COOKIE_NAME)
-    if cookie_token:
-        token = cookie_token
-    else:
-        # 2. Check Authorization Bearer header
-        auth_header = request.headers.get("Authorization")
-        if auth_header and auth_header.startswith("Bearer "):
-            token = auth_header.split(" ", 1)[1].strip()
+    # 1. Check Authorization Bearer header (precedence for explicit API client tokens)
+    auth_header = request.headers.get("Authorization")
+    if auth_header and auth_header.startswith("Bearer "):
+        token = auth_header.split(" ", 1)[1].strip()
+    elif request.cookies.get(settings.SESSION_COOKIE_NAME):
+        # 2. Fallback to HttpOnly session cookie
+        token = request.cookies.get(settings.SESSION_COOKIE_NAME)
 
     if not token:
         raise HTTPException(

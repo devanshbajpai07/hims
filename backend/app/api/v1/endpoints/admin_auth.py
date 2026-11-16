@@ -87,13 +87,14 @@ def admin_login(
             if payload.remember_me
             else 86400
         )
+        is_prod = settings.ENVIRONMENT.lower() == "production"
         response.set_cookie(
             key=settings.SESSION_COOKIE_NAME,
             value=result["token"],
             max_age=max_age,
             httponly=True,
-            secure=(settings.ENVIRONMENT == "production"),
-            samesite="lax",
+            secure=is_prod,
+            samesite="none" if is_prod else "lax",
         )
 
     return result
@@ -104,11 +105,12 @@ def admin_logout(
     response: Response,
 ):
     """Terminate administrator session and clear HttpOnly session cookie."""
+    is_prod = settings.ENVIRONMENT.lower() == "production"
     response.delete_cookie(
         key=settings.SESSION_COOKIE_NAME,
         httponly=True,
-        secure=(settings.ENVIRONMENT == "production"),
-        samesite="lax",
+        secure=is_prod,
+        samesite="none" if is_prod else "lax",
     )
     return {"success": True, "message": "Administrator session ended safely."}
 

@@ -83,6 +83,8 @@ export interface AuthSuccessResponse {
     created_at: string;
     last_login_at: string | null;
   };
+  session_token?: string;
+  token?: string;
   csrf_token: string;
   message: string;
 }
@@ -99,10 +101,46 @@ function getCookie(name: string): string | null {
 
 class PurchaserApiClient {
   private csrfToken: string | null = null;
+  private sessionToken: string | null = null;
   private currentPurchaserCache: PurchaserProfile | null = null;
 
   constructor() {
     this.csrfToken = getCookie('hims_purchaser_csrf');
+    this.sessionToken = this.getStoredSessionToken();
+  }
+
+  private getStoredSessionToken(): string | null {
+    if (typeof window === 'undefined') return null;
+    try {
+      return (
+        window.sessionStorage?.getItem('hims_purchaser_token') ||
+        window.localStorage?.getItem('hims_purchaser_token') ||
+        null
+      );
+    } catch {
+      return null;
+    }
+  }
+
+  setSessionToken(token: string | null, remember: boolean = true) {
+    this.sessionToken = token;
+    if (typeof window !== 'undefined') {
+      try {
+        if (token) {
+          window.sessionStorage?.setItem('hims_purchaser_token', token);
+          if (remember) {
+            window.localStorage?.setItem('hims_purchaser_token', token);
+          }
+        } else {
+          window.sessionStorage?.removeItem('hims_purchaser_token');
+          window.localStorage?.removeItem('hims_purchaser_token');
+        }
+      } catch {}
+    }
+  }
+
+  getSessionToken(): string | null {
+    return this.sessionToken || this.getStoredSessionToken();
   }
 
   setCsrfToken(token: string) {
@@ -121,6 +159,11 @@ class PurchaserApiClient {
       'Content-Type': 'application/json',
       ...(options.headers as Record<string, string> || {}),
     };
+
+    const token = this.getSessionToken();
+    if (token && !headers['Authorization']) {
+      headers['Authorization'] = `Bearer ${token}`;
+    }
 
     const csrf = this.getCsrfToken();
     if (csrf && options.method && options.method !== 'GET' && options.method !== 'HEAD') {
@@ -173,6 +216,9 @@ class PurchaserApiClient {
       }),
     });
 
+    if (res.session_token || res.token) {
+      this.setSessionToken(res.session_token || res.token || null, true);
+    }
     if (res.csrf_token) {
       this.setCsrfToken(res.csrf_token);
     }
@@ -206,6 +252,9 @@ class PurchaserApiClient {
       }),
     });
 
+    if (res.session_token || res.token) {
+      this.setSessionToken(res.session_token || res.token || null, payload.rememberDevice ?? true);
+    }
     if (res.csrf_token) {
       this.setCsrfToken(res.csrf_token);
     }
@@ -229,10 +278,12 @@ class PurchaserApiClient {
       });
       this.currentPurchaserCache = null;
       this.csrfToken = null;
+      this.setSessionToken(null);
       return res;
     } catch (e) {
       this.currentPurchaserCache = null;
       this.csrfToken = null;
+      this.setSessionToken(null);
       throw e;
     }
   }

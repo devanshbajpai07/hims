@@ -33,7 +33,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 
         {/* Cohesive Sans-Serif Supporting Description */}
         <p className="mt-8 text-lg sm:text-xl text-slate-600 font-normal max-w-2xl leading-relaxed font-sans">
-          AURA unifies patient intake, physician consultation queues, and operational governance into one calm, single-specialty intelligence layer.
+          Aarogya unifies patient intake, physician consultation queues, and operational governance into one calm, single-specialty intelligence layer.
         </p>
 
         {/* CTA Buttons with Proportionate Sizing */}

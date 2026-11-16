@@ -194,7 +194,7 @@ export const RegisterPage: React.FC<RegisterPageProps> = ({ onNavigate }) => {
         setUsernameStatus({
           checking: false,
           available: false,
-          message: res.error || 'Username is already taken across HIMS.',
+          message: res.error || 'Username is already taken across Aarogya.',
           suggestions: res.suggestions,
         });
       }
@@ -348,7 +348,7 @@ export const RegisterPage: React.FC<RegisterPageProps> = ({ onNavigate }) => {
             </div>
             <div className="flex items-baseline gap-2">
               <span className="text-3xl font-extrabold tracking-tight text-slate-950 font-sans">
-                aura
+                Aarogya
               </span>
             </div>
           </button>
@@ -763,7 +763,7 @@ export const RegisterPage: React.FC<RegisterPageProps> = ({ onNavigate }) => {
                     {usernameStatus.checking && (
                       <p className="text-xs text-slate-500 mt-2 flex items-center gap-1.5">
                         <span className="w-3.5 h-3.5 border-2 border-teal-700 border-t-transparent rounded-full animate-spin" />
-                        <span>Checking global uniqueness across HIMS...</span>
+                        <span>Checking global uniqueness across Aarogya...</span>
                       </p>
                     )}
 
@@ -1163,7 +1163,7 @@ export const RegisterPage: React.FC<RegisterPageProps> = ({ onNavigate }) => {
       {/* Subtle Bottom Footer Strip */}
       <footer className="relative z-10 w-full max-w-[1536px] mx-auto px-6 sm:px-10 lg:px-14 py-6 border-t border-slate-200/70 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500">
         <div className="flex items-center gap-2">
-          <span>© 2026 AURA Health Systems Inc.</span>
+          <span>© 2026 Aarogya Health Systems Inc.</span>
           <span>•</span>
           <span>Hospital Information Management System</span>
         </div>

@@ -6,7 +6,7 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
-    PROJECT_NAME: str = "HIMS - Hospital Information Management System"
+    PROJECT_NAME: str = "Aarogya - Hospital Information Management System"
     VERSION: str = "2.0.0"
     API_V1_STR: str = "/api/v1"
     ENVIRONMENT: str = "development"
@@ -46,6 +46,8 @@ class Settings(BaseSettings):
         "http://localhost:5174",
         "http://127.0.0.1:5174",
         "http://localhost:3000",
+        "https://aarogya-rho-lovat.vercel.app",
+        "https://aarogya-bngr.onrender.com",
     ]
 
     @field_validator("FRONTEND_ORIGINS", mode="before")
@@ -75,7 +77,7 @@ class Settings(BaseSettings):
     # Antideploy / Resend Email
     RESEND_API_KEY: str = ""
     RESEND_API_URL: str = "https://api.antideploy.com"
-    EMAIL_FROM: str = "AURA HIMS <onboarding@mail.antideploy.app>"
+    EMAIL_FROM: str = "Aarogya <onboarding@mail.antideploy.app>"
 
     # Filebase S3-Compatible Object Storage
     FILEBASE_ENDPOINT_URL: str = "https://s3.filebase.io"

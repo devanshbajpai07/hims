@@ -53,7 +53,7 @@ export const NursingSupervisorDashboard: React.FC<NursingSupervisorDashboardProp
   session,
   supervisorName = 'Nursing Services Supervisor',
   facilityName = 'ABC Hospital',
-  facilityUid = 'AURA-ABCH-KANP-2718',
+  facilityUid = 'AAROGYA-ABCH-KANP-2718',
   onToast = () => {},
   token,
   username = '',

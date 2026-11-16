@@ -224,7 +224,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({
             </div>
             <div className="flex items-baseline gap-2">
               <span className="text-3xl font-extrabold tracking-tight text-slate-950 font-sans">
-                aura
+                Aarogya
               </span>
             </div>
           </button>
@@ -420,7 +420,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({
             {/* Registration Prompt Section - Cleanly designed at bottom */}
             <div className="mt-8 pt-7 border-t border-slate-100 text-center space-y-3">
               <p className="text-sm text-slate-500 font-normal">
-                First time using this hospital&apos;s HIMS?
+                First time using this hospital&apos;s Aarogya system?
               </p>
               <button
                 type="button"
@@ -439,7 +439,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({
           {/* Connected Lower Dock: Clinical Staff Testimonial Footnote */}
           <div className="bg-slate-50/80 border-t border-slate-200/80 px-7 sm:px-12 py-7 sm:py-8 text-center">
             <p className="italic text-xs sm:text-[13.5px] text-slate-600 leading-normal">
-              &ldquo;Shift handoffs, inpatient charting, and emergency triage feel natural and immediate. AURA gave our clinical staff hours back with our patients.&rdquo;
+              &ldquo;Shift handoffs, inpatient charting, and emergency triage feel natural and immediate. Aarogya gave our clinical staff hours back with our patients.&rdquo;
               <strong className="text-slate-900 font-semibold not-italic ml-2">&mdash; Clinical Staff Leadership</strong>
             </p>
           </div>
@@ -472,7 +472,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({
       {/* Subtle Bottom Footer Strip */}
       <footer className="relative z-10 w-full max-w-[1536px] mx-auto px-6 sm:px-10 lg:px-14 py-6 border-t border-slate-200/70 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500">
         <div className="flex items-center gap-2">
-          <span>© 2026 AURA Health Systems Inc.</span>
+          <span>© 2026 Aarogya Health Systems Inc.</span>
           <span>•</span>
           <span>Hospital Information Management System</span>
         </div>

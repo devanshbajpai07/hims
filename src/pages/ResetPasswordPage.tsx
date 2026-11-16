@@ -53,7 +53,7 @@ export const ResetPasswordPage: React.FC<ResetPasswordPageProps> = ({
           portalTitle: 'Employee',
           loginPath: '/login',
           loginLabel: 'Return to Employee Login',
-          quote: '"Shift handoffs, inpatient charting, and emergency triage feel natural and immediate. AURA gives clinical staff hours back with patients." — Clinical Staff Operations',
+          quote: '"Shift handoffs, inpatient charting, and emergency triage feel natural and immediate. Aarogya gives clinical staff hours back with patients." — Clinical Staff Operations',
         };
       case 'purchaser':
       default:
@@ -62,7 +62,7 @@ export const ResetPasswordPage: React.FC<ResetPasswordPageProps> = ({
           portalTitle: 'Enterprise',
           loginPath: '/account/login',
           loginLabel: 'Return to Enterprise Login',
-          quote: '"Licensing and provisioning multi-facility hospital infrastructure used to take fiscal quarters. With AURA, our health network was fully operational in minutes." — Victoria Sterling, VP of Health Informatics & Procurement',
+          quote: '"Licensing and provisioning multi-facility hospital infrastructure used to take fiscal quarters. With Aarogya, our health network was fully operational in minutes." — Victoria Sterling, VP of Health Informatics & Procurement',
         };
     }
   };
@@ -155,7 +155,7 @@ export const ResetPasswordPage: React.FC<ResetPasswordPageProps> = ({
             </div>
             <div className="flex items-baseline gap-2">
               <span className="text-3xl font-extrabold tracking-tight text-slate-950 font-sans">
-                aura
+                Aarogya
               </span>
             </div>
           </button>
@@ -419,7 +419,7 @@ export const ResetPasswordPage: React.FC<ResetPasswordPageProps> = ({
       {/* Page Footer */}
       <footer className="relative z-10 w-full max-w-[1536px] mx-auto px-6 sm:px-10 lg:px-14 py-8 border-t border-slate-200/80 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500 font-sans">
         <div>
-          © 2026 AURA Health Systems Inc. • Institutional Authentication
+          © 2026 Aarogya Health Systems Inc. • Institutional Authentication
         </div>
         <div className="flex items-center gap-6">
           <span className="flex items-center gap-1.5 text-emerald-700 font-medium">

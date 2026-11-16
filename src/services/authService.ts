@@ -61,6 +61,10 @@ export class MembershipStatusError extends Error {
 // Operational mode: live database backed through authenticated FastAPI backend
 const USE_MOCK_ONLY = false;
 
+const API_BASE = (typeof import.meta !== 'undefined' && (import.meta as any).env?.VITE_API_URL
+  ? String((import.meta as any).env.VITE_API_URL).replace(/\/$/, '')
+  : '') + '/api/v1';
+
 // In-memory simulation state
 let liveHospitals = [...mockHospitals];
 let liveDirectory = [...mockEmployeeDirectory];
@@ -143,7 +147,7 @@ export const authService = {
         const headers: Record<string, string> = {};
         if (token) headers['Authorization'] = `Bearer ${token}`;
 
-        const res = await fetch('/api/v1/employee/profile', {
+        const res = await fetch(`${API_BASE}/employee/profile`, {
           headers,
           credentials: 'include',
         });
@@ -276,7 +280,7 @@ export const authService = {
 
     if (typeof window !== 'undefined' && typeof fetch === 'function') {
       try {
-        const res = await fetch(`/api/v1/registration/check-username?username=${encodeURIComponent(username.trim())}`);
+        const res = await fetch(`${API_BASE}/registration/check-username?username=${encodeURIComponent(username.trim())}`);
         if (res.ok) {
           const data = await res.json();
           return { available: Boolean(data.available), suggestions: data.suggestions || [] };
@@ -308,7 +312,7 @@ export const authService = {
     }
 
     if (typeof window !== 'undefined' && typeof fetch === 'function') {
-      const res = await fetch('/api/v1/registration/start', {
+      const res = await fetch(`${API_BASE}/registration/start`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -374,7 +378,7 @@ export const authService = {
     const trimmedOtp = otp.trim();
 
     if (typeof window !== 'undefined' && typeof fetch === 'function') {
-      const res = await fetch('/api/v1/registration/verify-otp', {
+      const res = await fetch(`${API_BASE}/registration/verify-otp`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -441,7 +445,7 @@ export const authService = {
 
   async getAvailableDepartments(hospitalUid: string): Promise<DepartmentOption[]> {
     if (typeof window !== 'undefined' && typeof fetch === 'function') {
-      const res = await fetch(`/api/v1/registration/available-departments?hospital_uid=${encodeURIComponent(hospitalUid.trim())}`);
+      const res = await fetch(`${API_BASE}/registration/available-departments?hospital_uid=${encodeURIComponent(hospitalUid.trim())}`);
       if (res.ok) {
         const list = await res.json();
         if (Array.isArray(list)) return list;
@@ -462,7 +466,7 @@ export const authService = {
 
   async getAvailableRoles(hospitalUid: string): Promise<RoleOption[]> {
     if (typeof window !== 'undefined' && typeof fetch === 'function') {
-      const res = await fetch(`/api/v1/registration/available-roles?hospital_uid=${encodeURIComponent(hospitalUid.trim())}`);
+      const res = await fetch(`${API_BASE}/registration/available-roles?hospital_uid=${encodeURIComponent(hospitalUid.trim())}`);
       if (res.ok) {
         const list = await res.json();
         if (Array.isArray(list)) return list;
@@ -494,7 +498,7 @@ export const authService = {
     message: string;
   }> {
     if (typeof window !== 'undefined' && typeof fetch === 'function') {
-      const res = await fetch('/api/v1/registration/submit', {
+      const res = await fetch(`${API_BASE}/registration/submit`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -531,7 +535,7 @@ export const authService = {
 
     const norm = this.normalizeUsername(payload.username);
     if (liveUsers.some((u) => u.user.username.toLowerCase() === norm)) {
-      throw new AuthenticationError('Username is already registered on HIMS.');
+      throw new AuthenticationError('Username is already registered on Aarogya.');
     }
     if (payload.password !== payload.confirmPassword) {
       throw new AuthenticationError('Passwords do not match.');
@@ -580,7 +584,7 @@ export const authService = {
     message: string;
   }> {
     if (typeof window !== 'undefined' && typeof fetch === 'function') {
-      const res = await fetch('/api/v1/registration/additional-assignment-request', {
+      const res = await fetch(`${API_BASE}/registration/additional-assignment-request`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -620,7 +624,7 @@ export const authService = {
   async register(payload: RegistrationPayload): Promise<{ user: User; membership: TenantMembership }> {
     const hosp = liveHospitals.find((h) => h.hospitalUid.toUpperCase() === payload.hospitalUid.toUpperCase().trim());
     if (!hosp) {
-      throw new AuthenticationError('Invalid Hospital UID: Institution not found in the HIMS registry.');
+      throw new AuthenticationError('Invalid Hospital UID: Institution not found in the Aarogya registry.');
     }
 
     const emp = liveDirectory.find(
@@ -632,7 +636,7 @@ export const authService = {
       throw new AuthenticationError('Employee UID not recognized in the official employee directory.');
     }
     if (emp.registered) {
-      throw new AuthenticationError('This employee record is already registered on HIMS.');
+      throw new AuthenticationError('This employee record is already registered on Aarogya.');
     }
 
     if (payload.password !== payload.confirmPassword) {
@@ -641,7 +645,7 @@ export const authService = {
 
     const norm = this.normalizeUsername(payload.username);
     if (liveUsers.some((u) => u.user.username.toLowerCase() === norm)) {
-      throw new AuthenticationError('Username is already registered on HIMS.');
+      throw new AuthenticationError('Username is already registered on Aarogya.');
     }
 
     const newUser: User = {
@@ -693,7 +697,7 @@ export const authService = {
     // 1. Attempt live API login against FastAPI backend
     try {
       if (typeof window !== 'undefined' && typeof fetch === 'function') {
-        const res = await fetch('/api/v1/auth/login', {
+        const res = await fetch(`${API_BASE}/auth/login`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           credentials: 'include',
@@ -885,7 +889,7 @@ export const authService = {
   async selectWorkspace(userId: string, hospitalId: string, rememberMe: boolean = false): Promise<AuthSession> {
     try {
       if (typeof window !== 'undefined' && typeof fetch === 'function') {
-        const res = await fetch('/api/v1/auth/select-workspace', {
+        const res = await fetch(`${API_BASE}/auth/select-workspace`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           credentials: 'include',
@@ -982,7 +986,7 @@ export const authService = {
       throw new AuthenticationError('Please enter your username or registered email address.');
     }
     if (typeof window !== 'undefined' && typeof fetch === 'function') {
-      const res = await fetch('/api/v1/auth/forgot-password', {
+      const res = await fetch(`${API_BASE}/auth/forgot-password`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ identifier: identifier.trim() }),
@@ -1001,7 +1005,7 @@ export const authService = {
 
   async resetPassword(payload: { token: string; new_password: string; confirm_password: string }): Promise<{ success: boolean; message: string }> {
     if (typeof window !== 'undefined' && typeof fetch === 'function') {
-      const res = await fetch('/api/v1/auth/reset-password', {
+      const res = await fetch(`${API_BASE}/auth/reset-password`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
@@ -1034,7 +1038,7 @@ export const authService = {
       try {
         const headers: Record<string, string> = {};
         if (token) headers['Authorization'] = `Bearer ${token}`;
-        await fetch('/api/v1/auth/logout', { method: 'POST', headers, credentials: 'include' });
+        await fetch(`${API_BASE}/auth/logout`, { method: 'POST', headers, credentials: 'include' });
       } catch {}
     }
   },

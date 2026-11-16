@@ -72,7 +72,7 @@ export const FooterSection: React.FC<FooterSectionProps> = ({ onNavigate }) => {
                 <Activity className="w-3.5 h-3.5" />
               </div>
               <span className="text-base font-bold text-white tracking-tight font-sans">
-                aura
+                Aarogya
               </span>
             </div>
             <p className="text-slate-400 font-light max-w-xs leading-relaxed">
@@ -142,7 +142,7 @@ export const FooterSection: React.FC<FooterSectionProps> = ({ onNavigate }) => {
         {/* Bottom Bar */}
         <div className="pt-8 border-t border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-slate-500 text-[11px]">
           <div>
-            © 2026 AURA Health Technologies Inc. All rights reserved.
+            © 2026 Aarogya Health Technologies Inc. All rights reserved.
           </div>
           <div className="flex items-center gap-6">
             <span className="hover:text-slate-300 transition-colors cursor-pointer">

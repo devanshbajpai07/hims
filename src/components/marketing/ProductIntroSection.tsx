@@ -30,7 +30,7 @@ export const ProductIntroSection: React.FC<ProductIntroSectionProps> = ({ onLaun
             Designed to restore sanity and quiet confidence to medical operations.
           </h2>
           <p className="mt-5 text-base sm:text-lg text-slate-600 font-normal leading-relaxed">
-            Legacy hospital software was built for billing accountants, not doctors or front-desk coordinators. AURA strips away every piece of redundant UI chrome, presenting only the decisive tasks each role requires to deliver exceptional care.
+            Legacy hospital software was built for billing accountants, not doctors or front-desk coordinators. Aarogya strips away every piece of redundant UI chrome, presenting only the decisive tasks each role requires to deliver exceptional care.
           </p>
         </div>
 
@@ -43,7 +43,7 @@ export const ProductIntroSection: React.FC<ProductIntroSectionProps> = ({ onLaun
               <span className="w-2.5 h-2.5 rounded-full bg-amber-400/80" />
               <span className="w-2.5 h-2.5 rounded-full bg-emerald-400/80" />
               <span className="ml-3 text-[11px] font-mono text-slate-500">
-                st-jude.aura-health.app/general-medicine
+                st-jude.aarogya.app/general-medicine
               </span>
             </div>
             <div className="flex items-center gap-2">

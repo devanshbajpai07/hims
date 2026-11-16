@@ -136,5 +136,7 @@ class PurchaserResponse(BaseModel):
 
 class PurchaserAuthResponse(BaseModel):
     purchaser: PurchaserResponse
+    session_token: Optional[str] = None
+    token: Optional[str] = None
     csrf_token: str
     message: str

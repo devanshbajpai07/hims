@@ -150,7 +150,7 @@ export const PurchaserLoginPage: React.FC<PurchaserLoginPageProps> = ({ onNaviga
             </div>
             <div className="flex items-baseline gap-2">
               <span className="text-3xl font-extrabold tracking-tight text-slate-950 font-sans">
-                aura
+                Aarogya
               </span>
             </div>
           </button>
@@ -338,7 +338,7 @@ export const PurchaserLoginPage: React.FC<PurchaserLoginPageProps> = ({ onNaviga
           {/* Connected Lower Dock: Dr. Marcus Testimonial Footnote in single balanced line with generous vertical padding */}
           <div className="bg-slate-50/80 border-t border-slate-200/80 px-7 sm:px-12 py-7 sm:py-8 text-center">
             <p className="italic text-xs sm:text-[13.5px] text-slate-600 leading-normal">
-              "AURA unified intake across our hospital wings with zero administrative friction."
+              "Aarogya unified intake across our hospital wings with zero administrative friction."
               <strong className="text-slate-900 font-semibold not-italic ml-2">— Chief Medical Officer</strong>
             </p>
           </div>
@@ -348,7 +348,7 @@ export const PurchaserLoginPage: React.FC<PurchaserLoginPageProps> = ({ onNaviga
       {/* Subtle Bottom Footer Strip */}
       <footer className="relative z-10 w-full max-w-[1536px] mx-auto px-6 sm:px-10 lg:px-14 py-6 border-t border-slate-200/70 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500">
         <div className="flex items-center gap-2">
-          <span>© 2026 AURA Health Systems Inc.</span>
+          <span>© 2026 Aarogya Health Systems Inc.</span>
           <span>•</span>
           <span>Institutional Procurement</span>
         </div>

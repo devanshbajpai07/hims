@@ -28,7 +28,7 @@ export const DesignComparisonDrawer: React.FC<DesignComparisonDrawerProps> = ({
                 <Layers className="w-5 h-5" />
               </div>
               <div>
-                <h2 className="text-lg font-bold text-slate-900">HIMS Design Concept Matrix</h2>
+                <h2 className="text-lg font-bold text-slate-900">Aarogya Design Concept Matrix</h2>
                 <p className="text-xs text-slate-500">
                   UX Architecture, Visual Psychology & Ergonomic Trade-offs
                 </p>

@@ -44,13 +44,14 @@ def login(
             if credentials.remember_me
             else 86400
         )
+        is_prod = settings.ENVIRONMENT.lower() == "production"
         response.set_cookie(
             key=settings.SESSION_COOKIE_NAME,
             value=session.access_token,
             max_age=max_age,
             httponly=True,
-            secure=(settings.ENVIRONMENT == "production"),
-            samesite="lax",
+            secure=is_prod,
+            samesite="none" if is_prod else "lax",
         )
 
     return result
@@ -81,13 +82,14 @@ def select_workspace(
         if payload.remember_me
         else 86400
     )
+    is_prod = settings.ENVIRONMENT.lower() == "production"
     response.set_cookie(
         key=settings.SESSION_COOKIE_NAME,
         value=session.access_token,
         max_age=max_age,
         httponly=True,
-        secure=(settings.ENVIRONMENT == "production"),
-        samesite="lax",
+        secure=is_prod,
+        samesite="none" if is_prod else "lax",
     )
 
     return session
@@ -110,11 +112,12 @@ def logout(
     if token:
         AuthService.revoke_session(db, token)
 
+    is_prod = settings.ENVIRONMENT.lower() == "production"
     response.delete_cookie(
         key=settings.SESSION_COOKIE_NAME,
         httponly=True,
-        secure=(settings.ENVIRONMENT == "production"),
-        samesite="lax",
+        secure=is_prod,
+        samesite="none" if is_prod else "lax",
     )
     return {"success": True, "message": "Successfully logged out."}
 

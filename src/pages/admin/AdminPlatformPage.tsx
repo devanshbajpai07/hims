@@ -642,7 +642,7 @@ export const AdminPlatformPage: React.FC<AdminPlatformPageProps> = ({ onNavigate
               <div className="min-w-0 flex-1">
                 <div className="flex items-center gap-1.5">
                   <span className="font-sans text-xl font-extrabold tracking-tight text-slate-950 leading-none">
-                    aura
+                    Aarogya
                   </span>
                   <span className="text-[9px] font-mono uppercase tracking-wider text-teal-900 font-bold bg-teal-50 px-1.5 py-0.5 rounded border border-teal-200/80">
                     ADMIN

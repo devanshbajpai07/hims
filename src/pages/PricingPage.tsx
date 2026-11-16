@@ -49,15 +49,6 @@ export const PricingPage: React.FC<PricingPageProps> = ({ onNavigate, context = 
   // Authenticate & verify purchaser session against backend
   useEffect(() => {
     let isMounted = true;
-    const storedEmployee = authService.getStoredSession();
-    const cachedPurchaser = purchaserService.getCurrentPurchaser();
-
-    // If employee email and cached purchaser email conflict, purge stale purchaser data
-    if (storedEmployee?.user?.email && cachedPurchaser?.email) {
-      if (storedEmployee.user.email.toLowerCase() !== cachedPurchaser.email.toLowerCase()) {
-        purchaserService.setCurrentPurchaser(null);
-      }
-    }
 
     purchaserApiClient
       .getMe()
@@ -456,7 +447,7 @@ export const PricingPage: React.FC<PricingPageProps> = ({ onNavigate, context = 
       {/* Dynamic Footer */}
       {isEnterprise ? (
         <footer className="relative z-10 w-full max-w-[1536px] mx-auto px-6 sm:px-10 lg:px-14 py-8 border-t border-slate-200/80 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500 font-sans">
-          <div>© 2026 AURA Health Systems Inc. • Institutional Procurement</div>
+          <div>© 2026 Aarogya Health Systems Inc. • Institutional Procurement</div>
           <div className="flex items-center gap-6">
             <span className="flex items-center gap-1.5 text-emerald-700 font-medium">
               <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />

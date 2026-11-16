@@ -47,14 +47,14 @@ def get_current_purchaser(
     x_csrf_token: Optional[str] = Header(None),
     hims_purchaser_csrf: Optional[str] = Cookie(None),
 ) -> Purchaser:
-    # 1. Resolve token from cookie or Authorization header
+    # 1. Resolve token from Authorization header (precedence) or cookie
     token = None
     from_cookie = False
-    if hims_purchaser_session:
+    if authorization and authorization.startswith("Bearer "):
+        token = authorization.split(" ")[1]
+    elif hims_purchaser_session:
         token = hims_purchaser_session
         from_cookie = True
-    elif authorization and authorization.startswith("Bearer "):
-        token = authorization.split(" ")[1]
 
     if not token:
         raise InvalidCredentialsError("Purchaser authentication required.")
@@ -90,7 +90,7 @@ def set_auth_cookies(
         max_age=max_age,
         httponly=True,
         secure=is_prod,
-        samesite="lax",
+        samesite="none" if is_prod else "lax",
         path="/",
     )
     response.set_cookie(
@@ -99,15 +99,16 @@ def set_auth_cookies(
         max_age=max_age,
         httponly=False,  # Client-accessible for double-submit CSRF protection
         secure=is_prod,
-        samesite="lax",
+        samesite="none" if is_prod else "lax",
         path="/",
     )
 
 
 def clear_auth_cookies(response: Response) -> None:
     is_prod = settings.ENVIRONMENT.lower() == "production"
-    response.delete_cookie(key=SESSION_COOKIE_KEY, path="/", secure=is_prod, samesite="lax")
-    response.delete_cookie(key=CSRF_COOKIE_KEY, path="/", secure=is_prod, samesite="lax")
+    samesite_val = "none" if is_prod else "lax"
+    response.delete_cookie(key=SESSION_COOKIE_KEY, path="/", secure=is_prod, samesite=samesite_val)
+    response.delete_cookie(key=CSRF_COOKIE_KEY, path="/", secure=is_prod, samesite=samesite_val)
 
 
 @router.post("/register", status_code=status.HTTP_201_CREATED)
@@ -145,6 +146,8 @@ def verify_email(
 
     return PurchaserAuthResponse(
         purchaser=PurchaserResponse.model_validate(purchaser),
+        session_token=session_token,
+        token=session_token,
         csrf_token=csrf_token,
         message="Email verified successfully. Welcome to your Purchaser Portal.",
     )
@@ -179,6 +182,8 @@ def login(
 
     return PurchaserAuthResponse(
         purchaser=PurchaserResponse.model_validate(purchaser),
+        session_token=session_token,
+        token=session_token,
         csrf_token=csrf_token,
         message=f"Welcome back, {purchaser.full_name}.",
     )

@@ -1710,7 +1710,7 @@ export const DoctorDashboard: React.FC<DoctorDashboardProps> = ({
                   </span>
                 </div>
                 <p className="text-xs text-slate-500 mt-0.5">
-                  Bucket: <code className="font-mono text-teal-900">{storageStatus?.bucket || 'aura-hims-documents'}</code> • Endpoint: <code className="font-mono text-slate-600">s3.filebase.com</code>
+                  Bucket: <code className="font-mono text-teal-900">{storageStatus?.bucket || 'aarogya-documents'}</code> • Endpoint: <code className="font-mono text-slate-600">s3.filebase.com</code>
                 </p>
               </div>
             </div>

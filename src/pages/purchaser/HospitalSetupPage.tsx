@@ -391,7 +391,7 @@ export const HospitalSetupPage: React.FC<HospitalSetupPageProps> = ({ onNavigate
                 </div>
                 <div>
                   <strong className="font-semibold text-slate-900">Equal Administrative Governance:</strong>{' '}
-                  In AURA, all administrators have equal administrative authority for this hospital. No hierarchy or primary/secondary distinction exists. Seat management and commercial arrangements remain purchaser-controlled.
+                  In Aarogya, all administrators have equal administrative authority for this hospital. No hierarchy or primary/secondary distinction exists. Seat management and commercial arrangements remain purchaser-controlled.
                 </div>
               </div>
             </div>
@@ -731,7 +731,7 @@ export const HospitalSetupPage: React.FC<HospitalSetupPageProps> = ({ onNavigate
               {/* Connected Lower Dock: Footnote Quote */}
               <div className="bg-slate-50/80 border-t border-slate-200/80 px-6 sm:px-10 py-6 sm:py-7 text-center">
                 <p className="italic text-xs sm:text-[13.5px] text-slate-600 leading-normal">
-                  &ldquo;AURA unified intake across our hospital wings with zero administrative friction.&rdquo;
+                  &ldquo;Aarogya unified intake across our hospital wings with zero administrative friction.&rdquo;
                   <strong className="text-slate-900 font-semibold not-italic ml-2">
                     &mdash; Victoria Sterling, VP of Health Informatics &amp; Procurement
                   </strong>
@@ -791,7 +791,7 @@ export const HospitalSetupPage: React.FC<HospitalSetupPageProps> = ({ onNavigate
       {/* Standard subtle footer strip */}
       <footer className="w-full border-t border-slate-200/60 py-6 mt-12">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500">
-          <span>&copy; 2026 AURA Health Systems Inc. &bull; Institutional Procurement</span>
+          <span>&copy; 2026 Aarogya Health Systems Inc. &bull; Institutional Procurement</span>
           <div className="flex items-center gap-4">
             <span className="flex items-center gap-1.5 text-emerald-700 font-medium">
               <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />

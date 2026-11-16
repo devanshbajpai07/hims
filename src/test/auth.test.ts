@@ -211,7 +211,7 @@ async function runTests() {
     });
     assert(false, 'Invalid hospital UID should be rejected');
   } catch (err: any) {
-    assert(err.message.includes('not found in the HIMS registry'), 'Invalid Hospital UID rejected with clear message');
+    assert(err.message.includes('not found in the Aarogya registry'), 'Invalid Hospital UID rejected with clear message');
   }
 
   // Test 17: Invalid Employee UID rejected
@@ -245,7 +245,7 @@ async function runTests() {
     });
     assert(false, 'Already registered employee UID should be rejected');
   } catch (err: any) {
-    assert(err.message.includes('already registered on HIMS'), 'Already registered employee rejected');
+    assert(err.message.includes('already registered on Aarogya'), 'Already registered employee rejected');
   }
 
   // Test 19: Password confirmation mismatch rejected

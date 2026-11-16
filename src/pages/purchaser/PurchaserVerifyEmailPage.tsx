@@ -114,7 +114,7 @@ export const PurchaserVerifyEmailPage: React.FC<PurchaserVerifyEmailPageProps> =
             </div>
             <div className="flex items-baseline gap-2">
               <span className="text-3xl font-extrabold tracking-tight text-slate-950 font-sans">
-                aura
+                Aarogya
               </span>
             </div>
           </button>
@@ -234,7 +234,7 @@ export const PurchaserVerifyEmailPage: React.FC<PurchaserVerifyEmailPageProps> =
       {/* Footer */}
       <footer className="relative z-10 w-full max-w-[1536px] mx-auto px-6 sm:px-10 lg:px-14 py-6 text-center text-xs text-slate-400 border-t border-slate-200/60 flex flex-col sm:flex-row items-center justify-between gap-3">
         <div className="flex items-center gap-3">
-          <span>© 2026 AURA Health Systems Inc.</span>
+          <span>© 2026 Aarogya Health Systems Inc.</span>
           <span className="hidden sm:inline">•</span>
           <span className="hidden sm:inline">Institutional Procurement</span>
         </div>

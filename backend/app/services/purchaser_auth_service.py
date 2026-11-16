@@ -154,7 +154,7 @@ class PurchaserAuthService:
         email_svc = get_email_service()
         email_svc.send_otp_email(
             to_email=norm_email,
-            hospital_name="AURA HIMS Purchaser Portal",
+            hospital_name="Aarogya Enterprise Portal",
             otp=otp,
             expires_minutes=settings.OTP_EXPIRE_MINUTES,
         )
@@ -293,7 +293,7 @@ class PurchaserAuthService:
         email_svc = get_email_service()
         email_svc.send_otp_email(
             to_email=norm_email,
-            hospital_name="AURA HIMS Purchaser Portal",
+            hospital_name="Aarogya Enterprise Portal",
             otp=otp,
             expires_minutes=settings.OTP_EXPIRE_MINUTES,
         )
@@ -676,7 +676,7 @@ class PurchaserAuthService:
             to_email=norm_new_email,
             subject="Confirm Your New Email Address",
             message=(
-                f"Hello,\n\nPlease confirm your request to change your AURA HIMS purchaser email to {norm_new_email}.\n"
+                f"Hello,\n\nPlease confirm your request to change your Aarogya purchaser email to {norm_new_email}.\n"
                 f"Verification Token: {raw_token}\n\nThis token will expire in 24 hours."
             ),
         )
@@ -685,7 +685,7 @@ class PurchaserAuthService:
             to_email=purchaser.email,
             subject="Security Alert: Email Change Requested",
             message=(
-                f"Hello,\n\nA request was initiated to change the email on your AURA HIMS purchaser account to {norm_new_email}.\n"
+                f"Hello,\n\nA request was initiated to change the email on your Aarogya purchaser account to {norm_new_email}.\n"
                 f"If you did not make this request, please change your password immediately."
             ),
         )
@@ -824,7 +824,7 @@ class PurchaserAuthService:
         email_svc = get_email_service()
         email_svc.send_otp_email(
             to_email=purchaser.email,
-            hospital_name="AURA Enterprise Portal",
+            hospital_name="Aarogya Enterprise Portal",
             otp=otp,
             expires_minutes=settings.OTP_EXPIRE_MINUTES,
         )
@@ -891,8 +891,8 @@ class PurchaserAuthService:
         email_svc = get_email_service()
         email_svc.send_notification_email(
             to_email=purchaser.email,
-            subject="AURA HIMS: Email Address Updated",
-            message=f"Hello {purchaser.full_name},\n\nYour AURA Enterprise Portal account email has been successfully updated to {purchaser.email}.",
+            subject="Aarogya: Email Address Updated",
+            message=f"Hello {purchaser.full_name},\n\nYour Aarogya Enterprise Portal account email has been successfully updated to {purchaser.email}.",
         )
         return purchaser
 
@@ -966,7 +966,7 @@ class PurchaserAuthService:
         # 2. Inform purchaser with confirmation and recovery instructions
         email_svc.send_notification_email(
             to_email=purchaser.email,
-            subject="AURA HIMS: Enterprise Account Deletion Scheduled (60-Day Recovery Window)",
+            subject="Aarogya: Enterprise Account Deletion Scheduled (60-Day Recovery Window)",
             message=(
                 f"Hello {purchaser.full_name},\n\n"
                 f"Your request to delete your enterprise organization account has been scheduled.\n"

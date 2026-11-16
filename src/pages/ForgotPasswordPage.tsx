@@ -172,7 +172,7 @@ export const ForgotPasswordPage: React.FC<ForgotPasswordPageProps> = ({
 
       {/* Footer */}
       <footer className="py-6 border-t border-slate-200/80 text-center text-xs text-slate-400">
-        © 2026 AURA Health Technologies • Hospital Information Management System
+        © 2026 Aarogya Health Technologies • Hospital Information Management System
       </footer>
     </div>
   );
