@@ -265,7 +265,7 @@ export const HospitalSetupPage: React.FC<HospitalSetupPageProps> = ({ onNavigate
     <div className="min-h-screen bg-[#FAF7F2] text-slate-900 flex flex-col justify-between font-sans">
       <PurchaserNavbar currentPath="/account/hospital-setup" onNavigate={onNavigate} />
 
-      <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full flex-1">
+      <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10 w-full flex-1">
         {/* Living Medical Motion Loading State */}
         {loading && (
           <InstitutionalLoadingScreen
@@ -284,7 +284,7 @@ export const HospitalSetupPage: React.FC<HospitalSetupPageProps> = ({ onNavigate
 
         {/* Empty State: No Registered Hospital */}
         {!loading && !data && (
-          <div className="bg-white rounded-3xl border border-slate-200/90 shadow-soft-sm p-12 text-center max-w-xl mx-auto">
+          <div className="bg-white rounded-3xl border border-slate-200/90 shadow-soft-sm p-8 sm:p-12 text-center max-w-xl mx-auto">
             <Building2 className="w-12 h-12 text-amber-600 mx-auto mb-4" />
             <h2 className="text-xl font-bold font-sans text-slate-900">Hospital Facility Not Registered</h2>
             <p className="text-xs text-slate-600 mt-2 font-normal mb-6">
@@ -301,22 +301,22 @@ export const HospitalSetupPage: React.FC<HospitalSetupPageProps> = ({ onNavigate
 
         {/* Content State */}
         {!loading && data && (
-          <div className="space-y-8">
+          <div className="space-y-6 sm:space-y-8">
             {/* 1. Main Page Header matching editorial design system */}
-            <div className="text-center max-w-5xl mx-auto mb-8 sm:mb-10">
-              <div className="flex items-center justify-center gap-4 mb-4 sm:mb-5">
-                <div className="h-[1.5px] w-12 sm:w-16 bg-slate-300" />
-                <span className="text-xs sm:text-sm font-mono font-semibold text-slate-600 uppercase tracking-[0.25em]">
+            <div className="text-center max-w-5xl mx-auto mb-6 sm:mb-10">
+              <div className="flex items-center justify-center gap-3 sm:gap-4 mb-3 sm:mb-5">
+                <div className="h-[1.5px] w-8 sm:w-16 bg-slate-300" />
+                <span className="text-xs sm:text-sm font-mono font-semibold text-slate-600 uppercase tracking-[0.2em] sm:tracking-[0.25em]">
                   EXECUTIVE GOVERNANCE &amp; ADMINISTRATION
                 </span>
-                <div className="h-[1.5px] w-12 sm:w-16 bg-slate-300" />
+                <div className="h-[1.5px] w-8 sm:w-16 bg-slate-300" />
               </div>
 
-              <h1 className="text-4xl sm:text-5xl lg:text-[3.75rem] font-serif font-normal text-slate-950 tracking-[-0.02em] leading-[1.12]">
+              <h1 className="text-2xl sm:text-4xl lg:text-[3.75rem] font-serif font-normal text-slate-950 tracking-[-0.02em] leading-[1.15]">
                 Hospital Administrator <span className="text-[#1A6865] font-serif font-medium">Management</span>
               </h1>
 
-              <p className="mt-5 text-base sm:text-lg md:text-xl text-slate-600 font-normal leading-relaxed w-full max-w-xl md:max-w-3xl mx-auto px-4 sm:px-0">
+              <p className="mt-3 sm:mt-5 text-sm sm:text-lg md:text-xl text-slate-600 font-normal leading-relaxed w-full max-w-xl md:max-w-3xl mx-auto px-2 sm:px-0">
                 Invite, oversee and manage institutional administrators authorized to govern this healthcare facility.
               </p>
             </div>
@@ -343,21 +343,21 @@ export const HospitalSetupPage: React.FC<HospitalSetupPageProps> = ({ onNavigate
             )}
 
             {/* 2. First Box: Facility Overview & Administrator Seats Header Card */}
-            <div className="bg-white rounded-3xl border border-slate-200/90 shadow-soft-sm p-6 sm:p-8">
-              <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+            <div className="bg-white rounded-2xl sm:rounded-3xl border border-slate-200/90 shadow-soft-sm p-4 sm:p-8">
+              <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-5 sm:gap-6">
                 {/* Hospital Information */}
-                <div className="space-y-2.5">
-                  <div className="flex flex-wrap items-center gap-3">
-                    <h2 className="text-2xl sm:text-3xl font-bold font-sans text-slate-950 tracking-tight">
+                <div className="space-y-2">
+                  <div className="flex flex-wrap items-center gap-2.5 sm:gap-3">
+                    <h2 className="text-xl sm:text-3xl font-bold font-sans text-slate-950 tracking-tight">
                       {data.hospital.name}
                     </h2>
-                    <span className="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-teal-50 text-teal-800 border border-teal-200 shrink-0">
+                    <span className="px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-teal-50 text-teal-800 border border-teal-200 shrink-0">
                       {data.hospital.plan_name} Tier
                     </span>
                   </div>
 
-                  <div className="flex flex-wrap items-center gap-2.5 sm:gap-3 text-xs sm:text-sm text-slate-500">
-                    <span className="font-mono text-teal-900 font-semibold bg-teal-50/80 px-2.5 py-1 rounded-lg border border-teal-200">
+                  <div className="flex flex-wrap items-center gap-2 sm:gap-3 text-xs sm:text-sm text-slate-500">
+                    <span className="font-mono text-teal-900 font-semibold bg-teal-50/80 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-lg border border-teal-200">
                       UID: {data.hospital.hospital_uid}
                     </span>
                     <span className="text-slate-300">•</span>
@@ -371,7 +371,7 @@ export const HospitalSetupPage: React.FC<HospitalSetupPageProps> = ({ onNavigate
                 </div>
 
                 {/* Administrator Seats Quota Box */}
-                <div className="bg-slate-50/90 border border-slate-200/90 rounded-2xl p-4 sm:p-5 min-w-[220px] sm:min-w-[240px] flex flex-col justify-center text-left sm:text-right shrink-0">
+                <div className="bg-slate-50/90 border border-slate-200/90 rounded-2xl p-4 sm:p-5 w-full lg:w-auto min-w-0 sm:min-w-[240px] flex flex-col justify-center text-left lg:text-right shrink-0">
                   <span className="text-[11px] font-mono uppercase tracking-[0.14em] font-bold text-slate-500 block mb-1">
                     Administrator Seats
                   </span>
@@ -385,7 +385,7 @@ export const HospitalSetupPage: React.FC<HospitalSetupPageProps> = ({ onNavigate
               </div>
 
               {/* Refined Equal Administrative Governance Notice */}
-              <div className="mt-6 pt-5 border-t border-slate-100 flex items-start gap-3.5 text-xs sm:text-[13px] text-slate-600 leading-relaxed">
+              <div className="mt-5 sm:mt-6 pt-4 sm:pt-5 border-t border-slate-100 flex items-start gap-3 text-xs sm:text-[13px] text-slate-600 leading-relaxed">
                 <div className="w-5 h-5 rounded-full bg-teal-50 border border-teal-200 text-teal-700 flex items-center justify-center shrink-0 mt-0.5">
                   <Info className="w-3.5 h-3.5" />
                 </div>
@@ -397,13 +397,13 @@ export const HospitalSetupPage: React.FC<HospitalSetupPageProps> = ({ onNavigate
             </div>
 
             {/* 3. Single Big Box with 4 Consolidated Options */}
-            <div className="bg-white rounded-3xl border border-slate-200/90 shadow-soft-lg overflow-hidden transition-all w-full">
+            <div className="bg-white rounded-2xl sm:rounded-3xl border border-slate-200/90 shadow-soft-lg overflow-hidden transition-all w-full">
               {/* 4 Tab Options Header */}
-              <div className="border-b border-slate-200/80 bg-[#FAF7F2]/60 px-4 sm:px-6 pt-3 flex flex-wrap gap-2">
+              <div className="border-b border-slate-200/80 bg-[#FAF7F2]/60 px-3 sm:px-6 pt-2 sm:pt-3 flex overflow-x-auto no-scrollbar scroll-smooth whitespace-nowrap gap-1.5 sm:gap-2">
                 <button
                   type="button"
                   onClick={() => setActiveTab('invite')}
-                  className={`px-4 sm:px-5 py-3 text-xs sm:text-sm font-semibold rounded-t-xl transition-all flex items-center gap-2 cursor-pointer border-b-2 ${
+                  className={`px-3.5 sm:px-5 py-2.5 sm:py-3 text-xs sm:text-sm font-semibold rounded-t-xl transition-all flex items-center gap-1.5 sm:gap-2 cursor-pointer border-b-2 shrink-0 ${
                     activeTab === 'invite'
                       ? 'border-teal-800 text-teal-950 bg-white shadow-xs font-bold'
                       : 'border-transparent text-slate-500 hover:text-slate-900 hover:bg-white/60'
@@ -416,7 +416,7 @@ export const HospitalSetupPage: React.FC<HospitalSetupPageProps> = ({ onNavigate
                 <button
                   type="button"
                   onClick={() => setActiveTab('active')}
-                  className={`px-4 sm:px-5 py-3 text-xs sm:text-sm font-semibold rounded-t-xl transition-all flex items-center gap-2 cursor-pointer border-b-2 ${
+                  className={`px-3.5 sm:px-5 py-2.5 sm:py-3 text-xs sm:text-sm font-semibold rounded-t-xl transition-all flex items-center gap-1.5 sm:gap-2 cursor-pointer border-b-2 shrink-0 ${
                     activeTab === 'active'
                       ? 'border-teal-800 text-teal-950 bg-white shadow-xs font-bold'
                       : 'border-transparent text-slate-500 hover:text-slate-900 hover:bg-white/60'
@@ -429,7 +429,7 @@ export const HospitalSetupPage: React.FC<HospitalSetupPageProps> = ({ onNavigate
                 <button
                   type="button"
                   onClick={() => setActiveTab('pending')}
-                  className={`px-4 sm:px-5 py-3 text-xs sm:text-sm font-semibold rounded-t-xl transition-all flex items-center gap-2 cursor-pointer border-b-2 ${
+                  className={`px-3.5 sm:px-5 py-2.5 sm:py-3 text-xs sm:text-sm font-semibold rounded-t-xl transition-all flex items-center gap-1.5 sm:gap-2 cursor-pointer border-b-2 shrink-0 ${
                     activeTab === 'pending'
                       ? 'border-teal-800 text-teal-950 bg-white shadow-xs font-bold'
                       : 'border-transparent text-slate-500 hover:text-slate-900 hover:bg-white/60'
@@ -442,7 +442,7 @@ export const HospitalSetupPage: React.FC<HospitalSetupPageProps> = ({ onNavigate
                 <button
                   type="button"
                   onClick={() => setActiveTab('history')}
-                  className={`px-4 sm:px-5 py-3 text-xs sm:text-sm font-semibold rounded-t-xl transition-all flex items-center gap-2 cursor-pointer border-b-2 ${
+                  className={`px-3.5 sm:px-5 py-2.5 sm:py-3 text-xs sm:text-sm font-semibold rounded-t-xl transition-all flex items-center gap-1.5 sm:gap-2 cursor-pointer border-b-2 shrink-0 ${
                     activeTab === 'history'
                       ? 'border-teal-800 text-teal-950 bg-white shadow-xs font-bold'
                       : 'border-transparent text-slate-500 hover:text-slate-900 hover:bg-white/60'

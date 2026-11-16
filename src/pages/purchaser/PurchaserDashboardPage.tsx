@@ -247,7 +247,7 @@ export const PurchaserDashboardPage: React.FC<PurchaserDashboardPageProps> = ({ 
         />
       )}
 
-      <main className="w-full max-w-[1536px] mx-auto px-6 sm:px-10 lg:px-14 py-8 sm:py-10 flex-1 font-sans">
+      <main className="w-full max-w-[1536px] mx-auto px-4 sm:px-10 lg:px-14 py-6 sm:py-10 flex-1 font-sans">
         {/* 60-Day Recovery Grace Period Alert Banner if Account is Scheduled for Deletion */}
         {activePurchaser?.accountStatus === 'pending_deletion' && (
           <div className="mb-8 p-5 sm:p-6 rounded-3xl bg-amber-50 border-2 border-amber-300 text-amber-950 flex flex-col md:flex-row md:items-center justify-between gap-5 shadow-soft-sm animate-in fade-in">
@@ -320,9 +320,9 @@ export const PurchaserDashboardPage: React.FC<PurchaserDashboardPageProps> = ({ 
         )}
 
         {/* Top Header & Action */}
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6 mb-10">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 sm:gap-6 mb-8 sm:mb-10">
           <div>
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-normal text-slate-950 tracking-[-0.02em] leading-tight">
+            <h1 className="text-2xl sm:text-4xl lg:text-5xl font-serif font-normal text-slate-950 tracking-[-0.02em] leading-tight">
               <span className="text-[#1A6865] font-serif font-medium">Purchaser</span> Subscription Portal
             </h1>
           </div>
@@ -330,7 +330,7 @@ export const PurchaserDashboardPage: React.FC<PurchaserDashboardPageProps> = ({ 
           {/* Persistent Action: Purchase New Subscription */}
           <button
             onClick={() => onNavigate('/account/pricing')}
-            className="px-7 py-3.5 sm:px-8 sm:py-4 rounded-full text-sm sm:text-base font-semibold text-white bg-gradient-to-r from-emerald-600 via-teal-700 to-emerald-800 hover:from-emerald-500 hover:to-teal-600 shadow-md hover:shadow-native-glow transition-all duration-200 flex items-center gap-2.5 cursor-pointer border border-emerald-400/30 shrink-0 self-start sm:self-auto font-sans"
+            className="px-6 py-3.5 sm:px-8 sm:py-4 rounded-full text-sm sm:text-base font-semibold text-white bg-gradient-to-r from-emerald-600 via-teal-700 to-emerald-800 hover:from-emerald-500 hover:to-teal-600 shadow-md hover:shadow-native-glow transition-all duration-200 flex items-center justify-center gap-2.5 cursor-pointer border border-emerald-400/30 shrink-0 w-full sm:w-auto font-sans"
           >
             <PlusCircle className="w-5 h-5 text-emerald-200" />
             <span>Purchase New Subscription</span>
@@ -338,39 +338,39 @@ export const PurchaserDashboardPage: React.FC<PurchaserDashboardPageProps> = ({ 
         </div>
 
         {/* Portfolio Metric Highlights */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-10">
-          <div className="bg-white rounded-3xl border border-slate-200/90 p-6 sm:p-7 shadow-soft-sm hover:shadow-soft-md transition-shadow">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 mb-8 sm:mb-10">
+          <div className="bg-white rounded-2xl sm:rounded-3xl border border-slate-200/90 p-5 sm:p-7 shadow-soft-sm hover:shadow-soft-md transition-shadow">
             <span className="text-xs sm:text-[13px] font-mono uppercase tracking-[0.14em] font-medium text-slate-500 block mb-2">
               Active Subscriptions
             </span>
-            <div className="text-4xl sm:text-5xl font-mono font-bold text-slate-950 my-1">
+            <div className="text-3xl sm:text-5xl font-mono font-bold text-slate-950 my-1">
               {totalSubs}
             </div>
-            <p className="text-sm sm:text-[14.5px] text-slate-600 font-normal mt-2 leading-relaxed">
+            <p className="text-xs sm:text-[14.5px] text-slate-600 font-normal mt-2 leading-relaxed">
               Independent hospital licenses owned.
             </p>
           </div>
 
-          <div className="bg-white rounded-3xl border border-slate-200/90 p-6 sm:p-7 shadow-soft-sm hover:shadow-soft-md transition-shadow">
+          <div className="bg-white rounded-2xl sm:rounded-3xl border border-slate-200/90 p-5 sm:p-7 shadow-soft-sm hover:shadow-soft-md transition-shadow">
             <span className="text-xs sm:text-[13px] font-mono uppercase tracking-[0.14em] font-medium text-slate-500 block mb-2">
               Registered Hospitals
             </span>
-            <div className="text-4xl sm:text-5xl font-mono font-bold text-emerald-700 my-1">
+            <div className="text-3xl sm:text-5xl font-mono font-bold text-emerald-700 my-1">
               {registeredCount}
             </div>
-            <p className="text-sm sm:text-[14.5px] text-slate-600 font-normal mt-2 leading-relaxed">
+            <p className="text-xs sm:text-[14.5px] text-slate-600 font-normal mt-2 leading-relaxed">
               Facilities with generated Hospital UIDs.
             </p>
           </div>
 
-          <div className="bg-white rounded-3xl border border-slate-200/90 p-6 sm:p-7 shadow-soft-sm hover:shadow-soft-md transition-shadow">
+          <div className="bg-white rounded-2xl sm:rounded-3xl border border-slate-200/90 p-5 sm:p-7 shadow-soft-sm hover:shadow-soft-md transition-shadow">
             <span className="text-xs sm:text-[13px] font-mono uppercase tracking-[0.14em] font-medium text-slate-500 block mb-2">
               Registration Pending
             </span>
-            <div className="text-4xl sm:text-5xl font-mono font-bold text-amber-600 my-1">
+            <div className="text-3xl sm:text-5xl font-mono font-bold text-amber-600 my-1">
               {pendingRegistrationCount}
             </div>
-            <p className="text-sm sm:text-[14.5px] text-slate-600 font-normal mt-2 leading-relaxed">
+            <p className="text-xs sm:text-[14.5px] text-slate-600 font-normal mt-2 leading-relaxed">
               Purchased licenses awaiting hospital details.
             </p>
           </div>

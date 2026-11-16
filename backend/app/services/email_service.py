@@ -441,6 +441,8 @@ class AntideployEmailService(EmailService):
 
 # Singleton email service factory
 def get_email_service() -> EmailService:
+    if settings.ENVIRONMENT.lower() == "testing" or settings.EMAIL_PROVIDER.lower().strip() == "mock":
+        return mock_email_service
     provider = settings.EMAIL_PROVIDER.lower().strip()
     if provider in ("antideploy", "resend"):
         return AntideployEmailService()

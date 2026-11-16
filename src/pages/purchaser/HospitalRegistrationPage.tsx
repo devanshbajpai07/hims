@@ -242,24 +242,24 @@ export const HospitalRegistrationPage: React.FC<HospitalRegistrationPageProps> =
                 <div className="h-[1.5px] w-12 sm:w-16 bg-slate-300" />
               </div>
 
-              <h1 className="text-4xl sm:text-5xl lg:text-[3.75rem] font-serif font-normal text-slate-950 tracking-[-0.02em] leading-[1.12]">
+              <h1 className="text-2xl sm:text-4xl lg:text-[3.75rem] font-serif font-normal text-slate-950 tracking-[-0.02em] leading-[1.15]">
                 Hospital UID <span className="text-[#1A6865] font-serif font-medium">Generated</span>
               </h1>
 
-              <p className="mt-5 text-base sm:text-lg md:text-xl text-slate-600 font-normal leading-relaxed w-full max-w-xl md:max-w-2xl mx-auto px-4 sm:px-0">
+              <p className="mt-3 sm:mt-5 text-sm sm:text-lg md:text-xl text-slate-600 font-normal leading-relaxed w-full max-w-xl md:max-w-2xl mx-auto px-2 sm:px-0">
                 Your hospital facility has been successfully registered and linked to your subscription.
               </p>
             </div>
 
             {/* Unified Card Container */}
-            <div className="bg-white rounded-3xl border border-slate-200/90 shadow-soft-lg overflow-hidden transition-all max-w-3xl mx-auto w-full">
-              <div className="p-8 sm:p-12 max-w-xl mx-auto w-full text-center">
+            <div className="bg-white rounded-2xl sm:rounded-3xl border border-slate-200/90 shadow-soft-lg overflow-hidden transition-all max-w-3xl mx-auto w-full">
+              <div className="p-5 sm:p-12 max-w-xl mx-auto w-full text-center">
                 {/* Generated Official UID Box */}
-                <div className="p-7 sm:p-8 rounded-2xl bg-teal-50/70 border border-teal-200/90 text-center shadow-xs">
+                <div className="p-5 sm:p-8 rounded-2xl bg-teal-50/70 border border-teal-200/90 text-center shadow-xs">
                   <span className="text-xs font-mono uppercase tracking-[0.2em] text-teal-800 font-bold block mb-2">
                     Official Hospital UID
                   </span>
-                  <div className="font-mono text-3xl sm:text-4xl font-bold tracking-wider text-slate-950 select-all">
+                  <div className="font-mono text-2xl sm:text-4xl font-bold tracking-wider text-slate-950 select-all break-all">
                     {registeredHospital.hospitalUid}
                   </div>
                 </div>
@@ -324,19 +324,19 @@ export const HospitalRegistrationPage: React.FC<HospitalRegistrationPageProps> =
               </div>
 
               {/* Heading in editorial serif style matching Pricing & Enterprise Registration */}
-              <h1 className="text-4xl sm:text-5xl lg:text-[3.75rem] font-serif font-normal text-slate-950 tracking-[-0.02em] leading-[1.12]">
+              <h1 className="text-2xl sm:text-4xl lg:text-[3.75rem] font-serif font-normal text-slate-950 tracking-[-0.02em] leading-[1.15]">
                 <span className="text-[#1A6865] font-serif font-medium">Register</span> Hospital Facility
               </h1>
 
               {/* Supporting description with generous, relaxed typography */}
-              <p className="mt-5 text-base sm:text-lg md:text-xl text-slate-600 font-normal leading-relaxed w-full max-w-xl md:max-w-3xl lg:max-w-4xl xl:max-w-5xl mx-auto px-4 sm:px-0">
+              <p className="mt-3 sm:mt-5 text-sm sm:text-lg md:text-xl text-slate-600 font-normal leading-relaxed w-full max-w-xl md:max-w-3xl lg:max-w-4xl xl:max-w-5xl mx-auto px-2 sm:px-0">
                 Link your active subscription to an official hospital or clinic entity and generate its unique Hospital UID.
               </p>
             </div>
 
             {/* Unified Integrated Container: Form + Docked Footnote (Matching Enterprise Create Account Page) */}
-            <div className="bg-white rounded-3xl border border-slate-200/90 shadow-soft-lg overflow-hidden transition-all max-w-5xl mx-auto w-full">
-              <div className="px-6 sm:px-10 lg:px-12 pt-10 sm:pt-12 pb-8 sm:pb-10 max-w-4xl mx-auto w-full">
+            <div className="bg-white rounded-2xl sm:rounded-3xl border border-slate-200/90 shadow-soft-lg overflow-hidden transition-all max-w-5xl mx-auto w-full">
+              <div className="px-4 sm:px-10 lg:px-12 pt-6 sm:pt-12 pb-6 sm:pb-10 max-w-4xl mx-auto w-full">
                 {/* Step indicator */}
                 <div className="mb-6 flex items-center justify-end">
                   <span className="text-xs font-mono text-slate-400">Step 1 of 2: Facility Identification</span>

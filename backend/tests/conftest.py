@@ -14,6 +14,7 @@ TEST_DATABASE_URL = os.getenv("TEST_DATABASE_URL", "sqlite:///./test_hims.db")
 os.environ["DATABASE_URL"] = TEST_DATABASE_URL
 os.environ["TEST_DATABASE_URL"] = TEST_DATABASE_URL
 os.environ["ENVIRONMENT"] = "testing"
+os.environ["EMAIL_PROVIDER"] = "mock"
 
 # Clean any previous stale test SQLite database file
 for stale_db in [TEST_DATABASE_PATH, Path("test_hims.db"), backend_dir / "test_hims.db"]:

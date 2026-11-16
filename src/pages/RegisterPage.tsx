@@ -336,18 +336,18 @@ export const RegisterPage: React.FC<RegisterPageProps> = ({ onNavigate }) => {
       />
 
       {/* Top Header Bar (Exact match with Enterprise Sign-In Header) */}
-      <header className="relative z-10 w-full py-3 font-sans">
-        <div className="w-full max-w-[1536px] mx-auto px-6 sm:px-10 lg:px-14 h-22 flex items-center justify-between">
+      <header className="relative z-10 w-full py-2 sm:py-3 font-sans">
+        <div className="w-full max-w-[1536px] mx-auto px-4 sm:px-10 lg:px-14 h-16 sm:h-22 flex items-center justify-between gap-3">
           {/* Brand Logo */}
           <button
             onClick={() => onNavigate('/')}
-            className="flex items-center gap-3.5 group text-left outline-none cursor-pointer"
+            className="flex items-center gap-2.5 sm:gap-3.5 group text-left outline-none cursor-pointer shrink min-w-0"
           >
-            <div className="w-11 h-11 rounded-2xl bg-slate-900 text-white flex items-center justify-center font-bold shadow-sm group-hover:scale-105 transition-transform">
-              <Activity className="w-6 h-6 text-emerald-400" />
+            <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-xl sm:rounded-2xl bg-slate-900 text-white flex items-center justify-center font-bold shadow-sm group-hover:scale-105 transition-transform shrink-0">
+              <Activity className="w-5 h-5 sm:w-6 sm:h-6 text-emerald-400" />
             </div>
-            <div className="flex items-baseline gap-2">
-              <span className="text-3xl font-extrabold tracking-tight text-slate-950 font-sans">
+            <div className="flex items-baseline gap-2 min-w-0">
+              <span className="text-xl sm:text-3xl font-extrabold tracking-tight text-slate-950 font-sans truncate">
                 Aarogya
               </span>
             </div>
@@ -356,34 +356,35 @@ export const RegisterPage: React.FC<RegisterPageProps> = ({ onNavigate }) => {
           {/* Back to Home Button */}
           <button
             onClick={() => onNavigate('/')}
-            className="px-7 py-3 sm:px-8 sm:py-3.5 rounded-full text-base sm:text-[17px] font-semibold text-white bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-700 hover:from-emerald-500 hover:to-teal-500 shadow-md hover:shadow-native-glow transition-all duration-200 flex items-center gap-2.5 group cursor-pointer border border-emerald-400/30 font-sans"
+            className="px-3.5 py-2 sm:px-8 sm:py-3.5 rounded-full text-xs sm:text-[17px] font-semibold text-white bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-700 hover:from-emerald-500 hover:to-teal-500 shadow-md hover:shadow-native-glow transition-all duration-200 flex items-center gap-1.5 sm:gap-2.5 group cursor-pointer border border-emerald-400/30 font-sans shrink-0"
           >
-            <ArrowLeft className="w-5 h-5 transition-transform group-hover:-translate-x-1" />
-            <span>Back to Home</span>
+            <ArrowLeft className="w-3.5 h-3.5 sm:w-5 sm:h-5 transition-transform group-hover:-translate-x-1" />
+            <span className="hidden sm:inline">Back to Home</span>
+            <span className="sm:hidden">Home</span>
           </button>
         </div>
       </header>
 
       {/* Main Unified Connected Flow */}
-      <main className="relative z-10 flex-1 w-full max-w-[1380px] mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 flex flex-col justify-center">
+      <main className="relative z-10 flex-1 w-full max-w-[1380px] mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-12 flex flex-col justify-center">
         {/* Centered Brand Title & Platform Context */}
-        <div className="text-center max-w-5xl xl:max-w-6xl mx-auto mb-10 sm:mb-12">
+        <div className="text-center max-w-5xl xl:max-w-6xl mx-auto mb-6 sm:mb-12">
           {/* Overline with flanking accent hairlines */}
-          <div className="flex items-center justify-center gap-4 mb-4 sm:mb-5">
-            <div className="h-[1.5px] w-12 sm:w-16 bg-slate-300" />
-            <span className="text-xs sm:text-sm font-mono font-semibold text-slate-600 uppercase tracking-[0.25em]">
+          <div className="flex items-center justify-center gap-3 sm:gap-4 mb-3 sm:mb-5">
+            <div className="h-[1.5px] w-8 sm:w-16 bg-slate-300" />
+            <span className="text-xs sm:text-sm font-mono font-semibold text-slate-600 uppercase tracking-[0.2em] sm:tracking-[0.25em]">
               EMPLOYEE REGISTRATION PORTAL
             </span>
-            <div className="h-[1.5px] w-12 sm:w-16 bg-slate-300" />
+            <div className="h-[1.5px] w-8 sm:w-16 bg-slate-300" />
           </div>
 
           {/* Heading in editorial serif style */}
-          <h1 className="text-4xl sm:text-5xl lg:text-[3.75rem] font-serif font-normal text-slate-950 tracking-[-0.02em] leading-[1.12]">
+          <h1 className="text-2xl sm:text-4xl lg:text-[3.75rem] font-serif font-normal text-slate-950 tracking-[-0.02em] leading-[1.15]">
             <span className="text-[#1A6865] font-serif font-medium">Employee</span> Registration
           </h1>
 
           {/* Supporting description */}
-          <p className="mt-5 text-base sm:text-lg md:text-xl text-slate-600 font-normal leading-relaxed w-full max-w-xl md:max-w-3xl lg:max-w-4xl xl:max-w-5xl mx-auto px-4 sm:px-0">
+          <p className="mt-3 sm:mt-5 text-sm sm:text-lg md:text-xl text-slate-600 font-normal leading-relaxed w-full max-w-xl md:max-w-3xl mx-auto px-2 sm:px-0">
             Request institutional access to your hospital workspace, complete identity verification, and establish your clinical role assignments.
           </p>
         </div>

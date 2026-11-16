@@ -94,23 +94,26 @@ export const Navbar: React.FC<NavbarProps> = ({
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 font-sans ${scrolled
-        ? 'bg-[#FAF7F2]/95 dark:bg-obsidian-950/95 backdrop-blur-xl border-b border-stone-200/80 dark:border-white/10 shadow-soft-sm py-0'
-        : 'bg-transparent py-3'
-        }`}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 font-sans ${
+        mobileMenuOpen
+          ? 'bg-[#FAF7F2] dark:bg-obsidian-950 border-b border-stone-200/80 dark:border-white/10 py-0'
+          : scrolled
+          ? 'bg-[#FAF7F2]/95 dark:bg-obsidian-950/95 backdrop-blur-xl border-b border-stone-200/80 dark:border-white/10 shadow-soft-sm py-0'
+          : 'bg-transparent py-2 sm:py-3'
+      }`}
     >
       {/* Expanded Max Width (1536px) & Generous Padding to shift logo left & buttons right */}
-      <div className="w-full max-w-[1536px] mx-auto px-6 sm:px-10 lg:px-14 h-22 flex items-center justify-between">
+      <div className="w-full max-w-[1536px] mx-auto px-4 sm:px-10 lg:px-14 h-16 sm:h-22 flex items-center justify-between">
         {/* Brand Logo (Enlarged & shifted towards left margin) */}
         <button
           onClick={handleHomeClick}
-          className="flex items-center gap-3.5 group text-left outline-none cursor-pointer"
+          className="flex items-center gap-2.5 sm:gap-3.5 group text-left outline-none cursor-pointer"
         >
-          <div className="w-11 h-11 rounded-2xl bg-slate-900 dark:bg-white text-white dark:text-slate-950 flex items-center justify-center font-bold shadow-sm group-hover:scale-105 transition-transform">
-            <Activity className="w-6 h-6 text-emerald-400" />
+          <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-xl sm:rounded-2xl bg-slate-900 dark:bg-white text-white dark:text-slate-950 flex items-center justify-center font-bold shadow-sm group-hover:scale-105 transition-transform shrink-0">
+            <Activity className="w-5 h-5 sm:w-6 sm:h-6 text-emerald-400" />
           </div>
           <div className="flex items-baseline gap-2">
-            <span className="text-3xl font-extrabold tracking-tight text-slate-950 dark:text-white font-sans">
+            <span className="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-950 dark:text-white font-sans">
               Aarogya
             </span>
           </div>
@@ -250,21 +253,21 @@ export const Navbar: React.FC<NavbarProps> = ({
         <div className="md:hidden flex items-center gap-2">
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="p-2 text-slate-700 dark:text-slate-200 hover:text-slate-900 dark:hover:text-white"
+            className="p-2 text-slate-700 dark:text-slate-200 hover:text-slate-900 dark:hover:text-white rounded-xl hover:bg-stone-200/50 transition-colors"
             aria-label="Toggle navigation menu"
           >
-            {mobileMenuOpen ? <X className="w-7 h-7" /> : <Menu className="w-7 h-7" />}
+            {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
         </div>
       </div>
 
-      {/* Mobile Dropdown Menu */}
+      {/* Mobile Dropdown Menu (Full-Height Sheet Overlay) */}
       {mobileMenuOpen && (
-        <div className="md:hidden bg-white dark:bg-obsidian-950 border-b border-slate-200 dark:border-white/10 px-6 py-6 animate-fadeIn shadow-xl font-sans">
-          <div className="flex flex-col space-y-4 text-base font-semibold">
+        <div className="md:hidden fixed inset-x-0 top-16 sm:top-22 bottom-0 bg-[#FAF7F2]/98 dark:bg-obsidian-950/98 backdrop-blur-2xl z-40 overflow-y-auto px-5 py-6 flex flex-col justify-between font-sans border-t border-stone-200/60 dark:border-white/10 animate-fadeIn">
+          <div className="flex flex-col space-y-3.5 text-base font-semibold">
             <button
               onClick={handleHomeClick}
-              className="text-left text-slate-700 dark:text-slate-200 py-1.5"
+              className="text-left text-slate-800 dark:text-slate-200 py-2.5 px-3 rounded-xl hover:bg-stone-200/50 transition-colors"
             >
               Home
             </button>
@@ -274,31 +277,31 @@ export const Navbar: React.FC<NavbarProps> = ({
                 onNavigate('/pricing');
                 window.scrollTo({ top: 0, behavior: 'smooth' });
               }}
-              className="text-left text-slate-700 dark:text-slate-200 py-1.5"
+              className="text-left text-slate-800 dark:text-slate-200 py-2.5 px-3 rounded-xl hover:bg-stone-200/50 transition-colors"
             >
               Pricing
             </button>
             <button
               onClick={(e) => handleSectionClick(e, 'community')}
-              className="text-left text-slate-700 dark:text-slate-200 py-1.5"
+              className="text-left text-slate-800 dark:text-slate-200 py-2.5 px-3 rounded-xl hover:bg-stone-200/50 transition-colors"
             >
               Community
             </button>
             <button
               onClick={(e) => handleSectionClick(e, 'about')}
-              className="text-left text-slate-700 dark:text-slate-200 py-1.5"
+              className="text-left text-slate-800 dark:text-slate-200 py-2.5 px-3 rounded-xl hover:bg-stone-200/50 transition-colors"
             >
               About Us
             </button>
 
-            <div className="pt-4 border-t border-stone-200/60 dark:border-white/10 flex flex-col space-y-2.5">
+            <div className="pt-4 border-t border-stone-200/80 dark:border-white/10 flex flex-col space-y-3">
               <button
                 onClick={() => {
                   setMobileMenuOpen(false);
                   onNavigate('/account/login');
                   window.scrollTo({ top: 0, behavior: 'smooth' });
                 }}
-                className="w-full py-3 px-4 rounded-xl text-sm font-semibold text-emerald-950 bg-emerald-50 border border-emerald-200/80 flex items-center justify-between"
+                className="w-full py-3.5 px-4 rounded-xl text-sm font-semibold text-emerald-950 bg-white border border-emerald-300 shadow-2xs flex items-center justify-between"
               >
                 <div className="flex items-center gap-2.5">
                   <Building2 className="w-4.5 h-4.5 text-emerald-600" />
@@ -313,7 +316,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                   onNavigate('/admin/login');
                   window.scrollTo({ top: 0, behavior: 'smooth' });
                 }}
-                className="w-full py-3 px-4 rounded-xl text-sm font-semibold text-emerald-950 bg-emerald-50 border border-emerald-200/80 flex items-center justify-between"
+                className="w-full py-3.5 px-4 rounded-xl text-sm font-semibold text-emerald-950 bg-white border border-emerald-300 shadow-2xs flex items-center justify-between"
               >
                 <div className="flex items-center gap-2.5">
                   <ShieldCheck className="w-4.5 h-4.5 text-emerald-600" />
@@ -328,7 +331,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                   onNavigate('/login');
                   window.scrollTo({ top: 0, behavior: 'smooth' });
                 }}
-                className="w-full py-3 px-4 rounded-xl text-sm font-semibold text-white bg-gradient-to-r from-emerald-600 to-teal-700 flex items-center justify-between shadow-xs"
+                className="w-full py-3.5 px-4 rounded-xl text-sm font-semibold text-white bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-700 flex items-center justify-between shadow-soft-sm"
               >
                 <div className="flex items-center gap-2.5">
                   <Stethoscope className="w-4.5 h-4.5 text-white/90" />
@@ -337,6 +340,10 @@ export const Navbar: React.FC<NavbarProps> = ({
                 <ArrowRight className="w-4 h-4 text-white/90" />
               </button>
             </div>
+          </div>
+
+          <div className="pt-6 border-t border-stone-200/60 text-xs text-slate-500 text-center">
+            Aarogya Healthcare Information Management System
           </div>
         </div>
       )}

@@ -232,6 +232,7 @@ export function App() {
   const [isChangeUsernameOpen, setIsChangeUsernameOpen] = useState(false);
   const [selectedPatientForEMR, setSelectedPatientForEMR] = useState<Patient | null>(null);
   const [isEMROpen, setIsEMROpen] = useState(false);
+  const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
 
   // Toast feedback state
   const [toasts, setToasts] = useState<ToastMessage[]>([]);
@@ -1002,7 +1003,10 @@ export function App() {
               <RoleSidebar
                 role={activeRole}
                 currentTab={currentTab}
-                onSelectTab={setCurrentTab}
+                onSelectTab={(tabId) => {
+                  setCurrentTab(tabId);
+                  setMobileSidebarOpen(false);
+                }}
                 waitingPatientsCount={waitingPatientsCount}
                 todayAppointmentsCount={todayAppointmentsCount}
                 openRegisterModal={() => setIsRegisterOpen(true)}
@@ -1016,6 +1020,8 @@ export function App() {
                 scopeType={session?.activeMembership?.scopeType || 'FACILITY'}
                 effectivePermissions={session?.activeMembership?.effectivePermissions || session?.effectivePermissions || []}
                 pendingRequestsCount={unreadCommCount}
+                isOpenOnMobile={mobileSidebarOpen}
+                onCloseMobile={() => setMobileSidebarOpen(false)}
               />
 
               {/* Main Role-Oriented Canvas */}
@@ -1056,10 +1062,11 @@ export function App() {
               activeAssignmentId={session?.activeMembership?.activeAssignmentId}
               onSwitchAssignment={handleSwitchAssignment}
               token={session?.token}
+              onToggleMobileSidebar={() => setMobileSidebarOpen((prev) => !prev)}
             />
 
             {/* Scrollable Role Dashboard View */}
-            <main className="flex-1 overflow-y-auto p-6 md:p-8">
+            <main className="flex-1 overflow-y-auto p-4 sm:p-6 md:p-8">
               {activeRole === 'receptionist' && (
                 <ReceptionistDashboard
                   appointments={appointments}

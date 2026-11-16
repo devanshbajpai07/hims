@@ -29,6 +29,7 @@ import {
   History,
   UserCog,
   Shield,
+  X,
 } from 'lucide-react';
 
 interface NavItem {
@@ -56,6 +57,8 @@ interface RoleSidebarProps {
   scopeType?: string;
   effectivePermissions?: string[];
   pendingRequestsCount?: number;
+  isOpenOnMobile?: boolean;
+  onCloseMobile?: () => void;
 }
 
 export const RoleSidebar: React.FC<RoleSidebarProps> = ({
@@ -75,6 +78,8 @@ export const RoleSidebar: React.FC<RoleSidebarProps> = ({
   scopeType = 'DEPARTMENT',
   effectivePermissions,
   pendingRequestsCount = 0,
+  isOpenOnMobile = false,
+  onCloseMobile,
 }) => {
   const hasPerm = (code: string) => {
     if (!effectivePermissions) return true;
@@ -345,19 +350,31 @@ export const RoleSidebar: React.FC<RoleSidebarProps> = ({
     }
   };
 
-  return (
-    <aside className="w-72 bg-white border-r border-slate-200/70 flex flex-col justify-between shrink-0 select-none">
+  const renderSidebarContent = (isMobile = false) => (
+    <>
       <div>
         {/* Brand & Hospital Context */}
-        <div className="h-16 px-6 flex items-center gap-3.5 border-b border-slate-100">
-          <div className="w-10 h-10 rounded-xl bg-teal-50 border border-teal-200/70 flex items-center justify-center text-teal-700 shrink-0 shadow-2xs">
-            <Building2 className="w-5.5 h-5.5" />
+        <div className="h-16 px-6 flex items-center justify-between border-b border-slate-100">
+          <div className="flex items-center gap-3.5 min-w-0">
+            <div className="w-10 h-10 rounded-xl bg-teal-50 border border-teal-200/70 flex items-center justify-center text-teal-700 shrink-0 shadow-2xs">
+              <Building2 className="w-5.5 h-5.5" />
+            </div>
+            <div className="min-w-0">
+              <span className="text-[15px] font-bold tracking-tight text-slate-900 truncate block leading-tight">
+                {hospitalName}
+              </span>
+            </div>
           </div>
-          <div className="min-w-0">
-            <span className="text-[15px] font-bold tracking-tight text-slate-900 truncate block leading-tight">
-              {hospitalName}
-            </span>
-          </div>
+          {isMobile && onCloseMobile && (
+            <button
+              type="button"
+              onClick={onCloseMobile}
+              className="p-1.5 text-slate-400 hover:text-slate-700 rounded-lg lg:hidden"
+              aria-label="Close sidebar"
+            >
+              <X className="w-5 h-5" />
+            </button>
+          )}
         </div>
 
         {/* Receptionist Quick Actions (Granularly gated by patient:create and appointment:create) */}
@@ -365,7 +382,10 @@ export const RoleSidebar: React.FC<RoleSidebarProps> = ({
           <div className="p-3.5 space-y-2.5 border-b border-slate-100">
             {openRegisterModal && hasPerm('patient:create') && (
               <button
-                onClick={openRegisterModal}
+                onClick={() => {
+                  if (isMobile && onCloseMobile) onCloseMobile();
+                  openRegisterModal();
+                }}
                 className="w-full py-3 px-4 text-sm font-bold text-teal-900 bg-teal-50 hover:bg-teal-100 border border-teal-200/90 rounded-xl flex items-center justify-center gap-2.5 transition-all shadow-soft-sm hover:shadow-md cursor-pointer"
               >
                 <UserPlus className="w-4.5 h-4.5 text-teal-700" />
@@ -374,7 +394,10 @@ export const RoleSidebar: React.FC<RoleSidebarProps> = ({
             )}
             {openScheduleModal && hasPerm('appointment:create') && (
               <button
-                onClick={openScheduleModal}
+                onClick={() => {
+                  if (isMobile && onCloseMobile) onCloseMobile();
+                  openScheduleModal();
+                }}
                 className="w-full py-3 px-4 text-sm font-bold text-slate-800 bg-white hover:bg-slate-50 border border-slate-200/90 rounded-xl flex items-center justify-center gap-2.5 transition-all shadow-soft-sm hover:shadow-md cursor-pointer"
               >
                 <CalendarPlus className="w-4.5 h-4.5 text-slate-600" />
@@ -401,8 +424,6 @@ export const RoleSidebar: React.FC<RoleSidebarProps> = ({
           </div>
         )}
 
-
-
         {/* Navigation list */}
         <div className="px-3.5 py-4">
           <div className="px-3.5 pb-2.5 text-[11px] font-bold uppercase tracking-wider text-slate-400">
@@ -419,6 +440,9 @@ export const RoleSidebar: React.FC<RoleSidebarProps> = ({
                   key={item.id}
                   onClick={() => {
                     onSelectTab(item.id);
+                    if (isMobile && onCloseMobile) {
+                      onCloseMobile();
+                    }
                     if (role !== 'nurse' && role !== 'staff' && role !== 'nursing_supervisor' && role !== 'receptionist' && role !== 'dept_head') {
                       if (item.id === 'change-password' && openChangePasswordModal) {
                         openChangePasswordModal();
@@ -474,6 +498,28 @@ export const RoleSidebar: React.FC<RoleSidebarProps> = ({
           </div>
         </div>
       </div>
-    </aside>
+    </>
+  );
+
+  return (
+    <>
+      {/* Desktop Persistent Sidebar */}
+      <aside className="hidden lg:flex w-72 bg-white border-r border-slate-200/70 flex-col justify-between shrink-0 select-none">
+        {renderSidebarContent(false)}
+      </aside>
+
+      {/* Mobile Off-Canvas Drawer */}
+      {isOpenOnMobile && (
+        <div className="fixed inset-0 z-50 lg:hidden flex animate-fadeIn">
+          <div
+            className="fixed inset-0 bg-slate-900/40 backdrop-blur-xs transition-opacity"
+            onClick={onCloseMobile}
+          />
+          <aside className="relative w-72 max-w-[85vw] bg-white h-full shadow-2xl flex flex-col justify-between z-10 overflow-y-auto">
+            {renderSidebarContent(true)}
+          </aside>
+        </div>
+      )}
+    </>
   );
 };

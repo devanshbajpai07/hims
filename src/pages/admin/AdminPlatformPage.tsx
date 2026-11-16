@@ -1022,19 +1022,21 @@ export const AdminPlatformPage: React.FC<AdminPlatformPageProps> = ({ onNavigate
             {/* Quick Action: Contact Staff */}
             <button
               onClick={() => setIsContactModalOpen(true)}
-              className="px-5 sm:px-6 py-2.5 sm:py-3 rounded-full text-xs sm:text-sm font-bold text-white bg-teal-800 hover:bg-teal-900 shadow-sm transition-all flex items-center gap-2 cursor-pointer whitespace-nowrap"
+              className="p-2 sm:px-5 md:px-6 sm:py-2.5 md:py-3 rounded-full text-xs sm:text-sm font-bold text-white bg-teal-800 hover:bg-teal-900 shadow-sm transition-all flex items-center gap-2 cursor-pointer whitespace-nowrap"
+              title="Contact Staff"
             >
               <Send className="w-4 h-4 stroke-[2.2]" />
-              <span>Contact Staff</span>
+              <span className="hidden md:inline">Contact Staff</span>
             </button>
 
             {/* Quick Action: Invite Employee */}
             <button
               onClick={() => setShowInviteModal(true)}
-              className="px-5 sm:px-6 py-2.5 sm:py-3 rounded-full text-xs sm:text-sm font-bold text-teal-900 bg-teal-50 hover:bg-teal-100 border border-teal-200 shadow-sm transition-all flex items-center gap-2 cursor-pointer whitespace-nowrap"
+              className="p-2 sm:px-5 md:px-6 sm:py-2.5 md:py-3 rounded-full text-xs sm:text-sm font-bold text-teal-900 bg-teal-50 hover:bg-teal-100 border border-teal-200 shadow-sm transition-all flex items-center gap-2 cursor-pointer whitespace-nowrap"
+              title="Invite Employee"
             >
               <UserPlus className="w-4 h-4 stroke-[2.2]" />
-              <span>Invite Employee</span>
+              <span className="hidden md:inline">Invite Employee</span>
             </button>
 
             {/* Notification Bell */}

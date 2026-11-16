@@ -141,22 +141,22 @@ export const PricingPage: React.FC<PricingPageProps> = ({ onNavigate, context = 
       )}
 
       {/* Main Pricing Content */}
-      <main className={`relative ${isEnterprise ? 'pt-8 sm:pt-12' : 'pt-36'} pb-24 px-4 sm:px-6 lg:px-8 overflow-hidden`}>
+      <main className={`relative ${isEnterprise ? 'pt-6 sm:pt-12' : 'pt-24 sm:pt-36'} pb-16 sm:pb-24 px-4 sm:px-6 lg:px-8 overflow-hidden`}>
         {/* Hairline Flowing Curves */}
         <FlowingBackgroundLines theme="light" />
 
         <div className="relative z-10 max-w-[1380px] mx-auto">
           {/* Header */}
-          <div className="text-center max-w-5xl xl:max-w-6xl mx-auto mb-14">
-            <div className="flex items-center justify-center gap-4 mb-6">
-              <div className="h-[1.5px] w-12 sm:w-16 bg-slate-300" />
-              <span className="text-sm sm:text-[15px] font-mono font-semibold text-slate-600 uppercase tracking-[0.25em]">
+          <div className="text-center max-w-5xl xl:max-w-6xl mx-auto mb-10 sm:mb-14">
+            <div className="flex items-center justify-center gap-3 sm:gap-4 mb-4 sm:mb-6">
+              <div className="h-[1.5px] w-8 sm:w-16 bg-slate-300" />
+              <span className="text-xs sm:text-[15px] font-mono font-semibold text-slate-600 uppercase tracking-[0.2em] sm:tracking-[0.25em]">
                 {isEnterprise ? 'ENTERPRISE SUBSCRIPTION CATALOG' : 'SOLUTION ALIGNMENT'}
               </span>
-              <div className="h-[1.5px] w-12 sm:w-16 bg-slate-300" />
+              <div className="h-[1.5px] w-8 sm:w-16 bg-slate-300" />
             </div>
 
-            <h1 className="max-w-4xl mx-auto text-5xl sm:text-6xl lg:text-[4.25rem] font-serif font-normal text-slate-950 tracking-[-0.02em] leading-[1.12] text-balance">
+            <h1 className="max-w-4xl mx-auto text-3xl sm:text-5xl lg:text-[4.25rem] font-serif font-normal text-slate-950 tracking-[-0.02em] leading-[1.15] text-balance">
               {isEnterprise ? (
                 <>
                   <span className="text-[#1A6865] font-serif font-medium">Add Facility</span> Subscription Tier
@@ -168,7 +168,7 @@ export const PricingPage: React.FC<PricingPageProps> = ({ onNavigate, context = 
               )}
             </h1>
 
-            <p className="mt-6 text-base sm:text-lg md:text-xl text-slate-600 font-normal leading-relaxed w-full max-w-xl md:max-w-3xl lg:max-w-4xl xl:max-w-5xl mx-auto px-4 sm:px-0">
+            <p className="mt-4 sm:mt-6 text-sm sm:text-lg md:text-xl text-slate-600 font-normal leading-relaxed w-full max-w-xl md:max-w-3xl lg:max-w-4xl xl:max-w-5xl mx-auto px-2 sm:px-0">
               {isEnterprise
                 ? 'Choose an independent subscription tier to license another hospital facility under your enterprise account. Administrator and employee quotas apply strictly per hospital.'
                 : 'Choose the operational classification that matches your facility. Every deployment quotation is calculated against authorized scope rather than one-size-fits-all bundles.'}
@@ -176,8 +176,8 @@ export const PricingPage: React.FC<PricingPageProps> = ({ onNavigate, context = 
 
             {/* Preselection notice if redirected after signing in */}
             {planParam && (
-              <div className="mt-7 inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-emerald-50 border border-emerald-200/90 text-xs sm:text-sm text-emerald-900 font-medium shadow-xs">
-                <Sparkles className="w-4 h-4 text-emerald-600 shrink-0" />
+              <div className="mt-5 sm:mt-7 inline-flex items-center gap-2 sm:gap-2.5 px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-full bg-emerald-50 border border-emerald-200/90 text-xs sm:text-sm text-emerald-900 font-medium shadow-xs">
+                <Sparkles className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-600 shrink-0" />
                 <span>
                   You selected <strong>{(SUBSCRIPTION_PLANS[planParam]?.name || planParam).toUpperCase()} Plan</strong>. Review details below and click checkout to finalize.
                 </span>
@@ -186,16 +186,16 @@ export const PricingPage: React.FC<PricingPageProps> = ({ onNavigate, context = 
 
             {/* Public-only: Existing Purchaser Callout Banner */}
             {!isEnterprise && (
-              <div className="mt-9 inline-flex flex-wrap items-center justify-center gap-3.5 sm:gap-4 py-2.5 px-6 rounded-full bg-white/95 border border-slate-200/90 shadow-soft-sm text-sm sm:text-[15px]">
+              <div className="mt-6 sm:mt-9 inline-flex flex-wrap items-center justify-center gap-2 sm:gap-4 py-2 px-4 sm:px-6 rounded-full bg-white/95 border border-slate-200/90 shadow-soft-sm text-xs sm:text-[15px]">
                 <span className="text-slate-600 font-medium">
                   Already registered with us?
                 </span>
                 <button
                   onClick={() => onNavigate('/account/login')}
-                  className="no-lift font-semibold text-teal-800 hover:text-teal-950 flex items-center gap-2 underline underline-offset-4 cursor-pointer text-sm sm:text-[15px] transition-colors"
+                  className="no-lift font-semibold text-teal-800 hover:text-teal-950 flex items-center gap-1.5 sm:gap-2 underline underline-offset-4 cursor-pointer text-xs sm:text-[15px] transition-colors"
                   style={{ transform: 'none' }}
                 >
-                  <LogIn className="w-4 h-4 stroke-[2.25]" />
+                  <LogIn className="w-3.5 h-3.5 sm:w-4 sm:h-4 stroke-[2.25]" />
                   <span>Login</span>
                 </button>
               </div>
@@ -211,7 +211,7 @@ export const PricingPage: React.FC<PricingPageProps> = ({ onNavigate, context = 
               return (
                 <div
                   key={plan.id}
-                  className={`rounded-2xl p-7 sm:p-8 xl:p-9 flex flex-col justify-between transition-all duration-200 ${
+                  className={`rounded-2xl p-5 sm:p-8 xl:p-9 flex flex-col justify-between transition-all duration-200 ${
                     isSelectedFromQuery
                       ? 'bg-white border-2 border-emerald-600 shadow-soft-lg ring-2 ring-emerald-500/20 relative'
                       : isBasic
