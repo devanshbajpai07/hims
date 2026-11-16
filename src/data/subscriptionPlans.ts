@@ -1,0 +1,156 @@
+import { SubscriptionPlan } from '../types/subscription';
+
+export const SUBSCRIPTION_PLANS: Record<string, SubscriptionPlan> = {
+  basic: {
+    id: 'basic',
+    name: 'Basic',
+    tagline: 'Ideal for small clinics & hospitals.',
+    priceDisplay: 'Free',
+    priceSubtext: 'No credit card required',
+    isFree: true,
+    isCustom: false,
+    maxAdministrators: 1,
+    employeeCapacityText: 'Up to 50 staff accounts',
+    employeeCapacityNumber: 50,
+    departmentsText: 'Predefined standard departments (including Dispensary: Future Scope)',
+    rolesText: 'Standard clinical & front-desk roles (Pharmacist: Future Scope)',
+    customizationText: 'Fixed policies & default configurations',
+    supportLevelText: 'Standard documentation & community support',
+    features: [
+      'Maximum 1 Hospital Administrator',
+      'Employee capacity: up to 50 employees',
+      'Predefined departments (Dispensary: Future Scope, Emergency, Gen-Med)',
+      'Predefined roles (including Pharmacist: Future Scope)',
+      'Dispensary prescription fulfillment (Future Scope)',
+      'Standard patient intake & queue management',
+      'Essential EMR charting & vitals recording',
+      'Standard community & knowledgebase support',
+    ],
+    ctaText: 'Get Started Free',
+    popular: false,
+  },
+  pro: {
+    id: 'pro',
+    name: 'Pro',
+    tagline: 'For established hospital wings & multi-specialty healthcare facilities.',
+    priceDisplay: '$99',
+    priceSubtext: 'Auto-renewal Enabled unless Cancelled',
+    isFree: false,
+    isCustom: false,
+    maxAdministrators: 3,
+    employeeCapacityText: 'Up to 500 staff accounts',
+    employeeCapacityNumber: 500,
+    departmentsText: 'Configurable clinical departments',
+    rolesText: 'Custom roles & permission assignment',
+    customizationText: 'Configurable workflows & governance rules',
+    supportLevelText: 'Enhanced technical support with priority ticketing',
+    features: [
+      'Maximum 3 Hospital Administrators',
+      'Employee capacity: up to 500 employees',
+      'Configurable departments & clinical units',
+      'Configurable roles & departmental permissions',
+      'Configurable operational policies & approval workflows',
+      'Multi-station queue management & load distribution',
+      'Two-level staff assignment review & approval',
+      'Enhanced support with priority incident response',
+    ],
+    ctaText: 'Future Scope',
+    popular: false,
+  },
+  enterprise: {
+    id: 'enterprise',
+    name: 'Ultra',
+    tagline: 'For hospital networks, tertiary care facilities & academic medical centers.',
+    priceDisplay: '$149',
+    priceSubtext: 'Auto-renewal Enabled unless Cancelled',
+    isFree: false,
+    isCustom: false,
+    maxAdministrators: 8,
+    employeeCapacityText: 'Up to 10,000 staff accounts',
+    employeeCapacityNumber: 10000,
+    departmentsText: 'Advanced multi-wing department hierarchy',
+    rolesText: 'Granular RBAC & cross-department privileges',
+    customizationText: 'Extensive workflow & compliance customisation',
+    supportLevelText: '24/7 dedicated support & SLA guarantees',
+    features: [
+      'Maximum 8 Hospital Administrators',
+      'Employee capacity: up to 10,000 employees',
+      'Advanced multi-tier department hierarchy',
+      'Granular enterprise RBAC & role matrices',
+      'Extensive workflow customisation & audit vault',
+      'Advanced governance, policy engine & compliance reports',
+      'Dedicated institutional implementation manager',
+      '24/7 priority support with guaranteed SLA response',
+    ],
+    ctaText: 'Future Scope',
+    popular: false,
+  },
+};
+
+export interface PlanComparisonRow {
+  category: string;
+  feature: string;
+  basic: string | boolean;
+  pro: string | boolean;
+  enterprise: string | boolean;
+}
+
+export const PLAN_COMPARISON_MATRIX: PlanComparisonRow[] = [
+  {
+    category: 'Administrative Limits',
+    feature: 'Maximum Hospital Administrators',
+    basic: '1 Administrator',
+    pro: '3 Administrators',
+    enterprise: '8 Administrators',
+  },
+  {
+    category: 'Capacity',
+    feature: 'Employee Staff Capacity',
+    basic: 'Up to 50 employees',
+    pro: 'Up to 500 employees',
+    enterprise: 'Up to 10,000 employees',
+  },
+  {
+    category: 'Departments & Roles',
+    feature: 'Department Configuration',
+    basic: 'Predefined standard set (includes Dispensary: Future Scope)',
+    pro: 'Configurable departments',
+    enterprise: 'Advanced multi-tier topology',
+  },
+  {
+    category: 'Departments & Roles',
+    feature: 'Role & Permission Customisation',
+    basic: 'Fixed standard roles',
+    pro: 'Configurable role slots',
+    enterprise: 'Custom RBAC matrix',
+  },
+  {
+    category: 'Workflow & Policy',
+    feature: 'Two-Level Staff Approval (Dept Head + Admin)',
+    basic: false,
+    pro: true,
+    enterprise: true,
+  },
+  {
+    category: 'Workflow & Policy',
+    feature: 'Policy & Workflow Customisation',
+    basic: 'Fixed defaults',
+    pro: 'Configurable',
+    enterprise: 'Extensive customisation',
+  },
+  {
+    category: 'Auditing & Governance',
+    feature: 'Immutable Audit Log Vault',
+    basic: false,
+    pro: true,
+    enterprise: true,
+  },
+  {
+    category: 'Support & Services',
+    feature: 'Support Level',
+    basic: 'Standard community',
+    pro: 'Enhanced priority ticketing',
+    enterprise: '24/7 Dedicated account SLA',
+  },
+];
+

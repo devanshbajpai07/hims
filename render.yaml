@@ -1,0 +1,53 @@
+services:
+  - type: web
+    name: hims-api
+    runtime: python
+    plan: free
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    autoDeploy: true
+    envVars:
+      - key: ENVIRONMENT
+        value: production
+      - key: PROJECT_NAME
+        value: HIMS - Hospital Information Management System
+      - key: VERSION
+        value: 2.0.0
+      - key: API_V1_STR
+        value: /api/v1
+      - key: ALGORITHM
+        value: HS256
+      - key: ACCESS_TOKEN_EXPIRE_MINUTES
+        value: 120
+      - key: SESSION_COOKIE_NAME
+        value: hims_session
+      - key: SESSION_COOKIE_MAX_AGE_DAYS
+        value: 30
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DATABASE_URL
+        sync: false
+      - key: FRONTEND_ORIGINS
+        sync: false
+      - key: EMAIL_PROVIDER
+        value: antideploy
+      - key: RESEND_API_KEY
+        sync: false
+      - key: RESEND_BASE_URL
+        value: https://antideploy.com/api/resend
+      - key: RESEND_API_URL
+        value: https://antideploy.com/api/resend
+      - key: EMAIL_FROM
+        value: aura-hims <app-4109823a@mail.antideploy.com>
+      - key: FILEBASE_ENDPOINT_URL
+        value: https://s3.filebase.io
+      - key: FILEBASE_REGION
+        value: auto
+      - key: FILEBASE_BUCKET_NAME
+        value: aura-hims-documents
+      - key: FILEBASE_ACCESS_KEY_ID
+        sync: false
+      - key: FILEBASE_SECRET_ACCESS_KEY
+        sync: false

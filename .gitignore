@@ -1,0 +1,28 @@
+# Secrets & Environment variables
+.env
+.env.*
+!.env.example
+backend/.env
+backend/.env.*
+!backend/.env.example
+
+# Dependencies & Build artifacts
+node_modules/
+dist/
+dist-test/
+.vercel
+.render
+
+# Python cache & test artifacts
+.pytest_cache/
+backend/.pytest_cache/
+__pycache__/
+*/__pycache__/
+*/*/__pycache__/
+*.pyc
+
+# Local SQLite databases & volume mounts
+pg_data/
+*.db
+backend/dummy_hims.db
+backend/test_hims.db

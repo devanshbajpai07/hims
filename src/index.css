@@ -1,0 +1,375 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+  
+  html {
+    scroll-behavior: smooth;
+    background-color: #FAF7F2;
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+    background-color: #FAF7F2;
+    font-family: 'Plus Jakarta Sans', 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+}
+
+/* Custom subtle scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(140, 150, 165, 0.25);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(140, 150, 165, 0.45);
+}
+
+/* Universal slight lift-up animation for all buttons on hover */
+button:not(:disabled):not(.no-lift):not(.no-hover-lift):not(.password-toggle):not([aria-label*="password" i]):not([title*="password" i]) {
+  transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.22s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+  will-change: transform;
+}
+
+button:not(:disabled):not(.no-lift):not(.no-hover-lift):not(.password-toggle):not([aria-label*="password" i]):not([title*="password" i]):hover {
+  transform: translateY(-2.5px);
+}
+
+button:not(:disabled):not(.no-lift):not(.no-hover-lift):not(.password-toggle):not([aria-label*="password" i]):not([title*="password" i]):active {
+  transform: translateY(0px);
+}
+
+/* Exempt list items inside dropdowns and specific inline buttons from vertical jump */
+.no-lift, .no-lift:hover, .no-lift:active, .no-lift:focus {
+  transform: none !important;
+}
+
+/* Password visibility toggle buttons: Strictly disable all transforms, scale, bulge, and jump animations; only retain color highlight */
+.password-toggle,
+.password-toggle:hover,
+.password-toggle:active,
+.password-toggle:focus,
+button[aria-label*="password" i],
+button[aria-label*="password" i]:hover,
+button[aria-label*="password" i]:active,
+button[aria-label*="password" i]:focus,
+button[title*="password" i],
+button[title*="password" i]:hover,
+button[title*="password" i]:active,
+button[title*="password" i]:focus {
+  transform: none !important;
+  scale: 1 !important;
+  box-shadow: none !important;
+  will-change: auto !important;
+  transition: color 0.15s ease !important;
+}
+
+.password-toggle svg,
+.password-toggle:hover svg,
+.password-toggle:active svg,
+button[aria-label*="password" i] svg,
+button[aria-label*="password" i]:hover svg,
+button[title*="password" i] svg,
+button[title*="password" i]:hover svg {
+  transform: none !important;
+  scale: 1 !important;
+  transition: color 0.15s ease !important;
+}
+
+/* Suppress duplicate browser-native password reveal and clear buttons (Microsoft Edge Chromium, Edge Legacy, IE) */
+/* Note: Vendor pseudo-elements MUST be in separate rule blocks so standard browser CSS parsers do not drop them */
+input::-ms-reveal {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  pointer-events: none !important;
+  visibility: hidden !important;
+}
+
+input::-ms-clear {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  pointer-events: none !important;
+  visibility: hidden !important;
+}
+
+input[type="password"]::-ms-reveal {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  pointer-events: none !important;
+  visibility: hidden !important;
+}
+
+input[type="password"]::-ms-clear {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  pointer-events: none !important;
+  visibility: hidden !important;
+}
+
+input::-webkit-credentials-auto-fill-button {
+  visibility: hidden !important;
+  display: none !important;
+  pointer-events: none !important;
+}
+
+input::-webkit-contacts-auto-fill-button {
+  visibility: hidden !important;
+  display: none !important;
+  pointer-events: none !important;
+}
+
+/* Buttons without hover lift, maintaining smooth physical click depression */
+button.no-hover-lift:not(:disabled),
+.no-hover-lift:not(:disabled) {
+  transition: transform 0.12s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.15s ease, background-color 0.15s ease, color 0.15s ease;
+  will-change: transform;
+}
+
+button.no-hover-lift:not(:disabled):hover,
+.no-hover-lift:not(:disabled):hover {
+  transform: translateY(0px) !important;
+}
+
+button.no-hover-lift:not(:disabled):active,
+.no-hover-lift:not(:disabled):active {
+  transform: translateY(2px) !important;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.08) !important;
+}
+
+/* Glowing cursor torch effect */
+.cursor-torch {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 15;
+  transition: opacity 0.3s ease;
+}
+
+/* 3-Color Sunrise Aurora Dynamic Fluid Motion (Coral, Amber, Violet) */
+@keyframes auroraCoralFloat {
+  0% {
+    transform: translate3d(0px, 0px, 0) scale(1) rotate(0deg);
+    opacity: 0.85;
+  }
+  25% {
+    transform: translate3d(45px, -30px, 0) scale(1.08) rotate(2.5deg);
+    opacity: 0.95;
+  }
+  50% {
+    transform: translate3d(80px, 35px, 0) scale(1.14) rotate(-1.5deg);
+    opacity: 0.90;
+  }
+  75% {
+    transform: translate3d(30px, 55px, 0) scale(1.05) rotate(1.5deg);
+    opacity: 0.98;
+  }
+  100% {
+    transform: translate3d(0px, 0px, 0) scale(1) rotate(0deg);
+    opacity: 0.85;
+  }
+}
+
+@keyframes auroraAmberFloat {
+  0% {
+    transform: translate3d(-50%, 0px, 0) scale(1);
+    opacity: 0.82;
+  }
+  30% {
+    transform: translate3d(-46%, -40px, 0) scale(1.12);
+    opacity: 0.96;
+  }
+  60% {
+    transform: translate3d(-54%, 30px, 0) scale(1.06);
+    opacity: 0.88;
+  }
+  85% {
+    transform: translate3d(-48%, -15px, 0) scale(1.10);
+    opacity: 0.94;
+  }
+  100% {
+    transform: translate3d(-50%, 0px, 0) scale(1);
+    opacity: 0.82;
+  }
+}
+
+@keyframes auroraVioletFloat {
+  0% {
+    transform: translate3d(0px, 0px, 0) scale(1) rotate(0deg);
+    opacity: 0.85;
+  }
+  35% {
+    transform: translate3d(-50px, 45px, 0) scale(1.12) rotate(-2deg);
+    opacity: 0.96;
+  }
+  70% {
+    transform: translate3d(-25px, -35px, 0) scale(1.06) rotate(2deg);
+    opacity: 0.90;
+  }
+  100% {
+    transform: translate3d(0px, 0px, 0) scale(1) rotate(0deg);
+    opacity: 0.85;
+  }
+}
+
+@keyframes auroraAnchorFloat {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 0.70;
+  }
+  50% {
+    transform: translate3d(35px, -25px, 0) scale(1.09);
+    opacity: 0.85;
+  }
+}
+
+.aurora-coral {
+  animation: auroraCoralFloat 10s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+.aurora-amber {
+  animation: auroraAmberFloat 12s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+.aurora-violet {
+  animation: auroraVioletFloat 11s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+.aurora-anchor {
+  animation: auroraAnchorFloat 14s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+/* Smooth keyframes for particles moving along SVG path curves */
+@keyframes particlePulse {
+  0%, 100% {
+    r: 3px;
+    opacity: 0.85;
+  }
+  50% {
+    r: 4.5px;
+    opacity: 1;
+    filter: drop-shadow(0 0 6px rgba(16, 185, 129, 0.9));
+  }
+}
+
+.particle-glow {
+  animation: particlePulse 3s ease-in-out infinite;
+}
+
+/* Living Clinical Loader Keyframes */
+@keyframes ecgLinePulse {
+  0% {
+    stroke-dashoffset: 600;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes shimmerBeam {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes orbitClockwise {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes orbitCounterClockwise {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(-360deg);
+  }
+}
+
+@keyframes clinicalHeartbeat {
+  0%, 100% {
+    transform: scale(1);
+  }
+  14% {
+    transform: scale(1.08);
+  }
+  28% {
+    transform: scale(1.02);
+  }
+  42% {
+    transform: scale(1.12);
+  }
+  70% {
+    transform: scale(1);
+  }
+}
+
+.animate-ecg {
+  stroke-dasharray: 200 400;
+  animation: ecgLinePulse 2.4s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+.animate-shimmer-beam {
+  animation: shimmerBeam 2s ease-in-out infinite;
+}
+
+.animate-orbit-slow {
+  animation: orbitClockwise 14s linear infinite;
+}
+
+.animate-orbit-reverse {
+  animation: orbitCounterClockwise 10s linear infinite;
+}
+
+.animate-heartbeat-soft {
+  animation: clinicalHeartbeat 2.2s ease-in-out infinite;
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
