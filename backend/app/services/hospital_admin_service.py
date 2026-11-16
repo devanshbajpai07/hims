@@ -1037,7 +1037,7 @@ class HospitalAdminService:
         target_membership = None
         if hospital_id:
             for am in admin_memberships:
-                if am.hospital_id == hospital_id:
+                if str(am.hospital_id) == str(hospital_id):
                     target_membership = am
                     break
             if not target_membership:
@@ -1051,12 +1051,24 @@ class HospitalAdminService:
         target_hospital = target_membership.hospital
 
         # 6. Validate hospital assigned subscription
-        if not target_hospital.subscription_id or not target_hospital.subscription:
+        if not target_hospital.subscription_id:
             raise SubscriptionNotFoundError(
                 "This hospital does not have an assigned subscription license."
             )
 
         sub = target_hospital.subscription
+        if not sub:
+            sub = (
+                db.query(PurchaserSubscription)
+                .filter(PurchaserSubscription.id == target_hospital.subscription_id)
+                .first()
+            )
+
+        if not sub:
+            raise SubscriptionNotFoundError(
+                "This hospital does not have an assigned subscription license."
+            )
+
         if sub.status != "active":
             raise SubscriptionInactiveError(
                 f"Hospital subscription is inactive (status: '{sub.status}'). Please contact your purchaser."

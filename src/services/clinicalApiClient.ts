@@ -441,6 +441,11 @@ function getAuthHeaders(explicitToken?: string, hasBody = false): Record<string,
   let assignmentId: string | undefined;
   if (typeof window !== 'undefined') {
     try {
+      const adminTok =
+        window.sessionStorage?.getItem('hims_admin_token') ||
+        window.localStorage?.getItem('hims_admin_token');
+      if (!token && adminTok) token = adminTok;
+
       const raw =
         window.sessionStorage?.getItem('hims_employee_session') ||
         window.localStorage?.getItem('hims_employee_session');

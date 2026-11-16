@@ -230,29 +230,47 @@ export const AdminPlatformPage: React.FC<AdminPlatformPageProps> = ({ onNavigate
       // 1. Verify admin session
       const me = await hospitalAdminApi.getAdminMe();
       setAdminProfile(me);
+    } catch (err: any) {
+      setErrorMessage(err.message || 'Session expired or unauthorized.');
+      onNavigate('/admin/login');
+      return;
+    }
 
+    try {
       // 2. Load overview metrics
-      const ov = await hospitalAdminApi.getOverview();
-      setOverview(ov);
+      const ov = await hospitalAdminApi.getOverview().catch((e) => {
+        console.warn('Non-fatal: could not load overview metrics', e);
+        return null;
+      });
+      if (ov) setOverview(ov);
 
       // 3. Load departments, roles, notifications & pending revocations
+      const activeToken = session?.token || hospitalAdminApi.getAdminToken() || undefined;
       const [deptsData, rolesData, notifsData, revsData] = await Promise.all([
-        hospitalAdminApi.listDepartments(),
-        hospitalAdminApi.listRoles(),
-        hospitalAdminApi.listNotifications(),
-        clinicalApiClient.adminGetRevocationRequests('PENDING', session?.token).catch(() => []),
+        hospitalAdminApi.listDepartments().catch((e) => {
+          console.warn('Non-fatal: could not load departments', e);
+          return [];
+        }),
+        hospitalAdminApi.listRoles().catch((e) => {
+          console.warn('Non-fatal: could not load roles', e);
+          return [];
+        }),
+        hospitalAdminApi.listNotifications().catch((e) => {
+          console.warn('Non-fatal: could not load notifications', e);
+          return [];
+        }),
+        clinicalApiClient.adminGetRevocationRequests('PENDING', activeToken).catch(() => []),
       ]);
       setDepartments(deptsData);
       setRoles(rolesData);
       setNotifications(notifsData);
       setPendingRevocationsCount(revsData.length);
     } catch (err: any) {
-      setErrorMessage(err.message || 'Session expired or unauthorized.');
-      onNavigate('/admin/login');
+      console.warn('Non-fatal dashboard data load error:', err);
     } finally {
       setLoading(false);
     }
-  }, [onNavigate]);
+  }, [onNavigate, session?.token]);
 
   useEffect(() => {
     loadInitialData();

@@ -511,7 +511,7 @@ class HospitalAdminApiClient {
     }
   }
 
-  private getHeaders(): HeadersInit {
+  getHeaders(): HeadersInit {
     const headers: Record<string, string> = {
       'Content-Type': 'application/json',
     };
@@ -699,7 +699,7 @@ class HospitalAdminApiClient {
   async getOverview(): Promise<AdminOverviewMetrics> {
     const res = await fetch(`${API_BASE}/admin/dashboard/overview`, {
       method: 'GET',
-      headers: { 'Content-Type': 'application/json' },
+      headers: this.getHeaders(),
       credentials: 'include',
     });
     if (!res.ok) {
@@ -717,7 +717,7 @@ class HospitalAdminApiClient {
 
     const res = await fetch(`${API_BASE}/admin/employees?${params.toString()}`, {
       method: 'GET',
-      headers: { 'Content-Type': 'application/json' },
+      headers: this.getHeaders(),
       credentials: 'include',
     });
     if (!res.ok) {
@@ -730,7 +730,7 @@ class HospitalAdminApiClient {
   async inviteEmployee(payload: EmployeeInvitePayload): Promise<{ success: boolean; message: string; invitation_id?: string }> {
     const res = await fetch(`${API_BASE}/admin/employees/invite`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: this.getHeaders(),
       credentials: 'include',
       body: JSON.stringify(payload),
     });
@@ -744,7 +744,7 @@ class HospitalAdminApiClient {
   async verifyEmployeeInvitation(token: string): Promise<EmployeeInvitationVerifyResponse> {
     const res = await fetch(`${API_BASE}/invitations/employee/verify?token=${encodeURIComponent(token)}`, {
       method: 'GET',
-      headers: { 'Content-Type': 'application/json' },
+      headers: this.getHeaders(),
       credentials: 'include',
     });
     if (!res.ok) {
@@ -764,7 +764,7 @@ class HospitalAdminApiClient {
   }> {
     const res = await fetch(`${API_BASE}/invitations/employee/accept`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: this.getHeaders(),
       credentials: 'include',
       body: JSON.stringify(payload),
     });
@@ -779,7 +779,7 @@ class HospitalAdminApiClient {
     const q = status ? `?status=${encodeURIComponent(status)}` : '';
     const res = await fetch(`${API_BASE}/admin/employees/invitations${q}`, {
       method: 'GET',
-      headers: { 'Content-Type': 'application/json' },
+      headers: this.getHeaders(),
       credentials: 'include',
     });
     if (!res.ok) {
@@ -792,7 +792,7 @@ class HospitalAdminApiClient {
   async revokeEmployeeInvitation(invitationId: string): Promise<{ success: boolean; message: string }> {
     const res = await fetch(`${API_BASE}/admin/employees/invitations/${invitationId}/revoke`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: this.getHeaders(),
       credentials: 'include',
     });
     if (!res.ok) {
@@ -805,7 +805,7 @@ class HospitalAdminApiClient {
   async resendEmployeeInvitation(invitationId: string): Promise<{ success: boolean; message: string }> {
     const res = await fetch(`${API_BASE}/admin/employees/invitations/${invitationId}/resend`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: this.getHeaders(),
       credentials: 'include',
     });
     if (!res.ok) {
@@ -818,7 +818,7 @@ class HospitalAdminApiClient {
   async updateEmployeeStatus(membershipId: string, status: string, reason?: string): Promise<{ success: boolean }> {
     const res = await fetch(`${API_BASE}/admin/employees/${membershipId}/status`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: this.getHeaders(),
       credentials: 'include',
       body: JSON.stringify({ status, reason }),
     });
@@ -832,7 +832,7 @@ class HospitalAdminApiClient {
   async assignEmployeeRoles(membershipId: string, departmentId: string | undefined, roleIds: string[]): Promise<{ success: boolean }> {
     const res = await fetch(`${API_BASE}/admin/employees/${membershipId}/roles`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: this.getHeaders(),
       credentials: 'include',
       body: JSON.stringify({ department_id: departmentId, role_ids: roleIds }),
     });
@@ -846,7 +846,7 @@ class HospitalAdminApiClient {
   async listDepartments(): Promise<DepartmentItem[]> {
     const res = await fetch(`${API_BASE}/admin/departments`, {
       method: 'GET',
-      headers: { 'Content-Type': 'application/json' },
+      headers: this.getHeaders(),
       credentials: 'include',
     });
     if (!res.ok) {
@@ -859,7 +859,7 @@ class HospitalAdminApiClient {
   async createDepartment(payload: { name: string; code: string; description?: string }): Promise<any> {
     const res = await fetch(`${API_BASE}/admin/departments`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: this.getHeaders(),
       credentials: 'include',
       body: JSON.stringify(payload),
     });
@@ -873,7 +873,7 @@ class HospitalAdminApiClient {
   async listRoles(): Promise<RoleItem[]> {
     const res = await fetch(`${API_BASE}/admin/roles`, {
       method: 'GET',
-      headers: { 'Content-Type': 'application/json' },
+      headers: this.getHeaders(),
       credentials: 'include',
     });
     if (!res.ok) {
@@ -886,7 +886,7 @@ class HospitalAdminApiClient {
   async createRole(payload: { name: string; code: string; scope: string; description?: string }): Promise<any> {
     const res = await fetch(`${API_BASE}/admin/roles`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: this.getHeaders(),
       credentials: 'include',
       body: JSON.stringify(payload),
     });
@@ -905,7 +905,7 @@ class HospitalAdminApiClient {
 
     const res = await fetch(`${API_BASE}/admin/audit?${params.toString()}`, {
       method: 'GET',
-      headers: { 'Content-Type': 'application/json' },
+      headers: this.getHeaders(),
       credentials: 'include',
     });
     if (!res.ok) {
@@ -918,7 +918,7 @@ class HospitalAdminApiClient {
   async listNotifications(): Promise<NotificationItem[]> {
     const res = await fetch(`${API_BASE}/admin/notifications`, {
       method: 'GET',
-      headers: { 'Content-Type': 'application/json' },
+      headers: this.getHeaders(),
       credentials: 'include',
     });
     if (!res.ok) {
@@ -931,7 +931,7 @@ class HospitalAdminApiClient {
   async markNotificationRead(notificationId: string): Promise<void> {
     await fetch(`${API_BASE}/admin/notifications/${notificationId}/read`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: this.getHeaders(),
       credentials: 'include',
     }).catch(() => {});
   }
@@ -973,7 +973,7 @@ class HospitalAdminApiClient {
   async listPermissions(): Promise<PermissionCatalogueResponse> {
     const res = await fetch(`${API_BASE}/admin/permissions`, {
       method: 'GET',
-      headers: { 'Content-Type': 'application/json' },
+      headers: this.getHeaders(),
       credentials: 'include',
     });
     if (!res.ok) {
@@ -986,7 +986,7 @@ class HospitalAdminApiClient {
   async listRoleVersions(roleId: string): Promise<RoleVersionItem[]> {
     const res = await fetch(`${API_BASE}/admin/roles/${roleId}/versions`, {
       method: 'GET',
-      headers: { 'Content-Type': 'application/json' },
+      headers: this.getHeaders(),
       credentials: 'include',
     });
     if (!res.ok) {
@@ -999,7 +999,7 @@ class HospitalAdminApiClient {
   async createRoleVersion(roleId: string, payload: CreateRoleVersionPayload): Promise<RoleVersionItem> {
     const res = await fetch(`${API_BASE}/admin/roles/${roleId}/versions`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: this.getHeaders(),
       credentials: 'include',
       body: JSON.stringify(payload),
     });
@@ -1017,7 +1017,7 @@ class HospitalAdminApiClient {
   async listEmployeeAssignments(membershipId: string): Promise<RoleAssignmentItem[]> {
     const res = await fetch(`${API_BASE}/admin/employees/${membershipId}/assignments`, {
       method: 'GET',
-      headers: { 'Content-Type': 'application/json' },
+      headers: this.getHeaders(),
       credentials: 'include',
     });
     if (!res.ok) {
@@ -1030,7 +1030,7 @@ class HospitalAdminApiClient {
   async assignEmployeeRole(membershipId: string, payload: AssignRolePayload): Promise<RoleAssignmentItem> {
     const res = await fetch(`${API_BASE}/admin/employees/${membershipId}/assignments`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: this.getHeaders(),
       credentials: 'include',
       body: JSON.stringify(payload),
     });
@@ -1044,7 +1044,7 @@ class HospitalAdminApiClient {
   async revokeEmployeeRoleAssignment(membershipId: string, assignmentId: string): Promise<{ success: boolean; message: string }> {
     const res = await fetch(`${API_BASE}/admin/employees/${membershipId}/assignments/${assignmentId}`, {
       method: 'DELETE',
-      headers: { 'Content-Type': 'application/json' },
+      headers: this.getHeaders(),
       credentials: 'include',
     });
     if (!res.ok) {
@@ -1057,7 +1057,7 @@ class HospitalAdminApiClient {
   async listEmployeeOverrides(membershipId: string): Promise<PermissionOverrideItem[]> {
     const res = await fetch(`${API_BASE}/admin/employees/${membershipId}/overrides`, {
       method: 'GET',
-      headers: { 'Content-Type': 'application/json' },
+      headers: this.getHeaders(),
       credentials: 'include',
     });
     if (!res.ok) {
@@ -1070,7 +1070,7 @@ class HospitalAdminApiClient {
   async createEmployeeOverride(membershipId: string, payload: CreateOverridePayload): Promise<PermissionOverrideItem> {
     const res = await fetch(`${API_BASE}/admin/employees/${membershipId}/overrides`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: this.getHeaders(),
       credentials: 'include',
       body: JSON.stringify(payload),
     });
@@ -1084,7 +1084,7 @@ class HospitalAdminApiClient {
   async revokeEmployeeOverride(membershipId: string, overrideId: string): Promise<{ success: boolean; message: string }> {
     const res = await fetch(`${API_BASE}/admin/employees/${membershipId}/overrides/${overrideId}`, {
       method: 'DELETE',
-      headers: { 'Content-Type': 'application/json' },
+      headers: this.getHeaders(),
       credentials: 'include',
     });
     if (!res.ok) {
@@ -1100,7 +1100,7 @@ class HospitalAdminApiClient {
       : `${API_BASE}/admin/employees/${membershipId}/effective-permissions`;
     const res = await fetch(url, {
       method: 'GET',
-      headers: { 'Content-Type': 'application/json' },
+      headers: this.getHeaders(),
       credentials: 'include',
     });
     if (!res.ok) {
@@ -1117,7 +1117,7 @@ class HospitalAdminApiClient {
   async listPendingApprovals(): Promise<PendingApprovalItem[]> {
     const res = await fetch(`${API_BASE}/admin/approvals`, {
       method: 'GET',
-      headers: { 'Content-Type': 'application/json' },
+      headers: this.getHeaders(),
       credentials: 'include',
     });
     if (!res.ok) {
@@ -1137,7 +1137,7 @@ class HospitalAdminApiClient {
   ): Promise<{ success: boolean; registration_id: string; status: string; employee_uid_verified: boolean }> {
     const res = await fetch(`${API_BASE}/admin/approvals/${requestId}/decide`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: this.getHeaders(),
       credentials: 'include',
       body: JSON.stringify(payload),
     });
