@@ -122,8 +122,17 @@ class PurchaserService {
   // --------------------------------------------------------------------------
 
   getCurrentPurchaser(): PurchaserAccount | null {
-    const storage = getStorage();
-    const raw = storage.getItem(STORAGE_KEYS.CURRENT_PURCHASER);
+    let raw: string | null = null;
+    if (typeof window !== 'undefined') {
+      try {
+        raw = window.sessionStorage?.getItem(STORAGE_KEYS.CURRENT_PURCHASER) ||
+              window.localStorage?.getItem(STORAGE_KEYS.CURRENT_PURCHASER) ||
+              null;
+      } catch {}
+    }
+    if (!raw) {
+      raw = getStorage().getItem(STORAGE_KEYS.CURRENT_PURCHASER);
+    }
     if (!raw) return null;
     try {
       return JSON.parse(raw);
@@ -133,17 +142,23 @@ class PurchaserService {
   }
 
   setCurrentPurchaser(purchaser: PurchaserAccount | null) {
-    const storage = getStorage();
     if (purchaser) {
-      storage.setItem(STORAGE_KEYS.CURRENT_PURCHASER, JSON.stringify(purchaser));
+      const serialized = JSON.stringify(purchaser);
+      if (typeof window !== 'undefined') {
+        try {
+          window.sessionStorage?.setItem(STORAGE_KEYS.CURRENT_PURCHASER, serialized);
+          window.localStorage?.setItem(STORAGE_KEYS.CURRENT_PURCHASER, serialized);
+        } catch {}
+      }
+      memoryStorage.setItem(STORAGE_KEYS.CURRENT_PURCHASER, serialized);
     } else {
-      storage.removeItem(STORAGE_KEYS.CURRENT_PURCHASER);
       if (typeof window !== 'undefined') {
         try {
           window.sessionStorage?.removeItem(STORAGE_KEYS.CURRENT_PURCHASER);
           window.localStorage?.removeItem(STORAGE_KEYS.CURRENT_PURCHASER);
         } catch {}
       }
+      memoryStorage.removeItem(STORAGE_KEYS.CURRENT_PURCHASER);
     }
   }
 

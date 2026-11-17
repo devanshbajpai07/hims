@@ -41,6 +41,17 @@ export const AdminLoginPage: React.FC<AdminLoginPageProps> = ({
   const [workspaceSelection, setWorkspaceSelection] = useState<AdminLoginResponse | null>(null);
   const [selectedHospitalId, setSelectedHospitalId] = useState<string | null>(null);
 
+  React.useEffect(() => {
+    const stored = authService.getStoredSession();
+    const hasAdminToken = typeof window !== 'undefined' && (
+      window.sessionStorage?.getItem('hims_admin_token') ||
+      window.localStorage?.getItem('hims_admin_token')
+    );
+    if (stored?.activeMembership?.role === 'admin' && hasAdminToken) {
+      onNavigate('/admin/dashboard');
+    }
+  }, [onNavigate]);
+
   const handleLoginSubmit = async (e: React.FormEvent | null, hospitalIdToSelect?: string) => {
     if (e) e.preventDefault();
     setErrorMessage(null);

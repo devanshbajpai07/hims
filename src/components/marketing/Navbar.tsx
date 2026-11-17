@@ -10,6 +10,9 @@ import {
   Stethoscope,
   ShieldCheck,
 } from 'lucide-react';
+import { purchaserApiClient } from '../../services/purchaserApiClient';
+import { purchaserService } from '../../services/purchaserService';
+import { authService } from '../../services/authService';
 
 interface NavbarProps {
   currentPath?: string;
@@ -83,6 +86,36 @@ export const Navbar: React.FC<NavbarProps> = ({
     } else {
       onNavigate('/');
     }
+  };
+
+  const handleEnterpriseLogin = () => {
+    setLoginDropdownOpen(false);
+    setMobileMenuOpen(false);
+    const hasPurchaser = Boolean(
+      purchaserApiClient.getSessionToken() || purchaserService.getCurrentPurchaser()
+    );
+    if (hasPurchaser) {
+      onNavigate('/account/dashboard');
+    } else {
+      onNavigate('/account/login');
+    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleAdminLogin = () => {
+    setLoginDropdownOpen(false);
+    setMobileMenuOpen(false);
+    const stored = authService.getStoredSession();
+    const hasAdminToken = typeof window !== 'undefined' && (
+      window.sessionStorage?.getItem('hims_admin_token') ||
+      window.localStorage?.getItem('hims_admin_token')
+    );
+    if (stored?.activeMembership?.role === 'admin' || hasAdminToken) {
+      onNavigate('/admin/dashboard');
+    } else {
+      onNavigate('/admin/login');
+    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const navLinks = [
@@ -196,11 +229,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                   {/* Option 1: Enterprise Login */}
                   <button
                     type="button"
-                    onClick={() => {
-                      setLoginDropdownOpen(false);
-                      onNavigate('/account/login');
-                      window.scrollTo({ top: 0, behavior: 'smooth' });
-                    }}
+                    onClick={handleEnterpriseLogin}
                     className="no-lift w-full flex items-center justify-between px-3.5 py-3 rounded-xl hover:bg-emerald-50/80 text-slate-800 hover:text-emerald-950 transition-colors text-left group cursor-pointer"
                   >
                     <div className="flex items-center gap-2.5">
@@ -213,11 +242,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                   {/* Option 2: Hospital Admin Login */}
                   <button
                     type="button"
-                    onClick={() => {
-                      setLoginDropdownOpen(false);
-                      onNavigate('/admin/login');
-                      window.scrollTo({ top: 0, behavior: 'smooth' });
-                    }}
+                    onClick={handleAdminLogin}
                     className="no-lift w-full flex items-center justify-between px-3.5 py-3 rounded-xl hover:bg-emerald-50/80 text-slate-800 hover:text-emerald-950 transition-colors text-left group cursor-pointer"
                   >
                     <div className="flex items-center gap-2.5">
@@ -296,11 +321,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 
             <div className="pt-4 border-t border-stone-200/80 dark:border-white/10 flex flex-col space-y-3">
               <button
-                onClick={() => {
-                  setMobileMenuOpen(false);
-                  onNavigate('/account/login');
-                  window.scrollTo({ top: 0, behavior: 'smooth' });
-                }}
+                onClick={handleEnterpriseLogin}
                 className="w-full py-3.5 px-4 rounded-xl text-sm font-semibold text-emerald-950 bg-white border border-emerald-300 shadow-2xs flex items-center justify-between"
               >
                 <div className="flex items-center gap-2.5">
@@ -311,11 +332,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               </button>
 
               <button
-                onClick={() => {
-                  setMobileMenuOpen(false);
-                  onNavigate('/admin/login');
-                  window.scrollTo({ top: 0, behavior: 'smooth' });
-                }}
+                onClick={handleAdminLogin}
                 className="w-full py-3.5 px-4 rounded-xl text-sm font-semibold text-emerald-950 bg-white border border-emerald-300 shadow-2xs flex items-center justify-between"
               >
                 <div className="flex items-center gap-2.5">

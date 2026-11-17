@@ -2,8 +2,11 @@
   "framework": "vite",
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
-  "cleanUrls": true,
   "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "https://aarogya-bngr.onrender.com/api/$1"
+    },
     {
       "source": "/api/:match*",
       "destination": "https://aarogya-bngr.onrender.com/api/:match*"

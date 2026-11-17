@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Activity,
   ShieldCheck,
@@ -29,8 +29,9 @@ export const PurchaserLoginPage: React.FC<PurchaserLoginPageProps> = ({ onNaviga
   const billingInterval = searchParams.get('interval') || '';
   const isResetSuccess = searchParams.get('reset') === 'success';
 
+  const cachedPurchaser = purchaserService.getCurrentPurchaser();
   const storedEmployee = authService.getStoredSession();
-  const defaultEmail = storedEmployee?.user?.email || '';
+  const defaultEmail = cachedPurchaser?.email || storedEmployee?.user?.email || '';
   const [email, setEmail] = useState(defaultEmail);
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(true);
@@ -39,6 +40,19 @@ export const PurchaserLoginPage: React.FC<PurchaserLoginPageProps> = ({ onNaviga
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [infoMessage, setInfoMessage] = useState<string | null>(null);
   const [showResetPopup, setShowResetPopup] = useState(isResetSuccess);
+
+  useEffect(() => {
+    const token = purchaserApiClient.getSessionToken();
+    const purchaser = purchaserService.getCurrentPurchaser();
+    if (token || purchaser) {
+      if (selectedPlan) {
+        const intervalQuery = billingInterval ? `&interval=${encodeURIComponent(billingInterval)}` : '';
+        onNavigate(`/account/checkout?plan=${encodeURIComponent(selectedPlan)}${intervalQuery}`);
+      } else {
+        onNavigate('/account/dashboard');
+      }
+    }
+  }, [onNavigate, selectedPlan, billingInterval]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
