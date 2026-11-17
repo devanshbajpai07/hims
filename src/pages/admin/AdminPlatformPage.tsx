@@ -698,8 +698,8 @@ export const AdminPlatformPage: React.FC<AdminPlatformPageProps> = ({ onNavigate
                 setMobileSidebarOpen(false);
               }}
               className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl font-medium transition-all cursor-pointer ${currentTab === 'overview'
-                  ? 'bg-teal-50 text-teal-950 font-bold border border-teal-200/80 shadow-2xs'
-                  : 'text-slate-600 hover:bg-slate-50 hover:text-slate-950'
+                ? 'bg-teal-50 text-teal-950 font-bold border border-teal-200/80 shadow-2xs'
+                : 'text-slate-600 hover:bg-slate-50 hover:text-slate-950'
                 }`}
             >
               <Activity className={`w-4 h-4 ${currentTab === 'overview' ? 'text-teal-800' : 'text-slate-400'}`} />
@@ -712,8 +712,8 @@ export const AdminPlatformPage: React.FC<AdminPlatformPageProps> = ({ onNavigate
                 setMobileSidebarOpen(false);
               }}
               className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl font-medium transition-all cursor-pointer ${currentTab === 'employees'
-                  ? 'bg-teal-50 text-teal-950 font-bold border border-teal-200/80 shadow-2xs'
-                  : 'text-slate-600 hover:bg-slate-50 hover:text-slate-950'
+                ? 'bg-teal-50 text-teal-950 font-bold border border-teal-200/80 shadow-2xs'
+                : 'text-slate-600 hover:bg-slate-50 hover:text-slate-950'
                 }`}
             >
               <Users className={`w-4 h-4 ${currentTab === 'employees' ? 'text-teal-800' : 'text-slate-400'}`} />
@@ -726,8 +726,8 @@ export const AdminPlatformPage: React.FC<AdminPlatformPageProps> = ({ onNavigate
                 setMobileSidebarOpen(false);
               }}
               className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl font-medium transition-all cursor-pointer ${currentTab === 'departments'
-                  ? 'bg-teal-50 text-teal-950 font-bold border border-teal-200/80 shadow-2xs'
-                  : 'text-slate-600 hover:bg-slate-50 hover:text-slate-950'
+                ? 'bg-teal-50 text-teal-950 font-bold border border-teal-200/80 shadow-2xs'
+                : 'text-slate-600 hover:bg-slate-50 hover:text-slate-950'
                 }`}
             >
               <Building2 className={`w-4 h-4 ${currentTab === 'departments' ? 'text-teal-800' : 'text-slate-400'}`} />
@@ -740,8 +740,8 @@ export const AdminPlatformPage: React.FC<AdminPlatformPageProps> = ({ onNavigate
                 setMobileSidebarOpen(false);
               }}
               className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl font-medium transition-all cursor-pointer ${currentTab === 'roles'
-                  ? 'bg-teal-50 text-teal-950 font-bold border border-teal-200/80 shadow-2xs'
-                  : 'text-slate-600 hover:bg-slate-50 hover:text-slate-950'
+                ? 'bg-teal-50 text-teal-950 font-bold border border-teal-200/80 shadow-2xs'
+                : 'text-slate-600 hover:bg-slate-50 hover:text-slate-950'
                 }`}
             >
               <ShieldCheck className={`w-4 h-4 ${currentTab === 'roles' ? 'text-teal-800' : 'text-slate-400'}`} />
@@ -754,8 +754,8 @@ export const AdminPlatformPage: React.FC<AdminPlatformPageProps> = ({ onNavigate
                 setMobileSidebarOpen(false);
               }}
               className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl font-medium transition-all cursor-pointer ${currentTab === 'approvals'
-                  ? 'bg-teal-50 text-teal-950 font-bold border border-teal-200/80 shadow-2xs'
-                  : 'text-slate-600 hover:bg-slate-50 hover:text-slate-950'
+                ? 'bg-teal-50 text-teal-950 font-bold border border-teal-200/80 shadow-2xs'
+                : 'text-slate-600 hover:bg-slate-50 hover:text-slate-950'
                 }`}
             >
               <div className="flex items-center gap-3">
@@ -775,8 +775,8 @@ export const AdminPlatformPage: React.FC<AdminPlatformPageProps> = ({ onNavigate
                 setMobileSidebarOpen(false);
               }}
               className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl font-medium transition-all cursor-pointer ${currentTab === 'revocations'
-                  ? 'bg-teal-50 text-teal-950 font-bold border border-teal-200/80 shadow-2xs'
-                  : 'text-slate-600 hover:bg-slate-50 hover:text-slate-950'
+                ? 'bg-teal-50 text-teal-950 font-bold border border-teal-200/80 shadow-2xs'
+                : 'text-slate-600 hover:bg-slate-50 hover:text-slate-950'
                 }`}
             >
               <div className="flex items-center gap-3">
@@ -796,8 +796,8 @@ export const AdminPlatformPage: React.FC<AdminPlatformPageProps> = ({ onNavigate
                 setMobileSidebarOpen(false);
               }}
               className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl font-medium transition-all cursor-pointer ${currentTab === 'audit'
-                  ? 'bg-teal-50 text-teal-950 font-bold border border-teal-200/80 shadow-2xs'
-                  : 'text-slate-600 hover:bg-slate-50 hover:text-slate-950'
+                ? 'bg-teal-50 text-teal-950 font-bold border border-teal-200/80 shadow-2xs'
+                : 'text-slate-600 hover:bg-slate-50 hover:text-slate-950'
                 }`}
             >
               <Layers className={`w-4 h-4 ${currentTab === 'audit' ? 'text-teal-800' : 'text-slate-400'}`} />
@@ -810,8 +810,8 @@ export const AdminPlatformPage: React.FC<AdminPlatformPageProps> = ({ onNavigate
                 setMobileSidebarOpen(false);
               }}
               className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl font-medium transition-all cursor-pointer ${currentTab === 'reports'
-                  ? 'bg-teal-50 text-teal-950 font-bold border border-teal-200/80 shadow-2xs'
-                  : 'text-slate-600 hover:bg-slate-50 hover:text-slate-950'
+                ? 'bg-teal-50 text-teal-950 font-bold border border-teal-200/80 shadow-2xs'
+                : 'text-slate-600 hover:bg-slate-50 hover:text-slate-950'
                 }`}
             >
               <FileBarChart className={`w-4 h-4 ${currentTab === 'reports' ? 'text-teal-800' : 'text-slate-400'}`} />
@@ -824,8 +824,8 @@ export const AdminPlatformPage: React.FC<AdminPlatformPageProps> = ({ onNavigate
                 setMobileSidebarOpen(false);
               }}
               className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl font-medium transition-all cursor-pointer ${currentTab === 'security'
-                  ? 'bg-teal-50 text-teal-950 font-bold border border-teal-200/80 shadow-2xs'
-                  : 'text-slate-600 hover:bg-slate-50 hover:text-slate-950'
+                ? 'bg-teal-50 text-teal-950 font-bold border border-teal-200/80 shadow-2xs'
+                : 'text-slate-600 hover:bg-slate-50 hover:text-slate-950'
                 }`}
             >
               <Lock className={`w-4 h-4 ${currentTab === 'security' ? 'text-teal-800' : 'text-slate-400'}`} />
@@ -843,8 +843,8 @@ export const AdminPlatformPage: React.FC<AdminPlatformPageProps> = ({ onNavigate
                 setMobileSidebarOpen(false);
               }}
               className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl font-medium transition-all cursor-pointer ${currentTab === 'rosters'
-                  ? 'bg-teal-50 text-teal-950 font-bold border border-teal-200/80 shadow-2xs'
-                  : 'text-slate-600 hover:bg-slate-50 hover:text-slate-950'
+                ? 'bg-teal-50 text-teal-950 font-bold border border-teal-200/80 shadow-2xs'
+                : 'text-slate-600 hover:bg-slate-50 hover:text-slate-950'
                 }`}
             >
               <Calendar className="w-4 h-4 text-slate-400" />
@@ -857,8 +857,8 @@ export const AdminPlatformPage: React.FC<AdminPlatformPageProps> = ({ onNavigate
                 setMobileSidebarOpen(false);
               }}
               className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl font-medium transition-all cursor-pointer ${currentTab === 'operations'
-                  ? 'bg-teal-50 text-teal-950 font-bold border border-teal-200/80 shadow-2xs'
-                  : 'text-slate-600 hover:bg-slate-50 hover:text-slate-950'
+                ? 'bg-teal-50 text-teal-950 font-bold border border-teal-200/80 shadow-2xs'
+                : 'text-slate-600 hover:bg-slate-50 hover:text-slate-950'
                 }`}
             >
               <Boxes className="w-4 h-4 text-slate-400" />
@@ -871,8 +871,8 @@ export const AdminPlatformPage: React.FC<AdminPlatformPageProps> = ({ onNavigate
                 setMobileSidebarOpen(false);
               }}
               className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl font-medium transition-all cursor-pointer ${currentTab === 'settings'
-                  ? 'bg-teal-50 text-teal-950 font-bold border border-teal-200/80 shadow-2xs'
-                  : 'text-slate-600 hover:bg-slate-50 hover:text-slate-950'
+                ? 'bg-teal-50 text-teal-950 font-bold border border-teal-200/80 shadow-2xs'
+                : 'text-slate-600 hover:bg-slate-50 hover:text-slate-950'
                 }`}
             >
               <Settings className={`w-4 h-4 ${currentTab === 'settings' ? 'text-teal-800' : 'text-slate-400'}`} />
@@ -948,10 +948,10 @@ export const AdminPlatformPage: React.FC<AdminPlatformPageProps> = ({ onNavigate
                 {/* Tier-Specific Badge */}
                 <div
                   className={`hidden sm:inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-mono font-bold uppercase tracking-wider ${isUltra
-                      ? 'bg-amber-50 text-amber-950 border border-amber-300'
-                      : isPro
-                        ? 'bg-teal-50 text-teal-950 border border-teal-200'
-                        : 'bg-slate-100 text-slate-800 border border-slate-200'
+                    ? 'bg-amber-50 text-amber-950 border border-amber-300'
+                    : isPro
+                      ? 'bg-teal-50 text-teal-950 border border-teal-200'
+                      : 'bg-slate-100 text-slate-800 border border-slate-200'
                     }`}
                 >
                   <span
@@ -1000,8 +1000,8 @@ export const AdminPlatformPage: React.FC<AdminPlatformPageProps> = ({ onNavigate
                           key={a.id}
                           onClick={() => handleSwitchRole(a.id)}
                           className={`w-full text-left p-2.5 rounded-xl text-xs transition-colors flex items-start justify-between cursor-pointer ${isCurrent
-                              ? 'bg-teal-50 text-teal-950 font-semibold'
-                              : 'hover:bg-slate-50 text-slate-700'
+                            ? 'bg-teal-50 text-teal-950 font-semibold'
+                            : 'hover:bg-slate-50 text-slate-700'
                             }`}
                         >
                           <div>
@@ -1399,8 +1399,8 @@ export const AdminPlatformPage: React.FC<AdminPlatformPageProps> = ({ onNavigate
                   type="button"
                   onClick={() => setEmployeeViewMode('roster')}
                   className={`px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-2 ${employeeViewMode === 'roster'
-                      ? 'bg-teal-900 text-white shadow-sm'
-                      : 'bg-white text-slate-600 hover:text-slate-900 hover:bg-slate-100 border border-slate-200'
+                    ? 'bg-teal-900 text-white shadow-sm'
+                    : 'bg-white text-slate-600 hover:text-slate-900 hover:bg-slate-100 border border-slate-200'
                     }`}
                 >
                   <Users className="w-3.5 h-3.5" />
@@ -1410,8 +1410,8 @@ export const AdminPlatformPage: React.FC<AdminPlatformPageProps> = ({ onNavigate
                   type="button"
                   onClick={() => setEmployeeViewMode('invitations')}
                   className={`px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-2 ${employeeViewMode === 'invitations'
-                      ? 'bg-teal-900 text-white shadow-sm'
-                      : 'bg-white text-slate-600 hover:text-slate-900 hover:bg-slate-100 border border-slate-200'
+                    ? 'bg-teal-900 text-white shadow-sm'
+                    : 'bg-white text-slate-600 hover:text-slate-900 hover:bg-slate-100 border border-slate-200'
                     }`}
                 >
                   <Mail className="w-3.5 h-3.5" />
@@ -1534,18 +1534,18 @@ export const AdminPlatformPage: React.FC<AdminPlatformPageProps> = ({ onNavigate
                                 <td className="py-4 px-6">
                                   <span
                                     className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-semibold uppercase tracking-wider ${emp.status === 'active'
-                                        ? 'bg-emerald-50 text-emerald-800 border border-emerald-200'
-                                        : emp.status === 'suspended'
-                                          ? 'bg-amber-50 text-amber-800 border border-amber-200'
-                                          : 'bg-rose-50 text-rose-800 border border-rose-200'
+                                      ? 'bg-emerald-50 text-emerald-800 border border-emerald-200'
+                                      : emp.status === 'suspended'
+                                        ? 'bg-amber-50 text-amber-800 border border-amber-200'
+                                        : 'bg-rose-50 text-rose-800 border border-rose-200'
                                       }`}
                                   >
                                     <span
                                       className={`w-1.5 h-1.5 rounded-full ${emp.status === 'active'
-                                          ? 'bg-emerald-500'
-                                          : emp.status === 'suspended'
-                                            ? 'bg-amber-500'
-                                            : 'bg-rose-500'
+                                        ? 'bg-emerald-500'
+                                        : emp.status === 'suspended'
+                                          ? 'bg-amber-500'
+                                          : 'bg-rose-500'
                                         }`}
                                     />
                                     {emp.status}
@@ -1650,20 +1650,20 @@ export const AdminPlatformPage: React.FC<AdminPlatformPageProps> = ({ onNavigate
                                 <td className="py-4 px-6">
                                   <span
                                     className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-semibold uppercase tracking-wider ${inv.status === 'ACCEPTED'
-                                        ? 'bg-emerald-50 text-emerald-800 border border-emerald-200'
-                                        : inv.status === 'PENDING'
-                                          ? 'bg-amber-50 text-amber-800 border border-amber-200'
-                                          : inv.status === 'EXPIRED'
-                                            ? 'bg-slate-100 text-slate-600 border border-slate-200'
-                                            : 'bg-rose-50 text-rose-800 border border-rose-200'
+                                      ? 'bg-emerald-50 text-emerald-800 border border-emerald-200'
+                                      : inv.status === 'PENDING'
+                                        ? 'bg-amber-50 text-amber-800 border border-amber-200'
+                                        : inv.status === 'EXPIRED'
+                                          ? 'bg-slate-100 text-slate-600 border border-slate-200'
+                                          : 'bg-rose-50 text-rose-800 border border-rose-200'
                                       }`}
                                   >
                                     <span
                                       className={`w-1.5 h-1.5 rounded-full ${inv.status === 'ACCEPTED'
-                                          ? 'bg-emerald-500'
-                                          : inv.status === 'PENDING'
-                                            ? 'bg-amber-500'
-                                            : 'bg-slate-400'
+                                        ? 'bg-emerald-500'
+                                        : inv.status === 'PENDING'
+                                          ? 'bg-amber-500'
+                                          : 'bg-slate-400'
                                         }`}
                                     />
                                     {inv.status}
@@ -2465,8 +2465,8 @@ export const AdminPlatformPage: React.FC<AdminPlatformPageProps> = ({ onNavigate
                       <span
                         key={s.id}
                         className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium border ${isValid
-                            ? 'bg-white text-teal-950 border-teal-200 shadow-2xs'
-                            : 'bg-amber-50 text-amber-800 border-amber-200'
+                          ? 'bg-white text-teal-950 border-teal-200 shadow-2xs'
+                          : 'bg-amber-50 text-amber-800 border-amber-200'
                           }`}
                       >
                         <span className="text-[10px] uppercase font-mono font-bold text-teal-700">

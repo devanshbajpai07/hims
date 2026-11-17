@@ -1,6 +1,8 @@
 import json
+import os
 from pathlib import Path
-from typing import List, Union
+from typing import Any, List, Optional, Union
+from urllib.parse import urlparse
 from pydantic import Field, field_validator, model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
@@ -39,7 +41,7 @@ class Settings(BaseSettings):
         return v
 
     # CORS & Web Client
-    FRONTEND_URL: str = "http://localhost:5173"
+    FRONTEND_URL: str = "https://aarogya-rho-lovat.vercel.app" if os.getenv("ENVIRONMENT") == "production" or os.getenv("RENDER") else "http://localhost:5173"
     FRONTEND_ORIGINS: Union[List[str], str] = [
         "http://localhost:5173",
         "http://127.0.0.1:5173",
@@ -50,16 +52,47 @@ class Settings(BaseSettings):
         "https://aarogya-bngr.onrender.com",
     ]
 
+    @field_validator("FRONTEND_URL", mode="before")
+    def assemble_frontend_url(cls, v: Union[str, None]) -> str:
+        is_prod = (
+            os.getenv("ENVIRONMENT", "").lower() == "production"
+            or bool(os.getenv("RENDER"))
+        )
+        if v and isinstance(v, str) and v.strip():
+            cleaned = v.strip().rstrip("/")
+            if is_prod and "localhost" in cleaned:
+                return "https://aarogya-rho-lovat.vercel.app"
+            return cleaned
+        if is_prod:
+            return "https://aarogya-rho-lovat.vercel.app"
+        return "http://localhost:5173"
+
     @field_validator("FRONTEND_ORIGINS", mode="before")
     def assemble_cors_origins(cls, v: Union[str, List[str]]) -> List[str]:
+        origins: List[str] = []
         if isinstance(v, str):
             try:
                 parsed = json.loads(v)
                 if isinstance(parsed, list):
-                    return parsed
+                    origins = parsed
             except Exception:
-                return [i.strip() for i in v.split(",") if i.strip()]
-        return v
+                origins = [i.strip() for i in v.split(",") if i.strip()]
+        elif isinstance(v, list):
+            origins = list(v)
+
+        essential = [
+            "https://aarogya-rho-lovat.vercel.app",
+            "https://aarogya-bngr.onrender.com",
+            "http://localhost:5173",
+            "http://127.0.0.1:5173",
+            "http://localhost:5174",
+            "http://127.0.0.1:5174",
+            "http://localhost:3000",
+        ]
+        for o in essential:
+            if o not in origins:
+                origins.append(o)
+        return origins
 
     # OTP Configuration
     OTP_EXPIRE_MINUTES: int = 10
@@ -110,4 +143,64 @@ class Settings(BaseSettings):
 
 
 settings = Settings()
+
+
+def get_frontend_base_url(request: Optional[Any] = None) -> str:
+    """Intelligently resolves the active frontend base URL for emails and links.
+
+    1. Checks incoming HTTP request headers (Origin, Referer):
+       - If Origin or Referer is present and matches an allowed domain / pattern,
+         uses the exact scheme and host the user is currently browsing from.
+    2. Falls back to configured settings.FRONTEND_URL.
+    3. If settings.FRONTEND_URL is still localhost but we are in production or on Render,
+       falls back to the production Vercel deployment: 'https://aarogya-rho-lovat.vercel.app'.
+    """
+    if request is not None:
+        try:
+            # Check Origin header (sent with POST/PUT/DELETE requests)
+            origin = request.headers.get("origin") if hasattr(request, "headers") else None
+            if origin and isinstance(origin, str) and origin.strip():
+                candidate = origin.strip().rstrip("/")
+                if candidate.startswith("http://") or candidate.startswith("https://"):
+                    parsed = urlparse(candidate)
+                    domain = parsed.hostname or ""
+                    if (
+                        domain == "localhost"
+                        or domain == "127.0.0.1"
+                        or domain.endswith(".vercel.app")
+                        or domain.endswith(".onrender.com")
+                        or candidate in settings.FRONTEND_ORIGINS
+                    ):
+                        return candidate
+
+            # Check Referer header if Origin was absent
+            referer = request.headers.get("referer") if hasattr(request, "headers") else None
+            if referer and isinstance(referer, str) and referer.strip():
+                candidate = referer.strip().rstrip("/")
+                parsed = urlparse(candidate)
+                if parsed.scheme in ("http", "https") and parsed.netloc:
+                    domain = parsed.hostname or ""
+                    base_candidate = f"{parsed.scheme}://{parsed.netloc}".rstrip("/")
+                    if (
+                        domain == "localhost"
+                        or domain == "127.0.0.1"
+                        or domain.endswith(".vercel.app")
+                        or domain.endswith(".onrender.com")
+                        or base_candidate in settings.FRONTEND_ORIGINS
+                    ):
+                        return base_candidate
+        except Exception:
+            pass
+
+    # Fallback to configured FRONTEND_URL
+    configured = (settings.FRONTEND_URL or "").strip().rstrip("/")
+    is_prod = (
+        os.getenv("ENVIRONMENT", "").lower() == "production"
+        or bool(os.getenv("RENDER"))
+        or settings.ENVIRONMENT.lower() == "production"
+    )
+    if not configured or (is_prod and "localhost" in configured):
+        return "https://aarogya-rho-lovat.vercel.app"
+
+    return configured or "https://aarogya-rho-lovat.vercel.app"
 

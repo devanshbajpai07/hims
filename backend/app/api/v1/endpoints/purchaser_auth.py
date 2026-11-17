@@ -289,10 +289,12 @@ def change_password(
 
 @router.post("/forgot-password")
 def forgot_password(
-    payload: PurchaserForgotPasswordRequest, db: Session = Depends(get_db)
+    payload: PurchaserForgotPasswordRequest,
+    request: Request,
+    db: Session = Depends(get_db),
 ):
     """Dispatches a password reset link (enumeration-resistant response)."""
-    return PurchaserAuthService.request_password_reset(db, payload.email)
+    return PurchaserAuthService.request_password_reset(db, payload.email, request=request)
 
 
 @router.post("/reset-password")

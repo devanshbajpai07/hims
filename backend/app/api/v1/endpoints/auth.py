@@ -123,12 +123,16 @@ def logout(
 
 
 @router.post("/forgot-password", response_model=ForgotPasswordResponse)
-def forgot_password(payload: ForgotPasswordRequest, db: Session = Depends(get_db)):
+def forgot_password(
+    payload: ForgotPasswordRequest,
+    request: Request,
+    db: Session = Depends(get_db),
+):
     """
     Password recovery endpoint returning a generic safe confirmation message
     to avoid revealing whether an account or username exists.
     """
-    return AuthService.request_password_reset(db, payload.identifier)
+    return AuthService.request_password_reset(db, payload.identifier, request=request)
 
 
 @router.post("/reset-password", response_model=ResetPasswordResponse)

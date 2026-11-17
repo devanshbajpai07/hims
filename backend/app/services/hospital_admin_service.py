@@ -8,7 +8,7 @@ from typing import Any, Dict, List, Optional, Tuple
 from sqlalchemy import func, or_, select
 from sqlalchemy.orm import Session, joinedload
 
-from app.core.config import settings
+from app.core.config import get_frontend_base_url, settings
 from app.core.exceptions import (
     AccountStatusError,
     HIMSException,
@@ -414,6 +414,7 @@ class HospitalAdminService:
         hospital_id: uuid.UUID,
         payload: AdminInviteRequest,
         ip_address: Optional[str] = None,
+        request: Optional[Any] = None,
     ) -> Tuple[HospitalAdminInvitation, str]:
         """Invite a hospital administrator with row-level locking, quota validation, and email dispatch."""
         # 1. Acquire row-level lock on the hospital to serialize concurrent invitations
@@ -534,7 +535,8 @@ class HospitalAdminService:
         db.add(audit)
 
         # 8. Dispatch invitation email
-        invitation_url = f"{settings.FRONTEND_URL}/admin/accept-invitation?token={raw_token}"
+        frontend_base = get_frontend_base_url(request)
+        invitation_url = f"{frontend_base}/admin/accept-invitation?token={raw_token}"
         email_svc = get_email_service()
         email_svc.send_invitation_email(
             to_email=norm_email,
@@ -599,6 +601,7 @@ class HospitalAdminService:
         hospital_id: uuid.UUID,
         invitation_id: uuid.UUID,
         ip_address: Optional[str] = None,
+        request: Optional[Any] = None,
     ) -> Tuple[HospitalAdminInvitation, str]:
         """Invalidate previous invitation token, issue a fresh token, and resend invitation email."""
         invitation = (
@@ -636,7 +639,8 @@ class HospitalAdminService:
         )
         db.add(audit)
 
-        invitation_url = f"{settings.FRONTEND_URL}/admin/accept-invitation?token={raw_token}"
+        frontend_base = get_frontend_base_url(request)
+        invitation_url = f"{frontend_base}/admin/accept-invitation?token={raw_token}"
         email_svc = get_email_service()
         email_svc.send_invitation_email(
             to_email=invitation.invitee_email,
@@ -1417,6 +1421,7 @@ class HospitalAdminService:
         admin_user_id: uuid.UUID,
         payload: EmployeeInviteRequest,
         ip_address: Optional[str] = None,
+        request: Optional[Any] = None,
     ) -> Tuple[EmployeeInvitation, str]:
         """Administrator-initiated employee invitation with atomic quota enforcement and multi-scope role support."""
         # 1. Lock hospital to prevent concurrent quota breaches
@@ -1627,7 +1632,8 @@ class HospitalAdminService:
         db.add(audit)
 
         # 11. Dispatch email with dedicated employee acceptance link
-        invitation_url = f"{settings.FRONTEND_URL}/employee/invitation/accept?token={raw_token}"
+        frontend_base = get_frontend_base_url(request)
+        invitation_url = f"{frontend_base}/employee/invitation/accept?token={raw_token}"
         email_svc = get_email_service()
         role_summary = ", ".join(s["role_name"] for s in assignments_payload[:2])
         if len(assignments_payload) > 2:
@@ -2065,7 +2071,12 @@ class HospitalAdminService:
 
     @classmethod
     def resend_employee_invitation(
-        cls, db: Session, hospital_id: uuid.UUID, invitation_id: uuid.UUID, admin_user_id: uuid.UUID
+        cls,
+        db: Session,
+        hospital_id: uuid.UUID,
+        invitation_id: uuid.UUID,
+        admin_user_id: uuid.UUID,
+        request: Optional[Any] = None,
     ) -> Tuple[EmployeeInvitation, str]:
         """Generate a fresh invitation token and re-dispatch employee invitation email."""
         inv = (
@@ -2097,7 +2108,8 @@ class HospitalAdminService:
         )
         db.add(audit)
 
-        invitation_url = f"{settings.FRONTEND_URL}/employee/invitation/accept?token={raw_token}"
+        frontend_base = get_frontend_base_url(request)
+        invitation_url = f"{frontend_base}/employee/invitation/accept?token={raw_token}"
         email_svc = get_email_service()
         email_svc.send_invitation_email(
             to_email=inv.email,

@@ -7,7 +7,7 @@ from typing import Any, Dict, List, Optional, Tuple
 from sqlalchemy import func, select
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
-from app.core.config import settings
+from app.core.config import get_frontend_base_url, settings
 from app.core.exceptions import (
     AccountStatusError,
     CSRFError,
@@ -507,7 +507,12 @@ class PurchaserAuthService:
         db.commit()
 
     @classmethod
-    def request_password_reset(cls, db: Session, email: str) -> Dict[str, str]:
+    def request_password_reset(
+        cls,
+        db: Session,
+        email: str,
+        request: Optional[Any] = None,
+    ) -> Dict[str, str]:
         # Always return generic message to prevent user enumeration
         generic_message = (
             "If an account is associated with this email, a password reset link has been dispatched."
@@ -549,7 +554,8 @@ class PurchaserAuthService:
         db.add(reset_record)
         db.commit()
 
-        reset_link = f"{settings.FRONTEND_URL}/account/reset-password?token={raw_reset_token}"
+        frontend_base = get_frontend_base_url(request)
+        reset_link = f"{frontend_base}/account/reset-password?token={raw_reset_token}"
         email_svc = get_email_service()
         email_sent = email_svc.send_password_reset_email(
             to_email=norm_email,

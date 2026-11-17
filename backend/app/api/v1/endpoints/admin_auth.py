@@ -144,10 +144,11 @@ def get_admin_me(
 @router.post("/auth/forgot-password", response_model=ForgotPasswordResponse, status_code=status.HTTP_200_OK)
 def admin_forgot_password(
     payload: ForgotPasswordRequest,
+    request: Request,
     db: Session = Depends(get_db),
 ):
     """Administrator password recovery endpoint."""
-    return AuthService.request_password_reset(db, payload.identifier)
+    return AuthService.request_password_reset(db, payload.identifier, request=request)
 
 
 @router.post("/auth/reset-password", response_model=ResetPasswordResponse, status_code=status.HTTP_200_OK)

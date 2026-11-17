@@ -5,7 +5,7 @@ from datetime import datetime, timedelta, timezone
 from typing import Any, Dict, List, Optional, Tuple
 from sqlalchemy import func, or_, select
 from sqlalchemy.orm import Session, joinedload
-from app.core.config import settings
+from app.core.config import get_frontend_base_url, settings
 from app.core.exceptions import (
     AccountStatusError,
     InvalidCredentialsError,
@@ -319,7 +319,12 @@ class AuthService:
         )
 
     @classmethod
-    def request_password_reset(cls, db: Session, identifier: str) -> Dict[str, Any]:
+    def request_password_reset(
+        cls,
+        db: Session,
+        identifier: str,
+        request: Optional[Any] = None,
+    ) -> Dict[str, Any]:
         generic_message = (
             "If an account with that username or email exists in our system, "
             "password reset instructions have been dispatched to the registered email address."
@@ -373,7 +378,8 @@ class AuthService:
 
         # Choose portal route: admin vs employee
         route = "/admin/reset-password" if is_admin else "/reset-password"
-        reset_link = f"{settings.FRONTEND_URL}{route}?token={raw_reset_token}"
+        frontend_base = get_frontend_base_url(request)
+        reset_link = f"{frontend_base}{route}?token={raw_reset_token}"
 
         email_svc = get_email_service()
         email_sent = email_svc.send_password_reset_email(

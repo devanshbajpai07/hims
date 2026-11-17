@@ -134,6 +134,7 @@ def invite_employee(
             admin_user_id=admin_ctx.user.id,
             payload=payload,
             ip_address=ip_addr,
+            request=request,
         )
         return {
             "success": True,
@@ -185,6 +186,7 @@ def revoke_employee_invitation(
 @router.post("/employees/invitations/{invitation_id}/resend", status_code=status.HTTP_200_OK)
 def resend_employee_invitation(
     invitation_id: uuid.UUID,
+    request: Request,
     admin_ctx: AdminContext = Depends(get_current_admin),
     db: Session = Depends(get_db),
     _: Any = Depends(require_permission("employee:manage")),
@@ -196,6 +198,7 @@ def resend_employee_invitation(
             hospital_id=admin_ctx.hospital.id,
             invitation_id=invitation_id,
             admin_user_id=admin_ctx.user.id,
+            request=request,
         )
         return {"success": True, "invitation_id": inv.id, "status": inv.status, "expires_at": inv.expires_at}
     except ValueError as e:

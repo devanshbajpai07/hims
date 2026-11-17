@@ -90,7 +90,7 @@ def invite_hospital_administrator(
     ip_addr = request.client.host if request.client else None
     try:
         invitation, raw_token = HospitalAdminService.invite_hospital_administrator(
-            db, current_purchaser.id, hospital_id, payload, ip_address=ip_addr
+            db, current_purchaser.id, hospital_id, payload, ip_address=ip_addr, request=request
         )
         return AdminInviteItem(
             id=invitation.id,
@@ -162,7 +162,7 @@ def resend_admin_invitation(
     ip_addr = request.client.host if request.client else None
     try:
         inv, _ = HospitalAdminService.resend_admin_invitation(
-            db, current_purchaser.id, hospital_id, invitation_id, ip_address=ip_addr
+            db, current_purchaser.id, hospital_id, invitation_id, ip_address=ip_addr, request=request
         )
         return AdminInviteItem(
             id=inv.id,
