@@ -22,6 +22,7 @@ interface NurseDashboardProps {
   departmentName: string;
   patients: Patient[];
   onToast: (title: string, desc: string) => void;
+  token?: string;
 }
 
 export const NurseDashboard: React.FC<NurseDashboardProps> = ({
@@ -29,6 +30,7 @@ export const NurseDashboard: React.FC<NurseDashboardProps> = ({
   departmentName,
   patients,
   onToast,
+  token,
 }) => {
   const [activeTab, setActiveTab] = useState<'ward' | 'vitals' | 'tasks' | 'mar'>('ward');
   const [tasks, setTasks] = useState<NursingTask[]>([]);
@@ -38,7 +40,7 @@ export const NurseDashboard: React.FC<NurseDashboardProps> = ({
   useEffect(() => {
     setTasksLoading(true);
     clinicalApiClient
-      .getNursingTasks()
+      .getNursingTasks(token)
       .then((loaded) => {
         if (loaded) setTasks(loaded);
       })
@@ -48,7 +50,7 @@ export const NurseDashboard: React.FC<NurseDashboardProps> = ({
       .finally(() => {
         setTasksLoading(false);
       });
-  }, []);
+  }, [token]);
 
   // Vitals entry modal state
   const [vitalsModalPatient, setVitalsModalPatient] = useState<Patient | null>(null);
@@ -69,7 +71,7 @@ export const NurseDashboard: React.FC<NurseDashboardProps> = ({
 
   const handleCompleteTask = async (taskId: string) => {
     try {
-      await clinicalApiClient.completeNursingTask(taskId);
+      await clinicalApiClient.completeNursingTask(taskId, token);
       setTasks((prev) =>
         prev.map((t) =>
           t.id === taskId
@@ -88,13 +90,17 @@ export const NurseDashboard: React.FC<NurseDashboardProps> = ({
     if (!vitalsModalPatient) return;
     setSavingVitals(true);
     try {
-      await clinicalApiClient.recordVitals(vitalsModalPatient.id, {
-        bp: `${bp} mmHg`,
-        heartRate: Number(hr),
-        temperature: `${temp} °F`,
-        spo2: Number(spo2),
-        bloodGlucose: `${bloodSugar} mg/dL`,
-      });
+      await clinicalApiClient.recordVitals(
+        vitalsModalPatient.id,
+        {
+          bp: `${bp} mmHg`,
+          heartRate: Number(hr),
+          temperature: `${temp} °F`,
+          spo2: Number(spo2),
+          bloodGlucose: `${bloodSugar} mg/dL`,
+        },
+        token
+      );
       onToast('Vitals Recorded', `Vital signs successfully updated for ${vitalsModalPatient.name}.`);
       setVitalsModalPatient(null);
     } catch (err: any) {
@@ -108,14 +114,17 @@ export const NurseDashboard: React.FC<NurseDashboardProps> = ({
     e.preventDefault();
     if (!taskDesc) return;
     try {
-      const created = await clinicalApiClient.createNursingTask({
-        patientName: taskPatientName || undefined,
-        bedNumber: taskBed,
-        taskType: 'nursing_care',
-        description: taskDesc,
-        scheduledTime: taskTime,
-        priority: taskPriority,
-      });
+      const created = await clinicalApiClient.createNursingTask(
+        {
+          patientName: taskPatientName || undefined,
+          bedNumber: taskBed,
+          taskType: 'nursing_care',
+          description: taskDesc,
+          scheduledTime: taskTime,
+          priority: taskPriority,
+        },
+        token
+      );
       setTasks((prev) => [created, ...prev]);
       setNewTaskOpen(false);
       setTaskDesc('');

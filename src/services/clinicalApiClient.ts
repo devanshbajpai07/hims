@@ -441,11 +441,7 @@ function getAuthHeaders(explicitToken?: string, hasBody = false): Record<string,
   let assignmentId: string | undefined;
   if (typeof window !== 'undefined') {
     try {
-      const adminTok =
-        window.sessionStorage?.getItem('hims_admin_token') ||
-        window.localStorage?.getItem('hims_admin_token');
-      if (!token && adminTok) token = adminTok;
-
+      // 1. Employee session takes precedence for all clinical client operations
       const raw =
         window.sessionStorage?.getItem('hims_employee_session') ||
         window.localStorage?.getItem('hims_employee_session');
@@ -456,6 +452,17 @@ function getAuthHeaders(explicitToken?: string, hasBody = false): Record<string,
           assignmentId = parsed.activeAssignment.id;
         } else if (parsed?.activeMembership?.activeAssignmentId) {
           assignmentId = parsed.activeMembership.activeAssignmentId;
+        }
+      }
+
+      // 2. Only fall back to admin token if no employee session exists at all
+      if (!token) {
+        const adminTok =
+          window.sessionStorage?.getItem('hims_admin_token') ||
+          window.localStorage?.getItem('hims_admin_token');
+        if (adminTok) {
+          token = adminTok;
+          assignmentId = undefined; // Never send an employee assignmentId with an admin token
         }
       }
     } catch {}

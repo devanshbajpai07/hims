@@ -167,7 +167,7 @@ def get_current_employee(
     entitlements = get_plan_entitlements(plan_code) or get_plan_entitlements("BASIC")
 
     active_assignments = [
-        a for a in mem.role_assignments if a.is_active and a.assignment_status == "active"
+        a for a in mem.role_assignments if a.is_active and (a.assignment_status or "active").lower() == "active"
     ]
     assignment_id_str = (
         request.headers.get("X-Assignment-Id")
@@ -175,9 +175,10 @@ def get_current_employee(
         or payload.get("assignment_id")
     )
     if assignment_id_str and active_assignments:
-        matched = [a for a in active_assignments if str(a.id) == str(assignment_id_str)]
+        clean_assign_str = str(assignment_id_str).strip().lower()
+        matched = [a for a in active_assignments if str(a.id).lower() == clean_assign_str]
         if matched:
-            active_assignments.sort(key=lambda a: 0 if str(a.id) == str(assignment_id_str) else 1)
+            active_assignments.sort(key=lambda a: 0 if str(a.id).lower() == clean_assign_str else 1)
         elif request.headers.get("X-Assignment-Id"):
             # If an explicit assignment ID header is sent that does not belong to the employee, reject immediately
             raise HTTPException(

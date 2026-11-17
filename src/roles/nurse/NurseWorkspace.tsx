@@ -162,7 +162,7 @@ export const NurseWorkspace: React.FC<NurseWorkspaceProps> = ({
   useEffect(() => {
     setTasksLoading(true);
     clinicalApiClient
-      .getNursingTasks()
+      .getNursingTasks(token)
       .then((loaded) => {
         if (loaded) setTasks(loaded);
       })
@@ -170,7 +170,7 @@ export const NurseWorkspace: React.FC<NurseWorkspaceProps> = ({
         console.warn('Unable to load live nursing tasks from API:', err);
       })
       .finally(() => setTasksLoading(false));
-  }, []);
+  }, [token]);
 
   // Vitals entry modal state
   const [vitalsModalPatient, setVitalsModalPatient] = useState<Patient | null>(null);
@@ -190,7 +190,7 @@ export const NurseWorkspace: React.FC<NurseWorkspaceProps> = ({
 
   const handleCompleteTask = async (taskId: string) => {
     try {
-      await clinicalApiClient.completeNursingTask(taskId);
+      await clinicalApiClient.completeNursingTask(taskId, token);
       setTasks((prev) =>
         prev.map((t) =>
           t.id === taskId
@@ -209,13 +209,17 @@ export const NurseWorkspace: React.FC<NurseWorkspaceProps> = ({
     if (!vitalsModalPatient) return;
     setSavingVitals(true);
     try {
-      await clinicalApiClient.recordVitals(vitalsModalPatient.id, {
-        bp: `${bp} mmHg`,
-        heartRate: Number(hr),
-        temperature: `${temp} °F`,
-        spo2: Number(spo2),
-        bloodGlucose: `${bloodSugar} mg/dL`,
-      });
+      await clinicalApiClient.recordVitals(
+        vitalsModalPatient.id,
+        {
+          bp: `${bp} mmHg`,
+          heartRate: Number(hr),
+          temperature: `${temp} °F`,
+          spo2: Number(spo2),
+          bloodGlucose: `${bloodSugar} mg/dL`,
+        },
+        token
+      );
       onToast('Vitals Recorded', `Vital signs successfully updated for ${vitalsModalPatient.name}.`);
       setVitalsModalPatient(null);
     } catch (err: any) {
@@ -229,13 +233,16 @@ export const NurseWorkspace: React.FC<NurseWorkspaceProps> = ({
     e.preventDefault();
     if (!taskDesc) return;
     try {
-      const created = await clinicalApiClient.createNursingTask({
-        patientName: taskPatientName.trim() || undefined,
-        taskType: 'nursing_care',
-        description: taskDesc.trim(),
-        scheduledTime: taskTime.trim(),
-        priority: taskPriority,
-      });
+      const created = await clinicalApiClient.createNursingTask(
+        {
+          patientName: taskPatientName.trim() || undefined,
+          taskType: 'nursing_care',
+          description: taskDesc.trim(),
+          scheduledTime: taskTime.trim(),
+          priority: taskPriority,
+        },
+        token
+      );
       setTasks((prev) => [created, ...prev]);
       setNewTaskOpen(false);
       setTaskDesc('');
