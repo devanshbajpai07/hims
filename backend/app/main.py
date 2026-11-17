@@ -83,6 +83,15 @@ async def validation_exception_handler(request: Request, exc: RequestValidationE
     )
 
 
+@app.exception_handler(Exception)
+async def general_exception_handler(request: Request, exc: Exception):
+    logger.exception("Unhandled server exception: %s", str(exc))
+    return JSONResponse(
+        status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+        content={"detail": str(exc), "code": "INTERNAL_SERVER_ERROR"},
+    )
+
+
 # Include API v1 router
 app.include_router(api_router, prefix=settings.API_V1_STR)
 

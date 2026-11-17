@@ -1452,7 +1452,7 @@ Oxygen Saturation:    {spo2_val}%
 --------------------------------------------------------------------------------
 CHIEF COMPLAINT & PRESENTING SYMPTOMS
 --------------------------------------------------------------------------------
-Visit Slot Type:      {appt.type}
+Visit Slot Type:      {appt.appointment_type}
 Intake Complaint:     {patient.chief_complaint or 'Routine Medical Consultation'}
 
 --------------------------------------------------------------------------------

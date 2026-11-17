@@ -101,6 +101,23 @@ def test_doctor_consultation_workflow(client: TestClient, db: Session):
     assert res_complete.status_code == 200
     assert res_complete.json()["status"] == "completed"
 
+    # 5. Save consultation report (official Filebase S3 report compilation)
+    res_report = client.post(
+        f"/api/v1/clinical/consultations/{appt_id}/save-report",
+        json={
+            "clinical_notes": "Patient examined and evaluated. All vital signs reviewed. Prescribed medications.",
+            "diagnosis": "Acute Bronchitis (mild)",
+            "prescriptions": "Amoxicillin 500mg TID x 7 days",
+            "follow_up": "Return in 5-7 days if symptoms persist.",
+        },
+        headers=headers,
+    )
+    assert res_report.status_code == 200
+    report_data = res_report.json()
+    assert report_data["status"] == "completed"
+    assert "Consultation_Report_" in report_data["filename"]
+    assert "AAROGYA HEALTH SYSTEM" in report_data["report_preview"]
+
 
 def test_nurse_vitals_and_tasks(client: TestClient, db: Session):
     """Verifies nurse can record vitals and complete nursing tasks."""
